@@ -1,7 +1,7 @@
 (ns euler.euler001)
 
-; ## Problem 1 - Multiples of 3 and 5
-; 
+; Problem 1 - Multiples of 3 and 5
+; -----------------------------------
 ; If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
 ; 
 ; **Task**: Find the sum of all the multiples of 3 or 5 below 1000.
@@ -12,11 +12,7 @@
    (filter #(or (= (mod % 3) 0) (= (mod % 5) 0))) ; filter the multiples of 3 or 5
    (reduce +))) ; reduce the resulting list by adding each element
 
-; **Test**
-(= 23 (prob-001 10))
-
-; **Calculation**
-(prob-001 1000)
+(prob-001 1000) ; calculation
 
 
 ; Problem 2 - Even Fibonacci numbers
@@ -25,12 +21,13 @@
 ; (1), 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
 ; By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
 
-; a Fibonacci number (exept 0 and 1) is recursively defined as the sum of its two predecessing Fibonacci numbers:
-; base case: n <= 1 = n
-; rec case: n > 1 = fib(n - 1) + fib(n - 2)
+; **Background**
+; A Fibonacci number (exept 0 and 1) is recursively defined as the sum of its two predecessing Fibonacci numbers:
+; - base case: ``fib(n <= 1) = n``
+; - rec case: ``fib (n > 1) = fib(n - 1) + fib(n - 2)``
 
-; compute the nth element in the Fibonacci sequence
 (defn fib                 ; overloaded function
+  "computes the nth element in the Fibonacci sequence"
   ([n] (if (= n 0) 0      ; with one parameter
          (fib n 0 1)))    ; cached version using an accumulator
   ([n p0 p1]              ; with three parameters
@@ -38,7 +35,7 @@
      (fib (- n 1) p1 (+ p0 p1)))))
 
 (defn fib-lazy
-  "Computing the fibonacci sequence - lazily and polymorphic."
+  "Computing the whole fibonacci sequence - lazily and polymorphic."
   ; recursive case:  fib (x, y) -> fib (y, x+y)
   ([x y] (cons x (lazy-seq (fib y (+ x y)))))
   ; base case: creates an infinite, lazy seq (aka list)
@@ -55,10 +52,8 @@
                 :let [fib-num (fib num)]
                 :when (and (< fib-num n)
                            (even? fib-num))] fib-num)))
-; test
-(= 44 (prob-002 35))
-; calculation
-(prob-002 4000000)
+
+(prob-002 4000000) ; calculation
 
 
 ; Problem 3 - Largest prime factor
@@ -123,7 +118,7 @@
 ; reference for computing the least common multiple
 ; http://en.wikipedia.org/wiki/Least_common_multiple
 
-(defn least-common-multiple [n]
+(defn prob-005 [n]
   (->>
    (range n)
    (map #(frequencies (get-primes %)))
@@ -132,10 +127,7 @@
    (reduce *)
    (int)))
 
-; test
-(= 2520 (least-common-multiple 10))
-; calculation
-(least-common-multiple 20)
+(prob-005 20) ; calculation
 
 
 ; Problem 6 - Sum square difference
@@ -145,14 +137,11 @@
 ; Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.
 ; Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
-(defn sum-square-difference [n]
+(defn prob-006 [n]
   (int (- (Math/pow (reduce + (range (+ n 1))) 2)
           (reduce + (map #(Math/pow % 2) (range (+ n 1)))))))
 
-; test
-(= (sum-square-difference 10) 2640)
-; calculation
-(sum-square-difference 100)
+(prob-006 100) ; calculation
 
 ; Problem 7 - 10001st prime
 ; --------------------------
