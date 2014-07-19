@@ -3,7 +3,7 @@
 ; Problem 11 - Largest product in a grid
 ; ---------------------------------------
 ; In the 20x20 grid below, four numbers along a diagonal line have been marked in red.
-; The product of these numbers is 26 x 63 x 78 x 14 = 1788696.
+; The product of these numbers is ``26 x 63 x 78 x 14 = 1788696``.
 ; What is the greatest product of four adjacent numbers in the same direction
 ; - up, down, left, right, or diagonally - in the 20x20 grid?
 
@@ -70,10 +70,7 @@
       (if (>= (divisors cache) n) cache
         (recur (inc cnt))))))
 
-; test
-(= 28 (prob-012 6))
-; calculation
-(time (prob-012 500))
+(time (prob-012 500)) ; calculation
 
 ; Problem 13 - Large sum
 ; -----------------------
@@ -241,8 +238,8 @@
         (long (/ (factorial (* 2.0 n))
                  ; by (fac(n))^2
                  (Math/pow (factorial n) 2))))]
-  ; calculation
-  (lattice-paths 20))
+  
+(lattice-paths 20)) ; calculation
 
 
 ; Problem 16 - Power digit sum
