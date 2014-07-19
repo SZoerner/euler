@@ -36,12 +36,9 @@
 
 (defn fib-lazy
   "Computing the whole fibonacci sequence - lazily and polymorphic."
-  ; recursive case:  fib (x, y) -> fib (y, x+y)
-  ([x y] (cons x (lazy-seq (fib y (+ x y)))))
-  ; base case: creates an infinite, lazy seq (aka list)
-  ([] (fib 1N 1N))
-  ; retrieve the nth fib element
-  ([x] (first (drop (- x 1) (take x (fib))))))
+  ([x y] (cons x (lazy-seq (fib y (+ x y))))) ; recursive case:  fib (x, y) -> fib (y, x+y)
+  ([] (fib 1N 1N)) ; base case: creates an infinite, lazy seq (aka list)
+  ([x] (first (drop (- x 1) (take x (fib)))))) ; retrieve the nth fib element
 
 
 ; getting all even fib numbers below 4.000.000
@@ -81,33 +78,35 @@
 
 ; performant solution - iterative approach
 (defn get-primes
-  ; entry point - one parameter
-  ([n]
-   ; start with 2 and empty list
-   (get-primes n 2 '()))
-  ; overloaded function
-  ([n p primes]
+  ([n] ; entry point - one parameter
+   (get-primes n 2 '())) ; start with 2 and empty list
+  ([n p primes] ; overloaded function
    (cond
     (< n p) primes                           ; no more factors - stop iteration
     (and (= (mod n p) 0) (prime? p))         ; if factor and prime (fun fact: 10x speedup changing the order)
     (get-primes (/ n p) p (conj primes p))   ; add to set of prime factors
     :else (get-primes n (+ p 1) primes))))   ; no match - next iteration
 
-(apply max (get-primes 600851475143))
+(defn prob-003 [n]
+  (apply max (get-primes n)))
+
+(prob-003 600851475143) ; calculation
 
 
 ; Problem 4 - Largest palindrome product
 ; ---------------------------------------
 ; A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 ; Find the largest palindrome made from the product of two 3-digit numbers.
+(defn prob-004 [n]
+  (apply max                                                  ; get the largest result of
+         (for [num1 (range n 0 -1)
+               num2 (range n 0 -1)                          ; all numbers from 100 to 1000
+               :let [pal (* num1 num2)]                       ; compute the product of the two
+               :when (= (str pal)                             ; and filter those who are palindromes
+                        (clojure.string/reverse (str pal)))]  ; by converting to string and compare to the reversed string
+           pal)))
 
-(apply max                                                  ; get the largest result of
-       (for [num1 (range 100 1000)
-             num2 (range 100 1000)                          ; all numbers from 100 to 1000
-             :let [pal (* num1 num2)]                       ; compute the product of the two
-             :when (= (str pal)                             ; and filter those who are palindromes
-                      (clojure.string/reverse (str pal)))]  ; by converting to string and compare to the reversed string
-         pal))
+(prob-004 1000) ; calculation
 
 
 ; Problem 5 - Smallest multiple
@@ -149,7 +148,7 @@
 ; What is the 10 001st prime number?
 
 ; type: number => number
-(defn nth-prime [n]
+(defn prob-007 [n]
   (->>
    (range 1 Integer/MAX_VALUE) ; for all positive integers
    (take-nth 2)                ; shortcut to remove even numbers
@@ -157,17 +156,14 @@
    (take (- n 1))              ; realize n items
    last))                      ; pick the nth element
 
-; test
-(nth-prime 6)
-; calculation
-(nth-prime 10001)
+(prob-007 10001) ; calculation
 
 
 ; Problem 8 - Largest product in a series
 ; ----------------------------------------
 ; Find the greatest product of five consecutive digits in the 1000-digit number.
 
-(defn find-consec-product [n series]
+(defn prob-008 [n series]
   (->>
    (str series)                       ; hack to retrieve individual digits
    (map #(Integer/parseInt (str %)))  ; Int => List[Int]
@@ -175,11 +171,7 @@
    (map #(apply * %))                 ; calculate the product
    (apply max)))                      ; get the highest product
 
-; test
-(find-consec-product 5 123456789)
-; calculation
-(find-consec-product 5
-                     7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450)
+(prob-008 5 7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450) ; calculation
 
 
 ; Problem 9 - Special Pythagorean triplet
@@ -189,7 +181,7 @@
 ; There exists exactly one Pythagorean triplet for which a + b + c = 1000.
 ; Find the product abc.
 
-(defn pyth-triplet [n]
+(defn prob-009 [n]
   (first (for [a (range n)
                b (range (- n a))
                :let [c (- n (+ a b))]
@@ -198,10 +190,7 @@
                              (Math/pow c 2)))]
            (* a b c))))
 
-; test
-(= (* 3 4 5)(pyth-triplet (+ 3 4 5)))
-; calculation
-(pyth-triplet 1000)
+(prob-009 1000) ; calculation
 
 
 ; Problem 10 - Summation of primes
@@ -209,13 +198,10 @@
 ; The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
 ; Find the sum of all the primes below two million.
 
-(defn sum-primes [n]
+(defn prob-010 [n]
   (->>
    (range n)
    (filter prime?)
    (reduce +)))
 
-; test
-(sum-primes 10)
-; calculation
-(sum-primes 2000000)
+(prob-010 2000000) ; calculation
