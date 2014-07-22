@@ -28,27 +28,34 @@
 
 (defn fib                 ; overloaded function
   "computes the nth element in the Fibonacci sequence"
-  ([n] (if (= n 0) 0      ; with one parameter
-         (fib n 0 1)))    ; cached version using an accumulator
+  ([n] (if (= n 0N) 0N      ; with one parameter
+         (fib n 0N 1N)))    ; cached version using an accumulator
   ([n p0 p1]              ; with three parameters
-   (if (= n 1) p1
-     (fib (- n 1) p1 (+ p0 p1)))))
-
-(defn fib-lazy
-  "Computing the whole fibonacci sequence - lazily and polymorphic."
-  ([x y] (cons x (lazy-seq (fib y (+ x y))))) ; recursive case:  fib (x, y) -> fib (y, x+y)
-  ([] (fib 1N 1N)) ; base case: creates an infinite, lazy seq (aka list)
-  ([x] (first (drop (- x 1) (take x (fib)))))) ; retrieve the nth fib element
-
+   (if (= n 1N) p1
+     (fib (- n 1N) p1 (+ p0 p1)))))
 
 ; getting all even fib numbers below 4.000.000
 ; fun fact: the highest is already fib (33) = 3.524.578
 (defn prob-002 [n]
   (reduce +
-          (for [num (range 35)
+          (for [num (range 0N (+ n 1))
                 :let [fib-num (fib num)]
-                :when (and (< fib-num n)
-                           (even? fib-num))] fib-num)))
+                :while (< fib-num n)
+                :when (even? fib-num)] fib-num)))
+
+; Lazy implementation
+(defn fib-lazy
+  "Computing the whole fibonacci sequence - lazily and polymorphic."
+  ([] (fib-lazy 1N 1N)) ; base case: creates an infinite, lazy seq (aka list)
+  ([x y] (cons x (lazy-seq (fib-lazy y (+ x y))))) ; recursive case:  fib (x, y) -> fib (y, x+y)
+  ([x] (first (drop (- x 1) (take x (fib-lazy)))))) ; retrieve the nth fib element
+
+(defn prob-002-lazy [n]
+  (->>
+    (fib-lazy)
+    (take-while #(< % n) )
+    (filter even? )
+    (reduce + )))
 
 (prob-002 4000000) ; calculation
 

@@ -9,3 +9,8 @@
          100 ; the number of iterations for test.check to test
          (prop/for-all [n gen/nat]
            (even? (prob-002 n)))) ; always returns an even result
+
+(defspec prob-002-lazy-quickcheck
+         100
+         (prop/for-all [n gen/nat]
+            (= (prob-002 n) (prob-002-lazy n)))) ; both algorithms return the same results
