@@ -5,11 +5,13 @@
 (deftest prob-001-test
   (testing "Problem 1"    
     (is (= 3 (prob-001 5)))
-    (is (= 23 (prob-001 10)))))
+    (is (= 23 (prob-001 10)))
+    (is (= 233168 (prob-001 1000)))))
 
 (deftest prob-002-test
   (testing "Problem 2"
-    (is (= 44 (prob-002 35)))))
+    (is (= 44 (prob-002 35)))
+    (is (= 4613732 (prob-002 4000000)))))
 
 (deftest prob-003-test
   (testing "Problem 3"
