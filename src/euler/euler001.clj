@@ -38,16 +38,17 @@
 ; fun fact: the highest is already fib (33) = 3.524.578
 (defn prob-002 [n]
   (reduce +
-          (for [num (range 0N (+ n 1))
-                :let [fib-num (fib num)]
-                :while (< fib-num n)
-                :when (even? fib-num)] fib-num)))
+    (for [num (range 0N (+ n 1))
+      :let [fib-num (fib num)]
+      :while (< fib-num n)
+      :when (even? fib-num)] fib-num)))
+
 
 ; Lazy implementation
 (defn fib-lazy
   "Computing the whole fibonacci sequence - lazily and polymorphic."
   ([] (fib-lazy 1N 1N)) ; base case: creates an infinite, lazy seq (aka list)
-  ([x y] (cons x (lazy-seq (fib-lazy y (+ x y))))) ; recursive case:  fib (x, y) -> fib (y, x+y)
+  ([x y] (cons x (lazy-seq (fib-lazy y (+ x y))))) ; fib (x, y) -> fib (y, x+y) = infinite, lazy seq starting from x
   ([x] (first (drop (- x 1) (take x (fib-lazy)))))) ; retrieve the nth fib element
 
 (defn prob-002-lazy [n]
@@ -66,24 +67,10 @@
 ; What is the largest prime factor of the number 600851475143 ?
 
 ; predicate checking for prime number (using Java's BigInteger)
-(def prime? #(.isProbablePrime (BigInteger/valueOf %) 5)) ; certainty of 5 - 96.875%
+(defn prime? [n]
+  (.isProbablePrime (BigInteger/valueOf n) 5)) ; certainty of 5 - 96.875%
 
-; concise solution - streaming approach.. not performant at all :(
-(defn get-prime-stream [n]
-  (->>                         ; using the thread-last macro
-   (range 2 (+ (/ n 2) 1))     ; from all numbers up to n / 2 (+ 1, since range is exclusive)
-   (filter #(= (mod n %) 0))   ; filter factors
-   (filter prime?)             ; filter primes
-   (last)))                    ; get the last (aka max) value
-
-; concise solution - list comprehension.. could be worse (or better)...
-(defn get-prime-for [n]
-  (for [a (range (bigint (/ n 2)) 1 -1)  ; creating a lazy sequence from n down to 2
-        :when (and (= 0 (mod n a))       ; predicate checking using :when syntactic sugar
-                   (prime? a))]
-    (int a)))                            ; return value for the iteration cast to an int
-
-; performant solution - iterative approach
+; iterative approach
 (defn get-primes
   ([n] ; entry point - one parameter
    (get-primes n 2 '())) ; start with 2 and empty list
@@ -100,18 +87,34 @@
 (prob-003 600851475143) ; calculation
 
 
+; lazy stream approach
+(def lazy-primes
+  "lazy stream of prime numbers"              
+   (filter prime? ; filter primes
+           (conj (iterate #(+ 2 %) 3) 2)))   ; append all odd numbers to 2
+
+(defn- max-prime [n primes]
+  (let [div (first primes)] ; local variable - head of prime list
+    (cond
+      (= n div) div ; termination - found max prime
+      (= 0 (mod n div)) (max-prime (/ n div) primes)
+      :else (max-prime n (rest primes))))) ; list eater
+
+(defn prob-003-lazy [n]
+  (max-prime n lazy-primes))
+
 ; Problem 4 - Largest palindrome product
 ; ---------------------------------------
 ; A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 ; Find the largest palindrome made from the product of two 3-digit numbers.
 (defn prob-004 [n]
   (apply max                                                  ; get the largest result of
-         (for [num1 (range n 0 -1)
+   (for [num1 (range n 0 -1)
                num2 (range n 0 -1)                          ; all numbers from 100 to 1000
                :let [pal (* num1 num2)]                       ; compute the product of the two
                :when (= (str pal)                             ; and filter those who are palindromes
                         (clojure.string/reverse (str pal)))]  ; by converting to string and compare to the reversed string
-           pal)))
+               pal)))
 
 (prob-004 1000) ; calculation
 
@@ -145,7 +148,7 @@
 
 (defn prob-006 [n]
   (int (- (Math/pow (reduce + (range (+ n 1))) 2)
-          (reduce + (map #(Math/pow % 2) (range (+ n 1)))))))
+    (reduce + (map #(Math/pow % 2) (range (+ n 1)))))))
 
 (prob-006 100) ; calculation
 
@@ -190,12 +193,12 @@
 
 (defn prob-009 [n]
   (first (for [a (range n)
-               b (range (- n a))
-               :let [c (- n (+ a b))]
-               :when (and (< a b c)
-                          (= (+ (Math/pow a 2) (Math/pow b 2))
-                             (Math/pow c 2)))]
-           (* a b c))))
+   b (range (- n a))
+   :let [c (- n (+ a b))]
+   :when (and (< a b c)
+    (= (+ (Math/pow a 2) (Math/pow b 2))
+     (Math/pow c 2)))]
+   (* a b c))))
 
 (prob-009 1000) ; calculation
 

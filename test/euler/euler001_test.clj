@@ -13,9 +13,20 @@
     (is (= 44 (prob-002 35)))
     (is (= 4613732 (prob-002 4000000)))))
 
+(deftest prob-002-lazy-test
+  (testing "Problem 2"
+    (is (= 44 (prob-002-lazy 35)))
+    (is (= 4613732 (prob-002-lazy 4000000)))))
+
 (deftest prob-003-test
   (testing "Problem 3"
-    (is (= 29 (prob-003 13195)))))
+    (is (= 29 (prob-003 13195)))
+    (is (= 6857 (prob-003 600851475143)))))
+
+(deftest prob-003-lazy-test
+  (testing "Problem 3"
+    (is (= 29 (prob-003-lazy 13195)))
+    (is (= 6857 (prob-003-lazy 600851475143)))))
         
 (deftest prob-004-test
   (testing "Problem 4"
