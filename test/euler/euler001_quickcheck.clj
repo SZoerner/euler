@@ -14,3 +14,8 @@
          100
          (prop/for-all [n gen/nat]
             (= (prob-002 n) (prob-002-lazy n)))) ; both algorithms return the same results
+
+(defspec prob-003-lazy-quickcheck
+         100
+         (prop/for-all [n (gen/such-that #(> % 1) gen/nat)]
+            (= (prob-003 n) (prob-003-lazy n)))) ; both algorithms return the same results
