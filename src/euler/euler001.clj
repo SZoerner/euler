@@ -210,8 +210,8 @@
 
 (defn prob-010 [n]
   (->>
-    (range n)
-    (filter prime?)
+    lazy-primes
+    (take-while #(< % n))
     (reduce +)))
 
 (prob-010 2000000) ; calculation

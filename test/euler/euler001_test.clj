@@ -34,15 +34,18 @@
 
 (deftest prob-005-test
   (testing "Problem 5"
-    (is (= 2520 (prob-005 10)))))
+    (is (= 2520 (prob-005 10)))
+    (is (= 232792560 (prob-005 20)))))
 
 (deftest prob-006-test
   (testing "Problem 6"
-    (is (= 2640 (prob-006 10)))))
+    (is (= 2640 (prob-006 10)))
+    (is (= 25164150 (prob-006 100)))))
 
 (deftest prob-007-test
   (testing "Problem 7"
-    (is (= 13 (prob-007 6)))))
+    (is (= 13 (prob-007 6)))
+    (is (= 104743 (prob-007 10001)))))
         
 (deftest prob-008-test
   (testing "Problem 8"
@@ -50,8 +53,10 @@
 
 (deftest prob-009-test
   (testing "Problem 9"
-    (is (= (* 3 4 5)(prob-009 (+ 3 4 5))))))
+    (is (= (* 3 4 5)(prob-009 (+ 3 4 5))))
+    (is (= (* 200 375 425) (prob-009 1000)))))
 
 (deftest prob-010-test
   (testing "Problem 10"
-    (is (= 17 (prob-010 10)))))
+    (is (= 17 (prob-010 10)))
+    (is (= 142913828922 (prob-010 2000000)))))
