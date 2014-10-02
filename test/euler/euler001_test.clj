@@ -3,7 +3,7 @@
             [euler.euler001 :refer :all]))
 
 (deftest prob-001-test
-  (testing "Problem 1"    
+  (testing "Problem 1"
     (is (= 3 (prob-001 5)))
     (is (= 23 (prob-001 10)))
     (is (= 233168 (prob-001 1000)))))
@@ -27,10 +27,10 @@
   (testing "Problem 3"
     (is (= 29 (prob-003-lazy 13195)))
     (is (= 6857 (prob-003-lazy 600851475143)))))
-        
+
 (deftest prob-004-test
   (testing "Problem 4"
-    (is (= 9009 (prob-004 100)))))        
+    (is (= 9009 (prob-004 100)))))
 
 (deftest prob-005-test
   (testing "Problem 5"
@@ -46,14 +46,14 @@
   (testing "Problem 7"
     (is (= 13 (prob-007 6)))
     (is (= 104743 (prob-007 10001)))))
-        
+
 (deftest prob-008-test
   (testing "Problem 8"
     (is (= 15120 (prob-008 5 123456789)))))
 
 (deftest prob-009-test
   (testing "Problem 9"
-    (is (= (* 3 4 5)(prob-009 (+ 3 4 5))))
+    (is (= (* 3 4 5) (prob-009 (+ 3 4 5))))
     (is (= (* 200 375 425) (prob-009 1000)))))
 
 (deftest prob-010-test
