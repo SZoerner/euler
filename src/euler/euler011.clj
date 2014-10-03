@@ -7,8 +7,8 @@
 ; What is the greatest product of four adjacent numbers in the same direction
 ; - up, down, left, right, or diagonally - in the 20x20 grid?
 
-(let [input
-      ; reference the input matrix as a global variable
+(let [input-str
+      ; reference the input matrix as a local variable
       "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
       49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
       81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -28,7 +28,10 @@
       04 42 16 73 38 25 39 11 24 94 72 18 08 46 29 32 40 62 76 36
       20 69 36 41 72 30 23 88 34 62 99 69 82 67 59 85 74 04 36 16
       20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
-      01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"]
+      01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"
+
+  ; convert string into a 20x20 vector of integers
+      input (vec (map vec (partition 20 (map #(Integer. %) (.split input-str "\\s+")))))]
 
   ; -- by Chouser
   ; only works for square grids
@@ -46,8 +49,8 @@
                           :while (every? #(< -1 % size) yx)]
                       (reduce nth grid yx))))))
 
-  ; convert string into a 20x20 vector of integers
-  (prob-011 20 (vec (map vec (partition 20 (map #(Integer. %) (.split input "\\s+")))))))
+  ; calculation
+  (prob-011 20 input))
 
 
 ; Problem 12 - Highly divisible triangular number
@@ -56,7 +59,7 @@
 
 ; computes the nth triangle number
 (defn triangle [n]
-  (reduce + (range (+ n 1))))
+  (reduce + (range (inc n))))
 
 ; filters the divisors
 (defn divisors [n]
@@ -70,7 +73,9 @@
       (if (>= (divisors cache) n) cache
         (recur (inc cnt))))))
 
-(time (prob-012 500)) ; calculation
+; calculation
+; (prob-012 500)
+
 
 ; Problem 13 - Large sum
 ; -----------------------
@@ -197,7 +202,7 @@
 
 (defn next-collatz [num]
   ; calculate the next iteration
-  (if (odd? num) (+ 1 (* 3 num))
+  (if (odd? num) (inc (* 3 num))
     (/ num 2)))
 
 (defn map-collatz [n]
@@ -230,7 +235,7 @@
 (let [factorial
       (fn [n]
         ; multiply all natural numbers from 1 to n+1
-        (reduce * (range 1.0 (+ n 1))))
+        (reduce * (range 1.0 (inc n))))
 
       lattice-paths
       (fn [n]
@@ -336,6 +341,7 @@
 
 ; by hroi
 ; http://clojure-euler.wikispaces.com/Problem+019
+
 (count
  (for [year (range 1 101) month (range 0 12)
        :let [day (.getDay (doto (java.util.Date.) (.setYear year)

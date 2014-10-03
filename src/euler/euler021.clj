@@ -12,7 +12,7 @@
 (let
   [amicable
    (fn [n]
-     (reduce + (filter #(= 0 (mod n %)) (range 1 (+ 1 (/ n 2))))))
+     (reduce + (filter #(= 0 (mod n %)) (range 1 (inc (/ n 2))))))
 
    amicable?
    (fn [a]
@@ -41,7 +41,7 @@
                     (reduce +)))
    ; get the position
    get-index (fn [name]
-               (+ 1 (.indexOf input name)))]
+               (inc (.indexOf input name)))]
   ; compute the product of value and position
   (reduce + (map #(* (get-index %) (get-value %)) input)))
 
@@ -76,7 +76,7 @@
      (some (fn [a] (abundants (- i a))) abundants))
 
    ; List[Numbers] - input numbers from 1 up to 28124
-   input (range 1 (+ 1 28123))
+   input (range 1 (inc 28123))
 
    ; Set[Numbers] - all abundant numbers up to input
    abundants (into (sorted-set) (filter abundant? input))]

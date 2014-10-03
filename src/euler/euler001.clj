@@ -9,8 +9,9 @@
 (defn prob-001 [n]
   (->>
     (range n)                                               ; for all numbers below n
-    (filter #(or (= (mod % 3) 0) (= (mod % 5) 0)))          ; filter the multiples of 3 or 5
-    (reduce +)))                                            ; reduce the resulting list by adding each element
+    (filter #(or (= 0 (mod % 3))
+                 (= 0 (mod % 5))))                          ; filter the multiples of 3 or 5
+    (reduce +)))                                            ; reduce the resulting list by adding up each element
 
 ; calculation
 ; (prob-001 1000)
@@ -27,19 +28,24 @@
 ; - base case: ``fib(n <= 1) = n``
 ; - rec case: ``fib (n > 1) = fib(n - 1) + fib(n - 2)``
 
-(defn fib                                                   ; overloaded function
-  "computes the nth element in the Fibonacci sequence"
-  ([n] (if (= n 0N) 0N                                      ; with one parameter
-                    (fib n 0N 1N)))                         ; cached version using an accumulator
+(defn fib                                                   ; ; cached version using an accumulator
+  "computes the nth element in the Fibonacci sequence"      ; overloaded function
+  ([n]
+   (if (zero? n)
+     0N
+     (fib n 0N 1N)))                      ; with one parameter
+
   ([n p0 p1]                                                ; with three parameters
-   (if (= n 1N) p1
-                (fib (- n 1N) p1 (+ p0 p1)))))
+   (if (= n 1N)
+     p1
+     (fib (dec n) p1 (+ p0 p1)))))
+
 
 ; getting all even fib numbers below 4.000.000
 ; fun fact: the highest is already fib (33) = 3.524.578
 (defn prob-002 [n]
   (reduce +
-          (for [num (range 0N (+ n 1))
+          (for [num (range 0N (inc n))
                 :let [fib-num (fib num)]
                 :while (< fib-num n)
                 :when (even? fib-num)] fib-num)))
@@ -53,7 +59,7 @@
   "Computing the whole fibonacci sequence - lazily and polymorphic."
   ([] (fib-lazy 1N 1N))                                     ; base case: creates an infinite, lazy seq (aka list)
   ([x y] (cons x (lazy-seq (fib-lazy y (+ x y)))))          ; fib (x, y) -> fib (y, x+y) = infinite, lazy seq starting from x
-  ([x] (first (drop (- x 1) (take x (fib-lazy))))))         ; retrieve the nth fib element
+  ([x] (first (drop (dec x) (take x (fib-lazy))))))         ; retrieve the nth fib element
 
 (defn prob-002-lazy [n]
   (->>
@@ -157,7 +163,7 @@
 
 (defn prob-005 [n]
   (->>
-    (range (+ 1 n))
+    (range (inc n))
     (map #(frequencies (get-primes %)))
     (apply merge-with max)
     (map #(Math/pow (first %) (second %)))
@@ -176,8 +182,8 @@
 ; Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
 (defn prob-006 [n]
-  (int (- (Math/pow (reduce + (range (+ n 1))) 2)
-          (reduce + (map #(Math/pow % 2) (range (+ n 1)))))))
+  (int (- (Math/pow (reduce + (range (inc n))) 2)
+          (reduce + (map #(Math/pow % 2) (range (inc n)))))))
 
 ; calculation
 ; (prob-006 100)
@@ -193,7 +199,7 @@
     (range 1 Integer/MAX_VALUE)                             ; for all positive integers
     (take-nth 2)                                            ; shortcut to remove even numbers
     (filter prime?)                                         ; only prime numbers left
-    (take (- n 1))                                          ; realize n items
+    (take (dec n))                                          ; realize n items
     last))                                                  ; pick the nth element
 
 ; calculation
