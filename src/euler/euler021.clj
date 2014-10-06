@@ -157,9 +157,9 @@
                       (recur (* rem 10) d
                              (conj acc div)
                              (conj rems rem)))))))
-
-(apply max-key second (map #(conj [] % (count (rec-cycle 1 %)))
-                           (take 1000 (iterate dec 1000))))
+(defn prob-026 []
+  (apply max-key second (map #(conj [] % (count (rec-cycle 1 %)))
+                             (take 1000 (iterate dec 1000)))))
 
 
 ; Problem 27 - Quadratic primes
@@ -184,28 +184,21 @@
 (defn- prime-java? [n]
   (.isProbablePrime (BigInteger/valueOf n) 5))              ; certainty of 5 - 96.875%
 
-(defn prime-gen [a b]
-  "returns a generator of the form: n² + an + b"
-  (fn [n]
-    (+ (* n n) (* a n) b)))
-
 ; Validator function
 (defn consec-primes
   "given a generator function, returns number of consecutive prime numbers generated"
-  [gen]
+  [a b]
   (->>
     (iterate inc 0)
-    (map gen)
-    (take-while prime-java?)
-    (count)))
+    (map #(+ (* (+ % a) %) b))                              ; returns a generator of the form: n² + an + b
+    (take-while #(and (> % 0) (prime-java? %)))             ; filter as long as primes are generated
+    (count)))                                               ; count # of primes
 
 (defn prob-027 []
-  "list comprehension to solve the optimisation problem"
-  (let [{:keys [v]}
-        (last (sort-by #(first %)
-                       (for [a (range -999 1000)
-                             b (range -999 1000)
-                             :let [gen (consec-primes (prime-gen a b))]
-                             :when (not (= 0 gen))]
-                         {:k gen :v (* a b)})))]
-     v))
+  "list comprehension for finding the max prime generator"
+  (let [nums (range -999 1000)
+        quads (for [a nums                                  ; all quadratic prime generators
+                    b nums]                                 ; between -999 and 999
+                [a b (consec-primes a b)])
+        [a b _] (reduce #(if (> (nth %1 2) (nth %2 2)) %1 %2) quads)]
+    (* a b)))
