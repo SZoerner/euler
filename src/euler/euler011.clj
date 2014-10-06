@@ -257,10 +257,11 @@
 ; 2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
 ; What is the sum of the digits of the number 2^1000?
 
-(->> (.pow (BigInteger. "2") 1000)
-     str
-     (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
-     (reduce +))
+(defn prob-016 []
+  (->> (.pow (BigInteger. "2") 1000)
+       str
+       (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
+       (reduce +)))
 
 
 ; Problem 17 - Number letter counts
@@ -270,30 +271,32 @@
 ; NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters.
 ; The use of "and" when writing out numbers is in compliance with British usage.
 
-; string maps
-(let [singles
-      ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve"
-       "thirteen" "fourteen" "fifteen" "sixteen" "seventeen" "eighteen" "nineteen"]
-      tens ["twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"]]
+(defn prob-017 []
+  ; string maps
+  (let [singles
+        ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve"
+         "thirteen" "fourteen" "fifteen" "sixteen" "seventeen" "eighteen" "nineteen"]
+        tens ["twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"]
 
-  ; concatenate function
-  (defn to-words [n]
-    (cond
-      (< n 20) (nth singles (dec n))
-      (< n 100) (if (zero? (mod n 10))
-                  (nth tens (/ (- n 20) 10))
-                  (str (nth tens (/ (- n 20) 10)) (nth singles (dec (mod n 10)))))
-      (< n 1000) (if (zero? (mod n 100))
-                   (str (to-words (/ n 100)) "hundred")
-                   (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
-      (= n 1000) "onethousand"))
+        ; concatenate function
+        to-words
+        (fn to-words [n]
+          (cond
+            (< n 20) (nth singles (dec n))
+            (< n 100) (if (zero? (mod n 10))
+                        (nth tens (/ (- n 20) 10))
+                        (str (nth tens (/ (- n 20) 10)) (nth singles (dec (mod n 10)))))
+            (< n 1000) (if (zero? (mod n 100))
+                         (str (to-words (/ n 100)) "hundred")
+                         (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
+            (= n 1000) "onethousand"))]
 
-  ; calculation
-  (->>                                                      ; threading macro
-    (range 1 1001)                                          ; for all numbers 1 to 1000
-    (map to-words)                                          ; map to corresponding string
-    (reduce str)                                            ; concatenate
-    count))                                                 ; count the number of chars
+    ; calculation
+    (->>                                                    ; threading macro
+      (range 1 1001)                                        ; for all numbers 1 to 1000
+      (map to-words)                                        ; map to corresponding string
+      (reduce str)                                          ; concatenate
+      count)))                                              ; count the number of chars
 
 
 ; Problem 18 - Maximum path sum I
@@ -308,30 +311,31 @@
 ; That is, 3 + 7 + 4 + 9 = 23.
 ; Find the maximum total from top to bottom of the triangle below:
 
-(let
-    [triangle
-     [[75]
-      [95 64]
-      [17 47 82]
-      [18 35 87 10]
-      [20 4 82 47 65]
-      [19 1 23 75 3 34]
-      [88 2 77 73 7 63 67]
-      [99 65 4 28 6 16 70 92]
-      [41 41 26 56 83 40 80 70 33]
-      [41 48 72 33 47 32 37 16 94 29]
-      [53 71 44 65 25 43 91 52 97 51 14]
-      [70 11 33 28 77 73 17 78 39 68 17 57]
-      [91 71 52 38 17 14 91 43 58 50 27 29 48]
-      [63 66 4 68 89 53 67 30 73 16 69 87 40 31]
-      [04 62 98 27 23 9 70 98 73 93 38 53 60 4 23]]
+(defn prob-018 []
+  (let
+      [triangle
+       [[75]
+        [95 64]
+        [17 47 82]
+        [18 35 87 10]
+        [20 4 82 47 65]
+        [19 1 23 75 3 34]
+        [88 2 77 73 7 63 67]
+        [99 65 4 28 6 16 70 92]
+        [41 41 26 56 83 40 80 70 33]
+        [41 48 72 33 47 32 37 16 94 29]
+        [53 71 44 65 25 43 91 52 97 51 14]
+        [70 11 33 28 77 73 17 78 39 68 17 57]
+        [91 71 52 38 17 14 91 43 58 50 27 29 48]
+        [63 66 4 68 89 53 67 30 73 16 69 87 40 31]
+        [04 62 98 27 23 9 70 98 73 93 38 53 60 4 23]]
 
-     merge-rows
-     (fn [a b]
-       ; look at the two elements in the row below it,
-       ; take the max of those two elements, and sum them to the original element.
-       (map + (map #(apply max %) (partition 2 1 a)) b))]
-  (reduce merge-rows (reverse triangle)))
+       merge-rows
+       (fn [a b]
+         ; look at the two elements in the row below it,
+         ; take the max of those two elements, and sum them to the original element.
+         (map + (map #(apply max %) (partition 2 1 a)) b))]
+    (first (reduce merge-rows (reverse triangle)))))
 
 
 ; Problem 19 - Counting Sundays
@@ -347,12 +351,13 @@
 ; by hroi
 ; http://clojure-euler.wikispaces.com/Problem+019
 
-(count
-  (for [year (range 1 101) month (range 0 12)
-        :let [day (.getDay (doto (java.util.Date.) (.setYear year)
-                                                   (.setMonth month) (.setDate 1)))]
-        :when (= day 0)]
-    [year, month]))
+(defn prob-019 []
+  (count
+    (for [year (range 1 101) month (range 0 12)
+          :let [day (.getDay (doto (java.util.Date.) (.setYear year)
+                                                     (.setMonth month) (.setDate 1)))]
+          :when (= day 0)]
+      [year, month])))
 
 
 ; Problem 20 - Factorial digit sum
@@ -363,9 +368,10 @@
 ; Find the sum of the digits in the number 100!
 
 ; analogous to Problem 16
-(->>
-  (range (BigInteger. "1") 101)
-  (reduce *)
-  str
-  (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
-  (reduce +))
+(defn prob-020 []
+  (->>
+    (range (BigInteger. "1") 101)
+    (reduce *)
+    str
+    (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
+    (reduce +)))

@@ -21,3 +21,23 @@
 (deftest prob-015-test
   (testing "Problem 15"
     (is (= 137846528820 (prob-015)))))
+
+(deftest prob-016-test
+  (testing "Problem 16"
+    (is (= 1366 (prob-016)))))
+
+(deftest prob-017-test
+  (testing "Problem 17"
+    (is (= 21124 (prob-017)))))
+
+(deftest prob-018-test
+  (testing "Problem 18"
+    (is (= 1074 (prob-018)))))
+
+(deftest prob-019-test
+  (testing "Problem 19"
+    (is (= 171 (prob-019)))))
+
+(deftest prob-020-test
+  (testing "Problem 20"
+    (is (= 648 (prob-020)))))
