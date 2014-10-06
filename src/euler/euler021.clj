@@ -115,21 +115,20 @@
 
 ; compute the nth element in the Fibonacci sequence
 (defn fib                                                   ; overloaded function
-  ([n] (if (= n 0) 0                                        ; with one parameter
-                   (fib n (BigInteger. "0")                 ; using Java's BigInteger
-                        (BigInteger. "1"))))                ; cached version using an accumulator
+  ([n] (if (= n 0) 0 (fib n (BigInteger. "0")               ; using Java's BigInteger
+                          (BigInteger. "1"))))              ; cached version using an accumulator
   ([n p0 p1]                                                ; with three parameters
-   (if (= n 1) p1
-               (fib (- n 1) p1 (+ p0 p1)))))
+   (if (= n 1) p1 (fib (dec n) p1 (+ p0 p1)))))
 
-; count the number of digits
-(defn digits [n]
-  (count (str n)))                                          ; by converting to string
-
-(first                                                      ; get the first element
-  (drop-while                                               ; for which no longer holds
-    (comp #(> 1000 %) digits fib)                           ; that the count of digits
-    (range 1 5000)))                                        ; of the fib seq is below 1000.
+(defn prob-025 []
+  (->>
+    (iterate inc 1)
+    (drop-while
+      (comp
+        #(> 1000 %)
+        #(count (str %))
+        fib))
+    (first)))
 
 
 ; Problem 26 - Reciprocal cycles
