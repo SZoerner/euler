@@ -10,15 +10,15 @@
 ; Evaluate the sum of all the amicable numbers under 10000.
 
 (let
-  [amicable
-   (fn [n]
-     (reduce + (filter #(= 0 (mod n %)) (range 1 (inc (/ n 2))))))
+    [amicable
+     (fn [n]
+       (reduce + (filter #(= 0 (mod n %)) (range 1 (inc (/ n 2))))))
 
-   amicable?
-   (fn [a]
-     (let [b (amicable a)]
-       (if (and (= (amicable b) a) (not (= a b)))
-         [a b] ())))]
+     amicable?
+     (fn [a]
+       (let [b (amicable a)]
+         (if (and (= (amicable b) a) (not (= a b)))
+           [a b] ())))]
 
   (reduce + (distinct (flatten (map amicable? (range 1 10001))))))
 
@@ -32,16 +32,16 @@
 ; What is the total of all the name scores in the file?
 
 (let
-  [input  (sort (re-seq #"\w+" (slurp "http://projecteuler.net/project/names.txt")))
-   ; sum of the numerical representation of each character
-   get-value (fn [name]
-               (->> name
-                    (map int)
-                    (map #(partial (- % 64)))
-                    (reduce +)))
-   ; get the position
-   get-index (fn [name]
-               (inc (.indexOf input name)))]
+    [input (sort (re-seq #"\w+" (slurp "https://projecteuler.net/project/resources/p022_names.txt")))
+     ; sum of the numerical representation of each character
+     get-value (fn [name]
+                 (->> name
+                      (map int)
+                      (map #(partial (- % 64)))
+                      (reduce +)))
+     ; get the position
+     get-index (fn [name]
+                 (inc (.indexOf input name)))]
   ; compute the product of value and position
   (reduce + (map #(* (get-index %) (get-value %)) input)))
 
@@ -60,26 +60,26 @@
 ; Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
 (let
-  ; Number -> List[Numbers] - divisors of n (excluding n)
-  [divisors
-   (fn [n]
-     (filter #(= 0 (mod n %)) (range 1 n)))
+    ; Number -> List[Numbers] - divisors of n (excluding n)
+    [divisors
+     (fn [n]
+       (filter #(= 0 (mod n %)) (range 1 n)))
 
-   ; Number -> Boolean - is n an abundant number?
-   abundant?
-   (fn [n]
-     (< n (reduce + (divisors n))))
+     ; Number -> Boolean - is n an abundant number?
+     abundant?
+     (fn [n]
+       (< n (reduce + (divisors n))))
 
-   ; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
-   sum-of-abundants?
-   (fn [i abundants]
-     (some (fn [a] (abundants (- i a))) abundants))
+     ; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
+     sum-of-abundants?
+     (fn [i abundants]
+       (some (fn [a] (abundants (- i a))) abundants))
 
-   ; List[Numbers] - input numbers from 1 up to 28124
-   input (range 1 (inc 28123))
+     ; List[Numbers] - input numbers from 1 up to 28124
+     input (range 1 (inc 28123))
 
-   ; Set[Numbers] - all abundant numbers up to input
-   abundants (into (sorted-set) (filter abundant? input))]
+     ; Set[Numbers] - all abundant numbers up to input
+     abundants (into (sorted-set) (filter abundant? input))]
 
   ; calculation - sum up all 'non-abundant-sums' up to input
   (reduce + (filter #(not (sum-of-abundants? % abundants)) input)))
@@ -104,7 +104,7 @@
         r (rem pos m)
         e (nth s (quot pos m))]
     (if (= n 1) s
-      (cons e (permute-nth (remove #(= % e) s) r)))))
+                (cons e (permute-nth (remove #(= % e) s) r)))))
 
 (print (str (permute-nth (range 10) (dec 1000000))))
 
@@ -114,22 +114,22 @@
 ; What is the first term in the Fibonacci sequence to contain 1000 digits?
 
 ; compute the nth element in the Fibonacci sequence
-(defn fib                           ; overloaded function
-  ([n] (if (= n 0) 0                ; with one parameter
-         (fib n (BigInteger. "0")   ; using Java's BigInteger
-              (BigInteger. "1"))))  ; cached version using an accumulator
-  ([n p0 p1]                        ; with three parameters
+(defn fib                                                   ; overloaded function
+  ([n] (if (= n 0) 0                                        ; with one parameter
+                   (fib n (BigInteger. "0")                 ; using Java's BigInteger
+                        (BigInteger. "1"))))                ; cached version using an accumulator
+  ([n p0 p1]                                                ; with three parameters
    (if (= n 1) p1
-     (fib (- n 1) p1 (+ p0 p1)))))
+               (fib (- n 1) p1 (+ p0 p1)))))
 
 ; count the number of digits
 (defn digits [n]
-  (count (str n))) ; by converting to string
+  (count (str n)))                                          ; by converting to string
 
-(first                           ; get the first element
- (drop-while                     ; for which no longer holds
-  (comp #(> 1000 %) digits fib)  ; that the count of digits
-  (range 1 5000)))               ; of the fib seq is below 1000.
+(first                                                      ; get the first element
+  (drop-while                                               ; for which no longer holds
+    (comp #(> 1000 %) digits fib)                           ; that the count of digits
+    (range 1 5000)))                                        ; of the fib seq is below 1000.
 
 
 ; Problem 26 - Reciprocal cycles
@@ -151,12 +151,61 @@
   (loop [n n d d acc [] rems #{}]
     (let [div (int (/ n d)) rem (mod n d)]
       (if (= rem 0) ()
-        (if (contains? rems rem)
-          (drop-while #(not (= % (int (/ (* rem 10 ) d))))
-                      (drop 1(conj acc div)))
-          (recur (* rem 10) d
-                 (conj acc div)
-                 (conj rems rem)))))))
+                    (if (contains? rems rem)
+                      (drop-while #(not (= % (int (/ (* rem 10) d))))
+                                  (drop 1 (conj acc div)))
+                      (recur (* rem 10) d
+                             (conj acc div)
+                             (conj rems rem)))))))
 
-       (apply max-key second (map #(conj [] % (count (rec-cycle 1 %)))
-            (take 1000 (iterate dec 1000))))
+(apply max-key second (map #(conj [] % (count (rec-cycle 1 %)))
+                           (take 1000 (iterate dec 1000))))
+
+
+; Problem 27 - Quadratic primes
+; -------------------------------
+; Euler discovered the remarkable quadratic formula:
+;
+; n² + n + 41
+;
+; It turns out that the formula will produce 40 primes for the consecutive values n = 0 to 39. However, when n = 40, 402 + 40 + 41 = 40(40 + 1) + 41 is divisible by 41, and certainly when n = 41, 41² + 41 + 41 is clearly divisible by 41.
+;
+; The incredible formula  n² − 79n + 1601 was discovered, which produces 80 primes for the consecutive values n = 0 to 79. The product of the coefficients, −79 and 1601, is −126479.
+;
+; Considering quadratics of the form:
+;
+; n² + an + b, where |a| < 1000 and |b| < 1000
+;
+; where |n| is the modulus/absolute value of n
+; e.g. |11| = 11 and |−4| = 4
+; Find the product of the coefficients, a and b, for the quadratic expression that produces the maximum number of primes for consecutive values of n, starting with n = 0.
+
+; predicate checking for prime number (using Java's BigInteger)
+(defn- prime-java? [n]
+  (.isProbablePrime (BigInteger/valueOf n) 5))              ; certainty of 5 - 96.875%
+
+(defn prime-gen [a b]
+  "returns a generator of the form: n² + an + b"
+  (fn [n]
+    (+ (* n n) (* a n) b)))
+
+; Validator function
+(defn consec-primes
+  "given a generator function, returns number of consecutive prime numbers generated"
+  [gen]
+  (->>
+    (iterate inc 0)
+    (map gen)
+    (take-while prime-java?)
+    (count)))
+
+(defn prob-027 []
+  "list comprehension to solve the optimisation problem"
+  (let [{:keys [v]}
+        (last (sort-by #(first %)
+                       (for [a (range -999 1000)
+                             b (range -999 1000)
+                             :let [gen (consec-primes (prime-gen a b))]
+                             :when (not (= 0 gen))]
+                         {:k gen :v (* a b)})))]
+     v))
