@@ -2,6 +2,22 @@
   (:require [clojure.test :refer :all]
             [euler.euler021 :refer :all]))
 
+(deftest prob-021-test
+  (testing "Problem 21"
+    (is (= 31626 (prob-021)))))
+
+(deftest prob-022-test
+  (testing "Problem 22"
+    (is (= 871198282 (prob-022)))))
+
+(deftest prob-023-test
+  (testing "Problem 23"
+    (is (= 4179871 (prob-023)))))
+
+(deftest prob-024-test
+  (testing "Problem 24"
+    (is (= '(2 7 8 3 9 1 5 4 6 0) (prob-024)))))
+
 (deftest prob-025-test
   (testing "Problem 25"
     (is (= 4782 (prob-025)))))                                ; n² + n + 41

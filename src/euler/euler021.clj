@@ -9,18 +9,19 @@
 ;
 ; Evaluate the sum of all the amicable numbers under 10000.
 
-(let
-    [amicable
-     (fn [n]
-       (reduce + (filter #(= 0 (mod n %)) (range 1 (inc (/ n 2))))))
+(defn prob-021 []
+  (let
+      [amicable
+       (fn [n]
+         (reduce + (filter #(= 0 (mod n %)) (range 1 (inc (/ n 2))))))
 
-     amicable?
-     (fn [a]
-       (let [b (amicable a)]
-         (if (and (= (amicable b) a) (not (= a b)))
-           [a b] ())))]
+       amicable?
+       (fn [a]
+         (let [b (amicable a)]
+           (if (and (= (amicable b) a) (not (= a b)))
+             [a b] ())))]
 
-  (reduce + (distinct (flatten (map amicable? (range 1 10001))))))
+    (reduce + (distinct (flatten (map amicable? (range 1 10001)))))))
 
 
 ; Problem 22 - Names scores
@@ -31,19 +32,20 @@
 ; So, COLIN would obtain a score of 938 × 53 = 49714.
 ; What is the total of all the name scores in the file?
 
-(let
-    [input (sort (re-seq #"\w+" (slurp "https://projecteuler.net/project/resources/p022_names.txt")))
-     ; sum of the numerical representation of each character
-     get-value (fn [name]
-                 (->> name
-                      (map int)
-                      (map #(partial (- % 64)))
-                      (reduce +)))
-     ; get the position
-     get-index (fn [name]
-                 (inc (.indexOf input name)))]
-  ; compute the product of value and position
-  (reduce + (map #(* (get-index %) (get-value %)) input)))
+(defn prob-022 []
+  (let
+      [input (sort (re-seq #"\w+" (slurp "https://projecteuler.net/project/resources/p022_names.txt")))
+       ; sum of the numerical representation of each character
+       get-value (fn [name]
+                   (->> name
+                        (map int)
+                        (map #(partial (- % 64)))
+                        (reduce +)))
+       ; get the position
+       get-index (fn [name]
+                   (inc (.indexOf input name)))]
+    ; compute the product of value and position
+    (reduce + (map #(* (get-index %) (get-value %)) input))))
 
 
 ; Problem 23 - Non-abundant sums
@@ -59,30 +61,31 @@
 ;
 ; Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
-(let
-    ; Number -> List[Numbers] - divisors of n (excluding n)
-    [divisors
-     (fn [n]
-       (filter #(= 0 (mod n %)) (range 1 n)))
+(defn prob-023 []
+  (let
+      ; Number -> List[Numbers] - divisors of n (excluding n)
+      [divisors
+       (fn [n]
+         (filter #(= 0 (mod n %)) (range 1 n)))
 
-     ; Number -> Boolean - is n an abundant number?
-     abundant?
-     (fn [n]
-       (< n (reduce + (divisors n))))
+       ; Number -> Boolean - is n an abundant number?
+       abundant?
+       (fn [n]
+         (< n (reduce + (divisors n))))
 
-     ; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
-     sum-of-abundants?
-     (fn [i abundants]
-       (some (fn [a] (abundants (- i a))) abundants))
+       ; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
+       sum-of-abundants?
+       (fn [i abundants]
+         (some (fn [a] (abundants (- i a))) abundants))
 
-     ; List[Numbers] - input numbers from 1 up to 28124
-     input (range 1 (inc 28123))
+       ; List[Numbers] - input numbers from 1 up to 28124
+       input (range 1 (inc 28123))
 
-     ; Set[Numbers] - all abundant numbers up to input
-     abundants (into (sorted-set) (filter abundant? input))]
+       ; Set[Numbers] - all abundant numbers up to input
+       abundants (into (sorted-set) (filter abundant? input))]
 
-  ; calculation - sum up all 'non-abundant-sums' up to input
-  (reduce + (filter #(not (sum-of-abundants? % abundants)) input)))
+    ; calculation - sum up all 'non-abundant-sums' up to input
+    (reduce + (filter #(not (sum-of-abundants? % abundants)) input))))
 
 
 ; Problem 24 - Lexicographic permutations
@@ -98,7 +101,7 @@
 ; and then to recur to find the ((i-1) mod n)th permutation of the remaining elements.
 ; To avoid having to subtract by 1 each time, the recursive loop uses 0-based indexing, and is initialized with i-1
 
-(defn permute-nth [s pos]
+(defn- permute-nth [s pos]
   (let [n (count s)
         m (reduce * (range 1 n))
         r (rem pos m)
@@ -106,7 +109,8 @@
     (if (= n 1) s
                 (cons e (permute-nth (remove #(= % e) s) r)))))
 
-(print (str (permute-nth (range 10) (dec 1000000))))
+(defn prob-024 []
+   (permute-nth (range 10) (dec 1000000)))
 
 
 ; Problem 25 - 1000-digit Fibonacci number
@@ -114,7 +118,7 @@
 ; What is the first term in the Fibonacci sequence to contain 1000 digits?
 
 ; compute the nth element in the Fibonacci sequence
-(defn fib                                                   ; overloaded function
+(defn- fib                                                   ; overloaded function
   ([n] (if (= n 0) 0 (fib n (BigInteger. "0")               ; using Java's BigInteger
                           (BigInteger. "1"))))              ; cached version using an accumulator
   ([n p0 p1]                                                ; with three parameters
