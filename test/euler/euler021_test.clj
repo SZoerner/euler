@@ -27,3 +27,9 @@
     (is (= 40 (consec-primes 1 41)))                        ; n² + n + 41
     (is (= 80 (consec-primes -79 1601)))                    ; n² − 79n + 1601
     (is (= -59231 (prob-027)))))                              ; spoiler alert!
+
+(deftest prob-028-test
+  (testing "Problem 28"
+    (is (= 25 (prob-028 3)))
+    (is (= 101 (prob-028 5)))
+    (is (= 669171001 (prob-028 1001)))))

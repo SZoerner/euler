@@ -110,7 +110,7 @@
                 (cons e (permute-nth (remove #(= % e) s) r)))))
 
 (defn prob-024 []
-   (permute-nth (range 10) (dec 1000000)))
+  (permute-nth (range 10) (dec 1000000)))
 
 
 ; Problem 25 - 1000-digit Fibonacci number
@@ -118,7 +118,7 @@
 ; What is the first term in the Fibonacci sequence to contain 1000 digits?
 
 ; compute the nth element in the Fibonacci sequence
-(defn- fib                                                   ; overloaded function
+(defn- fib                                                  ; overloaded function
   ([n] (if (= n 0) 0 (fib n (BigInteger. "0")               ; using Java's BigInteger
                           (BigInteger. "1"))))              ; cached version using an accumulator
   ([n p0 p1]                                                ; with three parameters
@@ -205,3 +205,28 @@
                 [a b (consec-primes a b)])
         [a b _] (reduce #(if (> (nth %1 2) (nth %2 2)) %1 %2) quads)]
     (* a b)))
+
+
+; Problem 28 - Number spiral diagonals
+; -------------------------------
+; Starting with the number 1 and moving to the right in a clockwise direction 
+; a 5 by 5 spiral is formed as follows:
+
+; 21 22 23 24 25
+; 20  7  8  9 10
+; 19  6  1  2 11
+; 18  5  4  3 12
+; 17 16 15 14 13
+
+; It can be verified that the sum of the numbers on the diagonals is 101.
+; What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
+
+(defn prob-028 [n]
+  {:pre [(odd? n)]}                                         ; precondition: spirals can only have an odd length
+  (if (= n 1)                                               ; base case: f(1) = 1
+    1
+    (apply + (cons
+               (prob-028 (- n 2))                           ; recursive case: cons it to the recusive call of f(n -2)
+               (take 4                                      ; take four values per 'ring'
+                     (iterate #(- % (dec n)) (* n n)))))))  ; creating 'ring': from n * n, decrementing in steps of n- 1
+
