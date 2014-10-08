@@ -9,7 +9,7 @@
 ;
 ; Evaluate the sum of all the amicable numbers under 10000.
 
-(defn prob-021 []
+(defn p021 []
   (let
       [amicable
        (fn [n]
@@ -32,7 +32,7 @@
 ; So, COLIN would obtain a score of 938 × 53 = 49714.
 ; What is the total of all the name scores in the file?
 
-(defn prob-022 []
+(defn p022 []
   (let
       [input (sort (re-seq #"\w+" (slurp "https://projecteuler.net/project/resources/p022_names.txt")))
        ; sum of the numerical representation of each character
@@ -61,7 +61,7 @@
 ;
 ; Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
-(defn prob-023 []
+(defn p023 []
   (let
       ; Number -> List[Numbers] - divisors of n (excluding n)
       [divisors
@@ -109,7 +109,7 @@
     (if (= n 1) s
                 (cons e (permute-nth (remove #(= % e) s) r)))))
 
-(defn prob-024 []
+(defn p024 []
   (permute-nth (range 10) (dec 1000000)))
 
 
@@ -124,7 +124,7 @@
   ([n p0 p1]                                                ; with three parameters
    (if (= n 1) p1 (fib (dec n) p1 (+ p0 p1)))))
 
-(defn prob-025 []
+(defn p025 []
   (->>
     (iterate inc 1)
     (drop-while
@@ -160,7 +160,7 @@
                       (recur (* rem 10) d
                              (conj acc div)
                              (conj rems rem)))))))
-(defn prob-026 []
+(defn p026 []
   (apply max-key second (map #(conj [] % (count (rec-cycle 1 %)))
                              (take 1000 (iterate dec 1000)))))
 
@@ -197,7 +197,7 @@
     (take-while #(and (> % 0) (prime-java? %)))             ; filter as long as primes are generated
     (count)))                                               ; count # of primes
 
-(defn prob-027 []
+(defn p027 []
   "list comprehension for finding the max prime generator"
   (let [nums (range -999 1000)
         quads (for [a nums                                  ; all quadratic prime generators
@@ -221,12 +221,12 @@
 ; It can be verified that the sum of the numbers on the diagonals is 101.
 ; What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
 
-(defn prob-028 [n]
+(defn p028 [n]
   {:pre [(odd? n)]}                                         ; precondition: spirals can only have an odd length
   (if (= n 1)                                               ; base case: f(1) = 1
     1
     (apply + (cons
-               (prob-028 (- n 2))                           ; recursive case: cons it to the recusive call of f(n -2)
+               (p028 (- n 2))                           ; recursive case: cons it to the recusive call of f(n -2)
                (take 4                                      ; take four values per 'ring'
                      (iterate #(- % (dec n)) (* n n)))))))  ; creating 'ring': from n * n, decrementing in steps of n- 1
 

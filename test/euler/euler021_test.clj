@@ -2,34 +2,34 @@
   (:require [clojure.test :refer :all]
             [euler.euler021 :refer :all]))
 
-(deftest prob-021-test
+(deftest p021-test
   (testing "Problem 21"
-    (is (= 31626 (prob-021)))))
+    (is (= 31626 (p021)))))
 
-(deftest prob-022-test
+(deftest p022-test
   (testing "Problem 22"
-    (is (= 871198282 (prob-022)))))
+    (is (= 871198282 (p022)))))
 
-(deftest prob-023-test
+(deftest p023-test
   (testing "Problem 23"
-    (is (= 4179871 (prob-023)))))
+    (is (= 4179871 (p023)))))
 
-(deftest prob-024-test
+(deftest p024-test
   (testing "Problem 24"
-    (is (= '(2 7 8 3 9 1 5 4 6 0) (prob-024)))))
+    (is (= '(2 7 8 3 9 1 5 4 6 0) (p024)))))
 
-(deftest prob-025-test
+(deftest p025-test
   (testing "Problem 25"
-    (is (= 4782 (prob-025)))))                                ; n² + n + 41
+    (is (= 4782 (p025)))))                                ; n² + n + 41
 
-(deftest prob-027-test
+(deftest p027-test
   (testing "Problem 27"
     (is (= 40 (consec-primes 1 41)))                        ; n² + n + 41
     (is (= 80 (consec-primes -79 1601)))                    ; n² − 79n + 1601
-    (is (= -59231 (prob-027)))))                              ; spoiler alert!
+    (is (= -59231 (p027)))))                              ; spoiler alert!
 
-(deftest prob-028-test
+(deftest p028-test
   (testing "Problem 28"
-    (is (= 25 (prob-028 3)))
-    (is (= 101 (prob-028 5)))
-    (is (= 669171001 (prob-028 1001)))))
+    (is (= 25 (p028 3)))
+    (is (= 101 (p028 5)))
+    (is (= 669171001 (p028 1001)))))

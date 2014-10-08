@@ -5,36 +5,36 @@
             [clojure.test.check.clojure-test :as ct :refer (defspec)]
             [euler.euler001 :refer :all]))
 
-(defspec prob-002-quickcheck ; the name of the test
+(defspec p002-quickcheck ; the name of the test
   100 ; the number of iterations for test.check to test
   (prop/for-all [n gen/nat]
-                (even? (prob-002 n)))) ; always returns an even result
+                (even? (p002 n)))) ; always returns an even result
 
-(defspec prob-002-lazy-quickcheck
+(defspec p002-lazy-quickcheck
   100
   (prop/for-all [n gen/nat]
-                (= (prob-002 n) (prob-002-lazy n)))) ; both algorithms return the same results
+                (= (p002 n) (p002-lazy n)))) ; both algorithms return the same results
 
-(defspec prob-003-lazy-quickcheck
+(defspec p003-lazy-quickcheck
   100
   (prop/for-all [n (gen/such-that #(> % 1) gen/nat)]
-                (= (prob-003 n) (prob-003-lazy n)))) ; both algorithms return the same results
+                (= (p003 n) (p003-lazy n)))) ; both algorithms return the same results
 
-(defspec prob-004-quickcheck
+(defspec p004-quickcheck
   100 
   (prop/for-all [n (gen/such-that #(> % 1) gen/nat)]
-                (let [res (str (prob-004 n))]
+                (let [res (str (p004 n))]
                   (= res (apply str (reverse res)))))) ; each returned value is indeed a palindrome
 
-(defspec prob-005-quickcheck
+(defspec p005-quickcheck
   100
   (prop/for-all [n (gen/elements (vec (range 23)))]
-                (let [res (prob-005 n)
+                (let [res (p005 n)
                       nums (range 2 (+ 1 n))
                       div-by? (fn [x] (= 0 (rem res x)))]
                   (every? div-by? nums))))
 
-(defspec prob-009-quickcheck
+(defspec p009-quickcheck
   100
   (let [triplets ;; all Pythagorean triplets up to 300
         '((3 4 5 ) (5 12 13) (8 15 17) (7 24 25) (140 171 221)
@@ -56,4 +56,4 @@
           ; (161 240 289) -> duplicate of '(115 276 299)
           )]
     (prop/for-all [[a b c] (gen/elements triplets)]
-                  (= (* a b c) (prob-009 (+ a b c))))))
+                  (= (* a b c) (p009 (+ a b c))))))

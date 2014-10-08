@@ -7,7 +7,7 @@
 ; What is the greatest product of four adjacent numbers in the same direction
 ; - up, down, left, right, or diagonally - in the 20x20 grid?
 
-(defn prob-011 []
+(defn p011 []
   (let [input-str
         ; reference the input matrix as a local variable
         "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
@@ -58,7 +58,7 @@
 ; ------------------------------------------------
 ; What is the value of the first triangle number to have over five hundred divisors?
 
-(defn prob-012 []
+(defn p012 []
   (let [triangle (fn [n]                                    ; computes the nth triangle number
                    (reduce + (range (inc n))))
 
@@ -84,7 +84,7 @@
 
 ; type: Vec[Int] -> Int
 ; sum up
-(defn prob-013 []
+(defn p013 []
   (long (reduce +
                 ; each of the first eleven digits
                 (map #(Math/floor (/ % (Math/pow 10 39)))
@@ -202,7 +202,7 @@
 ; Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
 ; Which starting number, under one million, produces the longest chain?
 
-(defn prob-014 []
+(defn p014 []
   (let [next-collatz
         (fn [num]
           ; calculate the next iteration
@@ -236,7 +236,7 @@
 ; Binomial[2n, n] or (2n)!/(n!)^2,
 ; central meaning they fall along the center line of Pascal’s triangle.
 
-(defn prob-015 []
+(defn p015 []
   (let [factorial
         (fn [n]
           ; multiply all natural numbers from 1 to n+1
@@ -257,7 +257,7 @@
 ; 2^15 = 32768 and the sum of its digits is 3 + 2 + 7 + 6 + 8 = 26.
 ; What is the sum of the digits of the number 2^1000?
 
-(defn prob-016 []
+(defn p016 []
   (->> (.pow (BigInteger. "2") 1000)
        str
        (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
@@ -271,7 +271,7 @@
 ; NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters.
 ; The use of "and" when writing out numbers is in compliance with British usage.
 
-(defn prob-017 []
+(defn p017 []
   ; string maps
   (let [singles
         ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve"
@@ -311,7 +311,7 @@
 ; That is, 3 + 7 + 4 + 9 = 23.
 ; Find the maximum total from top to bottom of the triangle below:
 
-(defn prob-018 []
+(defn p018 []
   (let
       [triangle
        [[75]
@@ -351,7 +351,7 @@
 ; by hroi
 ; http://clojure-euler.wikispaces.com/Problem+019
 
-(defn prob-019 []
+(defn p019 []
   (count
     (for [year (range 1 101) month (range 0 12)
           :let [day (.getDay (doto (java.util.Date.) (.setYear year)
@@ -368,7 +368,7 @@
 ; Find the sum of the digits in the number 100!
 
 ; analogous to Problem 16
-(defn prob-020 []
+(defn p020 []
   (->>
     (range (BigInteger. "1") 101)
     (reduce *)
