@@ -38,3 +38,8 @@
   (testing "Problem 29"
     (is (= 15 (p029 5)))
     (is (= 9183 (p029 100)))))
+
+(deftest p030-test
+  (testing "Problem 30"
+    (is (= 19316 (p030 4)))
+    (is (= 443839 (p030 5)))))
