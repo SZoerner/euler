@@ -13,12 +13,12 @@
   (let
       [amicable
        (fn [n]
-         (reduce + (filter #(= 0 (mod n %)) (range 1 (inc (/ n 2))))))
+         (reduce + (filter #(zero? (mod n %)) (range 1 (inc (/ n 2))))))
 
        amicable?
        (fn [a]
          (let [b (amicable a)]
-           (if (and (= (amicable b) a) (not (= a b)))
+           (if (and (= (amicable b) a) (not= a b))
              [a b] ())))]
 
     (reduce + (distinct (flatten (map amicable? (range 1 10001)))))))
@@ -66,7 +66,7 @@
       ; Number -> List[Numbers] - divisors of n (excluding n)
       [divisors
        (fn [n]
-         (filter #(= 0 (mod n %)) (range 1 n)))
+         (filter #(zero? (mod n %)) (range 1 n)))
 
        ; Number -> Boolean - is n an abundant number?
        abundant?
@@ -119,7 +119,7 @@
 
 ; compute the nth element in the Fibonacci sequence
 (defn- fib                                                  ; overloaded function
-  ([n] (if (= n 0) 0 (fib n (BigInteger. "0")               ; using Java's BigInteger
+  ([n] (if (zero? n) 0 (fib n (BigInteger. "0")               ; using Java's BigInteger
                           (BigInteger. "1"))))              ; cached version using an accumulator
   ([n p0 p1]                                                ; with three parameters
    (if (= n 1) p1 (fib (dec n) p1 (+ p0 p1)))))
@@ -153,15 +153,15 @@
 (defn rec-cycle [n d]
   (loop [n n d d acc [] rems #{}]
     (let [div (int (/ n d)) rem (mod n d)]
-      (if (= rem 0) ()
+      (if (zero? rem) ()
                     (if (contains? rems rem)
-                      (drop-while #(not (= % (int (/ (* rem 10) d))))
+                      (drop-while #(not= % (int (/ (* rem 10) d)))
                                   (drop 1 (conj acc div)))
                       (recur (* rem 10) d
                              (conj acc div)
                              (conj rems rem)))))))
 (defn p026 []
-  (apply max-key second (map #(conj [] % (count (rec-cycle 1 %)))
+  (apply max-key second (map #(vector % (count (rec-cycle 1 %)))
                              (take 1000 (iterate dec 1000)))))
 
 
@@ -194,7 +194,7 @@
   (->>
     (iterate inc 0)
     (map #(+ (* (+ % a) %) b))                              ; returns a generator of the form: n² + an + b
-    (take-while #(and (> % 0) (prime-java? %)))             ; filter as long as primes are generated
+    (take-while #(and (pos? %) (prime-java? %)))            ; filter as long as primes are generated
     (count)))                                               ; count # of primes
 
 (defn p027 []
@@ -293,9 +293,9 @@
 (defn p031 [n]
   (let [step
         (fn step [n coins]
-          (cond (= n 0) 1                                   ; valid combination
-                (< n 0) 0                                   ; no valid combination
-                :else (if (< n (first coins))               ; first item is bigger than n
+          (cond (zero? n) 1                                   ; valid combination
+                (neg? n) 0                                    ; no valid combination
+                :else (if (< n (first coins))                 ; first item is bigger than n
                         (step n (rest coins))
                         (reduce + (map #(step n %) coins)))))]
     (step n '(200 100 50 20 10 5 2 1))))

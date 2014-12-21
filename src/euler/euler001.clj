@@ -9,8 +9,8 @@
 (defn p001 [n]
   (->>
     (range n)                                               ; for all numbers below n
-    (filter #(or (= 0 (mod % 3))
-                 (= 0 (mod % 5))))                          ; filter the multiples of 3 or 5
+    (filter #(or (zero? (mod % 3))
+                 (zero? (mod % 5))))                          ; filter the multiples of 3 or 5
     (reduce +)))                                            ; reduce the resulting list by adding up each element
 
 ; calculation

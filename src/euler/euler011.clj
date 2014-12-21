@@ -211,7 +211,7 @@
 
         map-collatz                                         ; lazily retrieving the sequence up to (excluding) 1
         (fn [n]                                             ; and return a the number of elements
-          {n (count (take-while #(not (= 1 %))
+          {n (count (take-while #(not= 1 %)
                                 (iterate next-collatz n)))})]
 
     ; calculation
@@ -356,7 +356,7 @@
     (for [year (range 1 101) month (range 0 12)
           :let [day (.getDay (doto (java.util.Date.) (.setYear year)
                                                      (.setMonth month) (.setDate 1)))]
-          :when (= day 0)]
+          :when (zero? day)]
       [year, month])))
 
 
