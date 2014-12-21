@@ -197,7 +197,7 @@
     (take-while #(and (pos? %) (prime-java? %)))            ; filter as long as primes are generated
     (count)))                                               ; count # of primes
 
-(defn p027 
+(defn p027
   "list comprehension for finding the max prime generator"
   []
   (let [nums (range -999 1000)
@@ -210,7 +210,7 @@
 
 ; Problem 28 - Number spiral diagonals
 ; -------------------------------
-; Starting with the number 1 and moving to the right in a clockwise direction 
+; Starting with the number 1 and moving to the right in a clockwise direction
 ; a 5 by 5 spiral is formed as follows:
 
 ; 21 22 23 24 25

@@ -3,14 +3,14 @@
 ; Problem 1 - Multiples of 3 and 5
 ; -----------------------------------
 ; If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
-; 
+;
 ; **Task**: Find the sum of all the multiples of 3 or 5 below 1000.
 
 (defn p001 [n]
   (->>
     (range n)                                               ; for all numbers below n
     (filter #(or (zero? (mod % 3))
-                 (zero? (mod % 5))))                          ; filter the multiples of 3 or 5
+                 (zero? (mod % 5))))                        ; filter the multiples of 3 or 5
     (reduce +)))                                            ; reduce the resulting list by adding up each element
 
 ; calculation
@@ -28,12 +28,12 @@
 ; - base case: ``fib(n <= 1) = n``
 ; - rec case: ``fib (n > 1) = fib(n - 1) + fib(n - 2)``
 
-(defn fib                                                   ; ; cached version using an accumulator
+(defn fib                                                   ; cached version using an accumulator
   "computes the nth element in the Fibonacci sequence"      ; overloaded function
   ([n]
    (if (zero? n)
      0N
-     (fib n 0N 1N)))                      ; with one parameter
+     (fib n 0N 1N)))                                        ; with one parameter
 
   ([n p0 p1]                                                ; with three parameters
    (if (= n 1N)
@@ -78,8 +78,8 @@
 ; What is the largest prime factor of the number 600851475143 ?
 
 ; predicate checking whether num is divisible by div
-(defn factor? [num div]
-  (zero? (rem num div)))
+(defn factor? [a b]
+  (zero? (rem a b)))
 
 ; returns a list of factors
 (defn factors [n]
@@ -184,6 +184,11 @@
 (defn p006 [n]
   (int (- (Math/pow (reduce + (range (inc n))) 2)
           (reduce + (map #(Math/pow % 2) (range (inc n)))))))
+
+(defn p006 [n]
+  (let [nums (range (inc n))]
+    (int (- (Math/pow (reduce + nums) 2)
+            (reduce + (map #(Math/pow % 2) nums))))))
 
 ; calculation
 ; (p006 100)

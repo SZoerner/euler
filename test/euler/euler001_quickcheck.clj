@@ -21,7 +21,7 @@
                 (= (p003 n) (p003-lazy n)))) ; both algorithms return the same results
 
 (defspec p004-quickcheck
-  100 
+  100
   (prop/for-all [n (gen/such-that #(> % 1) gen/nat)]
                 (let [res (str (p004 n))]
                   (= res (apply str (reverse res)))))) ; each returned value is indeed a palindrome
