@@ -39,7 +39,7 @@
        get-value (fn [name]
                    (->> name
                         (map int)
-                        (map #(partial (- % 64)))
+                        (map #(- % 64))
                         (reduce +)))
        ; get the position
        get-index (fn [name]
@@ -197,8 +197,9 @@
     (take-while #(and (pos? %) (prime-java? %)))            ; filter as long as primes are generated
     (count)))                                               ; count # of primes
 
-(defn p027 []
+(defn p027 
   "list comprehension for finding the max prime generator"
+  []
   (let [nums (range -999 1000)
         quads (for [a nums                                  ; all quadratic prime generators
                     b nums]                                 ; between -999 and 999
