@@ -8,8 +8,10 @@ My Project Euler solutions, written in Clojure
 
 ## Testing
 
-This project uses example-based testing (with clojure.test) as well as property-based testing (using clojure.test.check).
+This project runs example-based tests (using [Midje](https://github.com/marick/Midje)) as well as property-based testing (using [clojure.test.check](https://github.com/clojure/test.check)).
+For compatibility with [Cloverage](https://github.com/lshift/cloverage) tests are wrapped in ``deftest`` blocks.
 
-- To exeute only unit tests, run ``lein test test/euler/euler*_test.clj``.
-- To run the generative tests, run ``lein test test/euler/euler*_quickcheck.clj``.
-
+## Inspiration
+- [guillaume-nargeot/project-euler-clojure](https://github.com/guillaume-nargeot/project-euler-clojure)
+- [Clojure Code Quality Tools](http://blog.mattgauger.com/blog/2014/09/15/clojure-code-quality-tools/)
+- [Adding Coveralls Test Coverage](http://blog.bfontaine.net/2014/02/15/using-coveralls-with-clojure/)
