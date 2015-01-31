@@ -5,7 +5,7 @@
 [![Build
 Status](https://travis-ci.org/SZoerner/euler.svg?branch=master)](https://travis-ci.org/SZoerner/euler)
 [![Coverage Status](https://img.shields.io/coveralls/SZoerner/euler.svg)](https://coveralls.io/r/SZoerner/euler)
-[![Dependency Status](https://www.versioneye.com/user/projects/54cd10ddde7924f81a0003c1/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54cd10ddde7924f81a0003c1)
+[![Dependencies Status](http://jarkeeper.com/szoerner/euler/status.svg)](http://jarkeeper.com/szoerner/euler)
 
 My Project Euler solutions, written in Clojure
 
