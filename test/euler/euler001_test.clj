@@ -1,6 +1,5 @@
 (ns euler.euler001-test
-  (:require [clojure.test :refer :all]
-            [euler.euler001 :refer :all])
+  (:require [euler.euler001 :refer :all])
   (:use midje.sweet))
 
 (fact "Problem 1"

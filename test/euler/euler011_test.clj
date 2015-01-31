@@ -1,43 +1,33 @@
 (ns euler.euler011-test
-  (:require [clojure.test :refer :all]
-            [euler.euler011 :refer :all]))
+  (:require [euler.euler011 :refer :all])
+  (:use midje.sweet))
 
-(deftest p011-test
-  (testing "Problem 11"
-    (is (= 70600674 (p011)))))
+(fact "Problem 11"
+    (p011) => 70600674)
 
-(deftest p012-test
-  (testing "Problem 12"
-    (is (= 76576500 (p012)))))
+(fact "Problem 12"
+    (p012) => 76576500)
 
-(deftest p013-test
-  (testing "Problem 13"
-    (is (= 5537376230342 (p013)))))
+(fact "Problem 13"
+    (p013) => 5537376230342)
 
-(deftest p014-test
-  (testing "Problem 14"
-    (is (= 837799 (p014)))))
+(fact "Problem 14"
+    (p014) => 837799)
 
-(deftest p015-test
-  (testing "Problem 15"
-    (is (= 137846528820 (p015)))))
+(fact "Problem 15"
+    (p015) => 137846528820)
 
-(deftest p016-test
-  (testing "Problem 16"
-    (is (= 1366 (p016)))))
+(fact "Problem 16"
+    (p016) => 1366)
 
-(deftest p017-test
-  (testing "Problem 17"
-    (is (= 21124 (p017)))))
+(fact "Problem 17"
+    (p017) => 21124)
 
-(deftest p018-test
-  (testing "Problem 18"
-    (is (= 1074 (p018)))))
+(fact "Problem 18"
+    (p018) => 1074)
 
-(deftest p019-test
-  (testing "Problem 19"
-    (is (= 171 (p019)))))
+(fact "Problem 19"
+    (p019) => 171)
 
-(deftest p020-test
-  (testing "Problem 20"
-    (is (= 648 (p020)))))
+(fact "Problem 20"
+    (p020) => 648)
