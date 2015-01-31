@@ -3,7 +3,8 @@
             [clojure.test.check.generators :as gen]
             [clojure.test.check.properties :as prop]
             [euler.core-test :refer :all]
-            [euler.euler001 :refer :all]))
+            [euler.euler001 :refer :all])
+  (:use midje.sweet))
 
 (fact-qc "always returns an even result"
         [n gen/nat]
