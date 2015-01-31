@@ -16,6 +16,6 @@ Test coverage ist tracked via [Cloverage](https://github.com/lshift/cloverage) (
 Dependencies are checked for updates with [VersionEye](https://www.versioneye.com/).
 
 ## Inspiration
-- [guillaume-nargeot/project-euler-clojure](https://github.com/guillaume-nargeot/project-euler-clojure)
+
 - [Clojure Code Quality Tools](http://blog.mattgauger.com/blog/2014/09/15/clojure-code-quality-tools/)
 - [Adding Coveralls Test Coverage](http://blog.bfontaine.net/2014/02/15/using-coveralls-with-clojure/)
