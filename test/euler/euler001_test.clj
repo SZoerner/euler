@@ -1,7 +1,9 @@
 (ns euler.euler001-test
-  (:require [euler.euler001 :refer :all])
+  (:require [clojure.test :refer [deftest]]
+            [euler.euler001 :refer :all])
   (:use midje.sweet))
 
+(deftest tests
 (fact "Problem 1"
     (p001 5) => 3 
     (p001 10) => 23
@@ -49,3 +51,4 @@
 (fact "Problem 10"
     (p010 10) => 17
     (p010 2000000) => 142913828922)
+)

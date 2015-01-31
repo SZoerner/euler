@@ -1,11 +1,11 @@
 (ns euler.euler001-quickcheck
-  (:require [clojure.test.check :as tc]
+  (:require [clojure.test :refer [deftest]]
             [clojure.test.check.generators :as gen]
-            [clojure.test.check.properties :as prop]
             [euler.core-test :refer :all]
             [euler.euler001 :refer :all])
   (:use midje.sweet))
 
+(deftest tests-qc
 (fact-qc "always returns an even result"
         [n gen/nat]
         (p002 n) => even?)
@@ -22,7 +22,7 @@
          [n (gen/such-that #(> % 1) gen/nat)]
          (let [res (str (p004 n))]
           res => (apply str (reverse res))))
-
+)
 ; (fact-qc "p005-quickcheck"
 ;          [n (gen/elements (vec (range 2 23)))] ; input: numbers
 ;           (let [res (p005 n)                  ; result: smallest common multiple
