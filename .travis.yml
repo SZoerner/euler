@@ -1,4 +1,5 @@
 language: clojure
-script: lein midje
-# after_script:
-# - bash -ex test/coveralls.sh
+lein: lein2
+script: lein2 midje
+after_script:
+  - bash -ex test/coveralls.sh
