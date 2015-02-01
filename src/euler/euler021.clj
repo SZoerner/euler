@@ -11,15 +11,15 @@
 
 (defn p021 []
   (let
-      [amicable
-       (fn [n]
-         (reduce + (filter #(zero? (mod n %)) (range 1 (inc (/ n 2))))))
+    [amicable
+     (fn [n]
+       (reduce + (filter #(zero? (mod n %)) (range 1 (inc (/ n 2))))))
 
-       amicable?
-       (fn [a]
-         (let [b (amicable a)]
-           (if (and (= (amicable b) a) (not= a b))
-             [a b] ())))]
+     amicable?
+     (fn [a]
+       (let [b (amicable a)]
+         (if (and (= (amicable b) a) (not= a b))
+           [a b] ())))]
 
     (reduce + (distinct (flatten (map amicable? (range 1 10001)))))))
 
@@ -34,16 +34,16 @@
 
 (defn p022 []
   (let
-      [input (sort (re-seq #"\w+" (slurp "resources/p022_names.txt")))
-       ; sum of the numerical representation of each character
-       get-value (fn [name]
-                   (->> name
-                        (map int)
-                        (map #(- % 64))
-                        (reduce +)))
-       ; get the position
-       get-index (fn [name]
-                   (inc (.indexOf input name)))]
+    [input (sort (re-seq #"\w+" (slurp "resources/p022_names.txt")))
+     ; sum of the numerical representation of each character
+     get-value (fn [name]
+                 (->> name
+                      (map int)
+                      (map #(- % 64))
+                      (reduce +)))
+     ; get the position
+     get-index (fn [name]
+                 (inc (.indexOf input name)))]
     ; compute the product of value and position
     (reduce + (map #(* (get-index %) (get-value %)) input))))
 
@@ -63,26 +63,26 @@
 
 (defn p023 []
   (let
-      ; Number -> List[Numbers] - divisors of n (excluding n)
-      [divisors
-       (fn [n]
-         (filter #(zero? (mod n %)) (range 1 n)))
+    ; Number -> List[Numbers] - divisors of n (excluding n)
+    [divisors
+     (fn [n]
+       (filter #(zero? (mod n %)) (range 1 n)))
 
-       ; Number -> Boolean - is n an abundant number?
-       abundant?
-       (fn [n]
-         (< n (reduce + (divisors n))))
+     ; Number -> Boolean - is n an abundant number?
+     abundant?
+     (fn [n]
+       (< n (reduce + (divisors n))))
 
-       ; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
-       sum-of-abundants?
-       (fn [i abundants]
-         (some (fn [a] (abundants (- i a))) abundants))
+     ; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
+     sum-of-abundants?
+     (fn [i abundants]
+       (some (fn [a] (abundants (- i a))) abundants))
 
-       ; List[Numbers] - input numbers from 1 up to 28124
-       input (range 1 (inc 28123))
+     ; List[Numbers] - input numbers from 1 up to 28124
+     input (range 1 (inc 28123))
 
-       ; Set[Numbers] - all abundant numbers up to input
-       abundants (into (sorted-set) (filter abundant? input))]
+     ; Set[Numbers] - all abundant numbers up to input
+     abundants (into (sorted-set) (filter abundant? input))]
 
     ; calculation - sum up all 'non-abundant-sums' up to input
     (reduce + (filter #(not (sum-of-abundants? % abundants)) input))))
@@ -119,10 +119,10 @@
 
 ; compute the nth element in the Fibonacci sequence
 (defn- fib                                                  ; overloaded function
-  ([n] (if (zero? n) 0 (fib n (BigInteger. "0")               ; using Java's BigInteger
-                          (BigInteger. "1"))))              ; cached version using an accumulator
+  ([n] (if (zero? n) 0 (fib n (BigInteger. "0")             ; using Java's BigInteger
+                            (BigInteger. "1"))))            ; cached version using an accumulator
   ([n p0 p1]                                                ; with three parameters
-   (if (= n 1) p1 (fib (dec n) p1 (+ p0 p1)))))
+    (if (= n 1) p1 (fib (dec n) p1 (+ p0 p1)))))
 
 (defn p025 []
   (->>
@@ -154,12 +154,12 @@
   (loop [n n d d acc [] rems #{}]
     (let [div (int (/ n d)) rem (mod n d)]
       (if (zero? rem) ()
-                    (if (contains? rems rem)
-                      (drop-while #(not= % (int (/ (* rem 10) d)))
-                                  (drop 1 (conj acc div)))
-                      (recur (* rem 10) d
-                             (conj acc div)
-                             (conj rems rem)))))))
+                      (if (contains? rems rem)
+                        (drop-while #(not= % (int (/ (* rem 10) d)))
+                                    (drop 1 (conj acc div)))
+                        (recur (* rem 10) d
+                               (conj acc div)
+                               (conj rems rem)))))))
 (defn p026 []
   (apply max-key second (map #(vector % (count (rec-cycle 1 %)))
                              (take 1000 (iterate dec 1000)))))
@@ -294,9 +294,9 @@
 (defn p031 [n]
   (let [step
         (fn step [n coins]
-          (cond (zero? n) 1                                   ; valid combination
-                (neg? n) 0                                    ; no valid combination
-                :else (if (< n (first coins))                 ; first item is bigger than n
+          (cond (zero? n) 1                                 ; valid combination
+                (neg? n) 0                                  ; no valid combination
+                :else (if (< n (first coins))               ; first item is bigger than n
                         (step n (rest coins))
                         (reduce + (map #(step n %) coins)))))]
     (step n '(200 100 50 20 10 5 2 1))))

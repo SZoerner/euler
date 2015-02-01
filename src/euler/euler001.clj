@@ -7,13 +7,13 @@
 ; **Task**: Find the sum of all the multiples of 3 or 5 below 1000.
 
 (defn p001
-([] (p001 1000 3 5)) 
-([n & d]
-  (->>
-    (range n)                                               ; for all numbers below n
-    (filter (fn [i] 
-              (when (some #(zero? (mod i %)) d) i)))                        ; filter the multiples of 3 or 5
-    (reduce +))))                                            ; reduce the resulting list by adding up each element
+  ([] (p001 1000 3 5))
+  ([n & d]
+    (->>
+      (range n)                                             ; for all numbers below n
+      (filter (fn [i]
+                (when (some #(zero? (mod i %)) d) i)))      ; filter the multiples of 3 or 5
+      (reduce +))))                                         ; reduce the resulting list by adding up each element
 
 ; calculation
 ; (p001 1000)
@@ -33,14 +33,14 @@
 (defn fib                                                   ; cached version using an accumulator
   "computes the nth element in the Fibonacci sequence"      ; overloaded function
   ([n]
-   (if (zero? n)
-     0N
-     (fib n 0N 1N)))                                        ; with one parameter
+    (if (zero? n)
+      0N
+      (fib n 0N 1N)))                                       ; with one parameter
 
   ([n p0 p1]                                                ; with three parameters
-   (if (= n 1N)
-     p1
-     (fib (dec n) p1 (+ p0 p1)))))
+    (if (= n 1N)
+      p1
+      (fib (dec n) p1 (+ p0 p1)))))
 
 
 ; getting all even fib numbers below 4.000.000
@@ -102,13 +102,13 @@
 ; iterative approach
 (defn get-primes
   ([n]                                                      ; entry point - one parameter
-   (get-primes n 2 '()))                                    ; start with 2 and empty list
+    (get-primes n 2 '()))                                   ; start with 2 and empty list
   ([n p primes]                                             ; overloaded function
-   (cond
-     (< n p) primes                                         ; no more factors - stop iteration
-     (and (factor? n p) (prime? p))                         ; if factor and prime (fun fact: 10x speedup changing the order)
-     (get-primes (/ n p) p (conj primes p))                 ; add to set of prime factors
-     :else (get-primes n (inc p) primes))))                 ; no match - next iteration
+    (cond
+      (< n p) primes                                        ; no more factors - stop iteration
+      (and (factor? n p) (prime? p))                        ; if factor and prime (fun fact: 10x speedup changing the order)
+      (get-primes (/ n p) p (conj primes p))                ; add to set of prime factors
+      :else (get-primes n (inc p) primes))))                ; no match - next iteration
 
 (defn p003 [n]
   (apply max (get-primes n)))

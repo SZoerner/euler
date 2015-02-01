@@ -6,23 +6,23 @@
   (:use midje.sweet))
 
 (deftest tests-qc
-(fact-qc "always returns an even result"
-        [n gen/nat]
-        (p002 n) => even?)
+  (fact-qc "always returns an even result"
+           [n gen/nat]
+           (p002 n) => even?)
 
-(fact-qc "both algorithms return the same results"
-         [n gen/nat]
-         (p002-lazy n) => (p002 n))
+  (fact-qc "both algorithms return the same results"
+           [n gen/nat]
+           (p002-lazy n) => (p002 n))
 
-(fact-qc "both algorithms return the same results"
-         [n (gen/such-that #(> % 1) gen/nat)]
-         (p003-lazy n) => (p003 n))
+  (fact-qc "both algorithms return the same results"
+           [n (gen/such-that #(> % 1) gen/nat)]
+           (p003-lazy n) => (p003 n))
 
-(fact-qc "each returned value is indeed a palindrome"
-         [n (gen/such-that #(> % 1) gen/nat)]
-         (let [res (str (p004 n))]
-          res => (apply str (reverse res))))
-)
+  (fact-qc "each returned value is indeed a palindrome"
+           [n (gen/such-that #(> % 1) gen/nat)]
+           (let [res (str (p004 n))]
+             res => (apply str (reverse res))))
+  )
 ; (fact-qc "p005-quickcheck"
 ;          [n (gen/elements (vec (range 2 23)))] ; input: numbers
 ;           (let [res (p005 n)                  ; result: smallest common multiple
