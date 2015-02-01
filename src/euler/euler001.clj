@@ -6,12 +6,14 @@
 ;
 ; **Task**: Find the sum of all the multiples of 3 or 5 below 1000.
 
-(defn p001 [n]
+(defn p001
+([] (p001 1000 3 5)) 
+([n & d]
   (->>
     (range n)                                               ; for all numbers below n
-    (filter #(or (zero? (mod % 3))
-                 (zero? (mod % 5))))                        ; filter the multiples of 3 or 5
-    (reduce +)))                                            ; reduce the resulting list by adding up each element
+    (filter (fn [i] 
+              (when (some #(zero? (mod i %)) d) i)))                        ; filter the multiples of 3 or 5
+    (reduce +))))                                            ; reduce the resulting list by adding up each element
 
 ; calculation
 ; (p001 1000)
