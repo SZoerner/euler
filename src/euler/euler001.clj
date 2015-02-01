@@ -6,14 +6,24 @@
 ;
 ; **Task**: Find the sum of all the multiples of 3 or 5 below 1000.
 
+(defn divides-by?
+  "Does the divisor evenly divide the dividend?"
+  [dividend divisor]
+  (zero? (mod dividend divisor)))
+
+(defn divides-by-any
+  "Returns a predicate that tests whether its argument can be 
+   evenly divided by any of nums."
+  [& nums]
+  (fn [arg]
+    (boolean (some #(divides-by? arg %) nums))))
+
 (defn p001
   ([] (p001 1000 3 5))
-  ([n & d]
-   (->>
-    (range n)                                             ; for all numbers below n
-    (filter (fn [i]
-              (when (some #(zero? (mod i %)) d) i)))      ; filter the multiples of 3 or 5
-    (reduce +))))                                         ; reduce the resulting list by adding up each element
+  ([limit & divisors]
+   (->> (range limit)                                             ; for all numbers below n
+        (filter (apply divides-by-any divisors))      ; filter the multiples of 3 or 5
+        (reduce +))))                                         ; reduce the resulting list by adding up each element
 
 ; calculation
 ; (p001 1000)
