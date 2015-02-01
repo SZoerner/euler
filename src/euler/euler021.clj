@@ -34,7 +34,7 @@
 
 (defn p022 []
   (let
-      [input (sort (re-seq #"\w+" (slurp "https://projecteuler.net/project/resources/p022_names.txt")))
+      [input (sort (re-seq #"\w+" (slurp "resources/p022_names.txt")))
        ; sum of the numerical representation of each character
        get-value (fn [name]
                    (->> name
