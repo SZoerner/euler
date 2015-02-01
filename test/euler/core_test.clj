@@ -8,8 +8,8 @@
 
 (defmacro fact-qc [description props & rest]
   `(~show-result ~description
-     (qc/quick-check
-       100
-       (prop/for-all
-         ~props
-         (midje.sweet/fact ~description ~@rest)))))
+                 (qc/quick-check
+                  100
+                  (prop/for-all
+                   ~props
+                   (midje.sweet/fact ~description ~@rest)))))

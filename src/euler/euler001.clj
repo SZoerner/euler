@@ -9,11 +9,11 @@
 (defn p001
   ([] (p001 1000 3 5))
   ([n & d]
-    (->>
-      (range n)                                             ; for all numbers below n
-      (filter (fn [i]
-                (when (some #(zero? (mod i %)) d) i)))      ; filter the multiples of 3 or 5
-      (reduce +))))                                         ; reduce the resulting list by adding up each element
+   (->>
+    (range n)                                             ; for all numbers below n
+    (filter (fn [i]
+              (when (some #(zero? (mod i %)) d) i)))      ; filter the multiples of 3 or 5
+    (reduce +))))                                         ; reduce the resulting list by adding up each element
 
 ; calculation
 ; (p001 1000)
@@ -33,14 +33,14 @@
 (defn fib                                                   ; cached version using an accumulator
   "computes the nth element in the Fibonacci sequence"      ; overloaded function
   ([n]
-    (if (zero? n)
-      0N
-      (fib n 0N 1N)))                                       ; with one parameter
-
+   (if (zero? n)
+     0N
+     (fib n 0N 1N)))                                       ; with one parameter
+  
   ([n p0 p1]                                                ; with three parameters
-    (if (= n 1N)
-      p1
-      (fib (dec n) p1 (+ p0 p1)))))
+   (if (= n 1N)
+     p1
+     (fib (dec n) p1 (+ p0 p1)))))
 
 
 ; getting all even fib numbers below 4.000.000
@@ -65,10 +65,10 @@
 
 (defn p002-lazy [n]
   (->>
-    (fib-lazy)
-    (take-while #(< % n))
-    (filter even?)
-    (reduce +)))
+   (fib-lazy)
+   (take-while #(< % n))
+   (filter even?)
+   (reduce +)))
 
 ; calculation
 ; (p002-lazy 4000000)
@@ -88,7 +88,7 @@
   (let [lower (filter #(factor? n %)
                       (range 1 (inc (Math/sqrt n))))        ;; calculate up to sqrt(n)
         upper (map #(/ n %) lower)]                         ;; add the coresponding pairs by division
-    (set (concat lower upper))))
+       (set (concat lower upper))))
 
 ; predicate checking for prime number
 (defn prime? [n]
@@ -102,13 +102,13 @@
 ; iterative approach
 (defn get-primes
   ([n]                                                      ; entry point - one parameter
-    (get-primes n 2 '()))                                   ; start with 2 and empty list
+   (get-primes n 2 '()))                                   ; start with 2 and empty list
   ([n p primes]                                             ; overloaded function
-    (cond
-      (< n p) primes                                        ; no more factors - stop iteration
-      (and (factor? n p) (prime? p))                        ; if factor and prime (fun fact: 10x speedup changing the order)
-      (get-primes (/ n p) p (conj primes p))                ; add to set of prime factors
-      :else (get-primes n (inc p) primes))))                ; no match - next iteration
+   (cond
+     (< n p) primes                                        ; no more factors - stop iteration
+     (and (factor? n p) (prime? p))                        ; if factor and prime (fun fact: 10x speedup changing the order)
+     (get-primes (/ n p) p (conj primes p))                ; add to set of prime factors
+     :else (get-primes n (inc p) primes))))                ; no match - next iteration
 
 (defn p003 [n]
   (apply max (get-primes n)))
@@ -125,10 +125,10 @@
 
 (defn max-prime [n primes]
   (let [div (first primes)]                                 ; local variable - head of prime list
-    (cond
-      (= n div) div                                         ; termination - found max prime
-      (factor? n div) (max-prime (/ n div) primes)
-      :else (max-prime n (rest primes)))))                  ; list eater
+       (cond
+         (= n div) div                                         ; termination - found max prime
+         (factor? n div) (max-prime (/ n div) primes)
+         :else (max-prime n (rest primes)))))                  ; list eater
 
 (defn p003-lazy [n]
   (max-prime n lazy-primes))
@@ -149,7 +149,7 @@
                :let [pal (* num1 num2)]                     ; compute the product of the two
                :when (= (str pal)                           ; and filter those who are palindromes
                         (clojure.string/reverse (str pal)))] ; by converting to string and compare to the reversed string
-           pal)))
+              pal)))
 
 ; calculation
 ;(p004 1000)
@@ -165,12 +165,12 @@
 
 (defn p005 [n]
   (->>
-    (range (inc n))
-    (map #(frequencies (get-primes %)))
-    (apply merge-with max)
-    (map #(Math/pow (first %) (second %)))
-    (reduce *)
-    (int)))
+   (range (inc n))
+   (map #(frequencies (get-primes %)))
+   (apply merge-with max)
+   (map #(Math/pow (first %) (second %)))
+   (reduce *)
+   (int)))
 
 ; calculation
 ; (p005 20)
@@ -203,11 +203,11 @@
 ; type: number => number
 (defn p007 [n]
   (->>
-    (range 1 Integer/MAX_VALUE)                             ; for all positive integers
-    (take-nth 2)                                            ; shortcut to remove even numbers
-    (filter prime?)                                         ; only prime numbers left
-    (take (dec n))                                          ; realize n items
-    last))                                                  ; pick the nth element
+   (range 1 Integer/MAX_VALUE)                             ; for all positive integers
+   (take-nth 2)                                            ; shortcut to remove even numbers
+   (filter prime?)                                         ; only prime numbers left
+   (take (dec n))                                          ; realize n items
+   last))                                                  ; pick the nth element
 
 ; calculation
 ; (p007 10001)
@@ -219,11 +219,11 @@
 
 (defn p008 [n series]
   (->>
-    (str series)                                            ; hack to retrieve individual digits
-    (map #(Integer/parseInt (str %)))                       ; Int => List[Int]
-    (partition n 1)                                         ; partition into lists of 5
-    (map #(apply * %))                                      ; calculate the product
-    (apply max)))                                           ; get the highest product
+   (str series)                                            ; hack to retrieve individual digits
+   (map #(Integer/parseInt (str %)))                       ; Int => List[Int]
+   (partition n 1)                                         ; partition into lists of 5
+   (map #(apply * %))                                      ; calculate the product
+   (apply max)))                                           ; get the highest product
 
 ; calculation
 ; (p008 5 7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450)
@@ -256,9 +256,9 @@
 
 (defn p010 [n]
   (->>
-    lazy-primes
-    (take-while #(< % n))
-    (reduce +)))
+   lazy-primes
+   (take-while #(< % n))
+   (reduce +)))
 
 ; calculation
 ; (p010 2000000)

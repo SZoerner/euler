@@ -72,7 +72,7 @@
                     (loop [cnt 1]
                       (let [cache (triangle cnt)]
                         (if (>= (divisors cache) n) cache
-                                                    (recur (inc cnt))))))]
+                            (recur (inc cnt))))))]
 
     ; calculation
     (rec-check 500)))
@@ -207,7 +207,7 @@
         (fn [num]
           ; calculate the next iteration
           (if (odd? num) (inc (* 3 num))
-                         (/ num 2)))
+              (/ num 2)))
 
         map-collatz                                         ; lazily retrieving the sequence up to (excluding) 1
         (fn [n]                                             ; and return a the number of elements
@@ -217,13 +217,13 @@
     ; calculation
     (->>
       ; for all numbers 1 to 10^6,
-      (range 1 (Math/pow 10 6))
+     (range 1 (Math/pow 10 6))
       ; create map entries with {n map-collatz}
-      (map map-collatz)
-      (reduce conj)
+     (map map-collatz)
+     (reduce conj)
       ; and retrieve the key with the highest value
-      (apply max-key val)
-      (key))))
+     (apply max-key val)
+     (key))))
 
 
 ; Problem 15 - Lattice paths
@@ -293,10 +293,10 @@
 
     ; calculation
     (->>                                                    ; threading macro
-      (range 1 1001)                                        ; for all numbers 1 to 1000
-      (map to-words)                                        ; map to corresponding string
-      (reduce str)                                          ; concatenate
-      count)))                                              ; count the number of chars
+     (range 1 1001)                                        ; for all numbers 1 to 1000
+     (map to-words)                                        ; map to corresponding string
+     (reduce str)                                          ; concatenate
+     count)))                                              ; count the number of chars
 
 
 ; Problem 18 - Maximum path sum I
@@ -313,28 +313,28 @@
 
 (defn p018 []
   (let
-    [triangle
-     [[75]
-      [95 64]
-      [17 47 82]
-      [18 35 87 10]
-      [20 4 82 47 65]
-      [19 1 23 75 3 34]
-      [88 2 77 73 7 63 67]
-      [99 65 4 28 6 16 70 92]
-      [41 41 26 56 83 40 80 70 33]
-      [41 48 72 33 47 32 37 16 94 29]
-      [53 71 44 65 25 43 91 52 97 51 14]
-      [70 11 33 28 77 73 17 78 39 68 17 57]
-      [91 71 52 38 17 14 91 43 58 50 27 29 48]
-      [63 66 4 68 89 53 67 30 73 16 69 87 40 31]
-      [04 62 98 27 23 9 70 98 73 93 38 53 60 4 23]]
+   [triangle
+    [[75]
+     [95 64]
+     [17 47 82]
+     [18 35 87 10]
+     [20 4 82 47 65]
+     [19 1 23 75 3 34]
+     [88 2 77 73 7 63 67]
+     [99 65 4 28 6 16 70 92]
+     [41 41 26 56 83 40 80 70 33]
+     [41 48 72 33 47 32 37 16 94 29]
+     [53 71 44 65 25 43 91 52 97 51 14]
+     [70 11 33 28 77 73 17 78 39 68 17 57]
+     [91 71 52 38 17 14 91 43 58 50 27 29 48]
+     [63 66 4 68 89 53 67 30 73 16 69 87 40 31]
+     [04 62 98 27 23 9 70 98 73 93 38 53 60 4 23]]
 
-     merge-rows
-     (fn [a b]
+    merge-rows
+    (fn [a b]
        ; look at the two elements in the row below it,
        ; take the max of those two elements, and sum them to the original element.
-       (map + (map #(apply max %) (partition 2 1 a)) b))]
+      (map + (map #(apply max %) (partition 2 1 a)) b))]
     (first (reduce merge-rows (reverse triangle)))))
 
 
@@ -353,11 +353,11 @@
 
 (defn p019 []
   (count
-    (for [year (range 1 101) month (range 0 12)
-          :let [day (.getDay (doto (java.util.Date.) (.setYear year)
-                                                     (.setMonth month) (.setDate 1)))]
-          :when (zero? day)]
-      [year, month])))
+   (for [year (range 1 101) month (range 0 12)
+         :let [day (.getDay (doto (java.util.Date.) (.setYear year)
+                                  (.setMonth month) (.setDate 1)))]
+         :when (zero? day)]
+     [year, month])))
 
 
 ; Problem 20 - Factorial digit sum
@@ -370,8 +370,8 @@
 ; analogous to Problem 16
 (defn p020 []
   (->>
-    (range (BigInteger. "1") 101)
-    (reduce *)
-    str
-    (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
-    (reduce +)))
+   (range (BigInteger. "1") 101)
+   (reduce *)
+   str
+   (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
+   (reduce +)))

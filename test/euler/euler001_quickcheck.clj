@@ -21,8 +21,7 @@
   (fact-qc "each returned value is indeed a palindrome"
            [n (gen/such-that #(> % 1) gen/nat)]
            (let [res (str (p004 n))]
-             res => (apply str (reverse res))))
-  )
+             res => (apply str (reverse res)))))
 ; (fact-qc "p005-quickcheck"
 ;          [n (gen/elements (vec (range 2 23)))] ; input: numbers
 ;           (let [res (p005 n)                  ; result: smallest common multiple
