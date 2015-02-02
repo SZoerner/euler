@@ -10,7 +10,7 @@
             :dependencies [[org.clojure/clojure "1.6.0"]]
             :profiles {:dev {:dependencies [[midje "1.6.3"]
                                             [org.clojure/test.check "0.7.0"]]}}
-            :marginalia {:css ["custom.css"]}
+            :marginalia {:css ["marg.css"]}
             :codox {:defaults {:doc/format :markdown}
                     :sources ["src"]
                     :src-dir-uri "https://github.com/SZoerner/euler/blob/master/"
