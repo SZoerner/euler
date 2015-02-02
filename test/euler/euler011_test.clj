@@ -5,15 +5,14 @@
             [euler.euler011 :refer :all])
   (:use midje.sweet))
 
-(deftest tests
+(deftest euler011-tests
   (fact "Problem 11"
     (parse-grid "1 2 3 4" 2) => [[1 2] [3 4]]
     (parse-grid "1 2 3 4 5 6 7 8 9" 3) => [[1 2 3] [4 5 6] [7 8 9]]
-        (p011) => 70600674
-  
-  (fact-qc "return a vector of vectors"
-           [n gen/nat]
-           (parse-grid (str n) 1) => [[n]]))
+    (p011) => 70600674
+    (fact-qc "return a vector of vectors"
+      [n gen/nat]
+      (parse-grid (str n) 1) => [[n]]))
 
   ; (fact "Problem 12"
   ;     (p012) => 76576500) ;; too slow - makes cloverage abort

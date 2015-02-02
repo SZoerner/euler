@@ -3,7 +3,7 @@
             [euler.euler021 :refer :all])
   (:use midje.sweet))
 
-(deftest tests
+(deftest euler021-tests
   ; (fact "Problem 21"
   ;     (p021) => 31626) ;; too slow - makes cloverage abort
   

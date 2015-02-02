@@ -3,7 +3,7 @@
             [euler.euler001 :refer :all])
   (:use midje.sweet))
 
-(deftest tests
+(deftest euler001-tests
   (fact "Problem 1"
         (p001 5 3 5) => 3
         (p001 10 3 5) => 23

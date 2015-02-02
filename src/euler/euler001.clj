@@ -8,19 +8,19 @@
 ;;
 ;; **Task**: Find the sum of all the multiples of 3 or 5 below 1000.
 
-(defn divides-by?
+(defn factor?
   "**Int, Int -> Bool**  
   Predicate that tests whether the divisor evenly divides the dividend."
   [dividend divisor]
   (zero? (mod dividend divisor)))
 
-(defn divides-by-any
+(defn factor-any
   "**(Int) -> Int -> Bool**  
   Returns a predicate that tests whether its argument 
   can be evenly divided by any of the divisors."
   [& divisors]
   (fn [argument]
-    (boolean (some #(divides-by? argument %) divisors))))
+    (boolean (some #(factor? argument %) divisors))))
 
 (defn p001
   "**Int, (Int) -> Int** 
@@ -28,7 +28,7 @@
   ([] (p001 1000 3 5))
   ([limit & divisors]
    (->> (range limit)                                         ;; for the range 0 to (limit - 1)
-        (filter (apply divides-by-any divisors))              ;; filter the multiples (at least one divisor)
+        (filter (apply factor-any divisors))              ;; filter the multiples (at least one divisor)
         (reduce +))))                                         ;; and sum up the resulting list
 
 
@@ -96,10 +96,6 @@
 ; The prime factors of 13195 are 5, 7, 13 and 29.
 ; What is the largest prime factor of the number 600851475143 ?
 
-; predicate checking whether num is divisible by div
-(defn factor? [a b]
-  (zero? (rem a b)))
-
 ; returns a list of factors
 (defn factors [n]
   (let [lower (filter #(factor? n %)
@@ -107,7 +103,7 @@
         upper (map #(/ n %) lower)]                         ;; add the coresponding pairs by division
        (set (concat lower upper))))
 
-; predicate checking for prime number
+; predicate checking for prime numbers
 (defn prime? [n]
   (= (count (factors n)) 2))
 
