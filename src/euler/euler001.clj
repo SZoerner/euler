@@ -53,28 +53,25 @@
   [b (+ a b)])
 
 (def fibs
-  "Lazy sequence of all Fibonacci numbers."
+  "**(Int)**  
+  Lazy sequence of all Fibonacci numbers. 
+  Using BigIntegers to prevent integer overflow"
   (map first (iterate fib-next [1 1])))
 
 (defn fib-nth
   "**Int -> Int**  
-  Computes the nth element in the Fibonacci sequence."      ; overloaded function
-  ([n] (last (take n fibs)))                                       ; with one parameter
-  
-  ([n p0 p1]                                                ; with three parameters
-   (if (= n 1N)
-     p1
-     (fib-nth (dec n) p1 (+ p0 p1)))))
+  Computes the nth element in the Fibonacci sequence." 
+  ([n] (last (take n fibs))))
 
 (defn p002
   "**Int -> Int**  
   Retrieve the sum of all even Fibonacci numbers up to n."
-  ([] (p002 4000000))                                   ; fun fact: the highest is already fib (33) = 3.524.578
-  ([n] (reduce +
-          (for [num (range 1N (inc n))
-                :let [fib-num (fib-nth num)]
-                :while (< fib-num n)
-                :when (even? fib-num)] fib-num))))
+  ([] (p002 (* 4 1000 1000)))                                   ; fun fact: the highest is already fib (33) = 3.524.578
+  ([n]
+    (->> fibs
+      (take-while #(< % n))
+      (filter even?)
+      (reduce +))))
 
 ; Lazy implementation
 (defn fib-lazy
@@ -85,7 +82,7 @@
 
 (defn p002-lazy [n]
   (->>
-   (fib-lazy)
+   fibs
    (take-while #(< % n))
    (filter even?)
    (reduce +)))
