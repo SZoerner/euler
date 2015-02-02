@@ -1,11 +1,19 @@
 (ns euler.euler011-test
   (:require [clojure.test :refer [deftest]]
+            [clojure.test.check.generators :as gen]
+            [euler.core-test :refer :all]
             [euler.euler011 :refer :all])
   (:use midje.sweet))
 
 (deftest tests
   (fact "Problem 11"
-        (p011) => 70600674)
+    (parse-grid "1 2 3 4" 2) => [[1 2] [3 4]]
+    (parse-grid "1 2 3 4 5 6 7 8 9" 3) => [[1 2 3] [4 5 6] [7 8 9]]
+        (p011) => 70600674
+  
+  (fact-qc "return a vector of vectors"
+           [n gen/nat]
+           (parse-grid (str n) 1) => [[n]]))
 
   ; (fact "Problem 12"
   ;     (p012) => 76576500) ;; too slow - makes cloverage abort

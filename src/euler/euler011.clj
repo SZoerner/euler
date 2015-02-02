@@ -1,11 +1,18 @@
 (ns euler.euler011)
 
-; Problem 11 - Largest product in a grid
-; ---------------------------------------
-; In the 20x20 grid below, four numbers along a diagonal line have been marked in red.
-; The product of these numbers is ``26 x 63 x 78 x 14 = 1788696``.
-; What is the greatest product of four adjacent numbers in the same direction
-; - up, down, left, right, or diagonally - in the 20x20 grid?
+;; # Problem 11 - Largest product in a grid
+;;
+;; *Description:* In the 20x20 grid below, four numbers along a diagonal line have been marked in red.
+;; The product of these numbers is ``26 x 63 x 78 x 14 = 1788696``.
+;; 
+;; *Task:* What is the greatest product of four adjacent numbers in the same direction
+;; - up, down, left, right, or diagonally - in the 20x20 grid?
+
+(defn parse-grid 
+"**String -> [[Int]]**  
+Converts a string into a dimension x dimension vector of integers."
+  [grid-str dimension]
+  (vec (map vec (partition dimension (map #(Integer. %) (.split grid-str "\\s+"))))))
 
 (defn p011 []
   (let [input-str
@@ -31,9 +38,6 @@
         20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
         01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"
 
-        ; convert string into a 20x20 vector of integers
-        input (vec (map vec (partition 20 (map #(Integer. %) (.split input-str "\\s+")))))
-
         ; -- by Chouser
         ; only works for square grids
         product (fn [size grid]
@@ -51,7 +55,7 @@
                                     (reduce nth grid yx))))))]
 
     ; calculation
-    (product 20 input)))
+    (product 20 (parse-grid input-str 20))))
 
 
 ; Problem 12 - Highly divisible triangular number
