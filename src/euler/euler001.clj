@@ -9,13 +9,13 @@
 ;; **Task**: Find the sum of all the multiples of 3 or 5 below 1000.
 
 (defn divides-by?
-  "**(Int, Int) -> Bool**  
-  Predicate that tests whether the divisor evenly divides the dividend"
+  "**Int, Int -> Bool**  
+  Predicate that tests whether the divisor evenly divides the dividend."
   [dividend divisor]
   (zero? (mod dividend divisor)))
 
 (defn divides-by-any
-  "**[Int] -> (Int -> Bool)**  
+  "**(Int) -> Int -> Bool**  
   Returns a predicate that tests whether its argument 
   can be evenly divided by any of the divisors."
   [& divisors]
@@ -23,7 +23,7 @@
     (boolean (some #(divides-by? argument %) divisors))))
 
 (defn p001
-  "**(Int, [Int] -> Int** 
+  "**Int, (Int) -> Int** 
   Sums up the multiples of all integers below limit."
   ([] (p001 1000 3 5))
   ([limit & divisors]
@@ -46,25 +46,33 @@
 ;; - base case: ``fib(n <= 1) = n``  
 ;; - rec case: ``fib (n > 1) = fib(n - 1) + fib(n - 2)``
 
-(defn fib                                                   ; cached version using an accumulator
-  "computes the nth element in the Fibonacci sequence"      ; overloaded function
-  ([n]
-   (if (zero? n)
-     0N
-     (fib n 0N 1N)))                                       ; with one parameter
+(defn fib-next 
+  "**[Int, Int] -> [Int, Int]**  
+  Calculates the next Fibonacci iteration."
+  [[a b]]
+  [b (+ a b)])
+
+(def fibs
+  "Lazy sequence of all Fibonacci numbers."
+  (map first (iterate fib-next [1 1])))
+
+(defn fib-nth
+  "**Int -> Int**  
+  Computes the nth element in the Fibonacci sequence."      ; overloaded function
+  ([n] (last (take n fibs)))                                       ; with one parameter
   
   ([n p0 p1]                                                ; with three parameters
    (if (= n 1N)
      p1
-     (fib (dec n) p1 (+ p0 p1)))))
+     (fib-nth (dec n) p1 (+ p0 p1)))))
 
 (defn p002
   "**Int -> Int**  
-  Retrieve the sum of all even Fibonacci numbers up to n"
+  Retrieve the sum of all even Fibonacci numbers up to n."
   ([] (p002 4000000))                                   ; fun fact: the highest is already fib (33) = 3.524.578
   ([n] (reduce +
-          (for [num (range 0N (inc n))
-                :let [fib-num (fib num)]
+          (for [num (range 1N (inc n))
+                :let [fib-num (fib-nth num)]
                 :while (< fib-num n)
                 :when (even? fib-num)] fib-num))))
 
