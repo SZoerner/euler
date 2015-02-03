@@ -11,10 +11,6 @@
            (p002 n) => even?)
 
   (fact-qc "both algorithms return the same results"
-           [n gen/nat]
-           (p002-lazy n) => (p002 n))
-
-  (fact-qc "both algorithms return the same results"
            [n (gen/such-that #(> % 1) gen/nat)]
            (p003-lazy n) => (p003 n))
 

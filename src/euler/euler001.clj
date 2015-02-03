@@ -28,7 +28,7 @@
   ([] (p001 1000 3 5))
   ([limit & divisors]
    (->> (range limit)                                         ;; for the range 0 to (limit - 1)
-        (filter (apply factor-any divisors))              ;; filter the multiples (at least one divisor)
+        (filter (apply factor-any divisors))                  ;; filter the multiples (at least one divisor)
         (reduce +))))                                         ;; and sum up the resulting list
 
 
@@ -46,49 +46,20 @@
 ;; - base case: ``fib(n <= 1) = n``  
 ;; - rec case: ``fib (n > 1) = fib(n - 1) + fib(n - 2)``
 
-(defn fib-next 
-  "**[Int, Int] -> [Int, Int]**  
-  Calculates the next Fibonacci iteration."
-  [[a b]]
-  [b (+ a b)])
-
 (def fibs
   "**(Int)**  
-  Lazy sequence of all Fibonacci numbers. 
-  Using BigIntegers to prevent integer overflow"
-  (map first (iterate fib-next [1 1])))
-
-(defn fib-nth
-  "**Int -> Int**  
-  Computes the nth element in the Fibonacci sequence." 
-  ([n] (last (take n fibs))))
+  Lazy sequence of all Fibonacci numbers."
+  (lazy-cat [0 1] (map + (rest fibs) fibs)))
 
 (defn p002
   "**Int -> Int**  
   Retrieve the sum of all even Fibonacci numbers up to n."
-  ([] (p002 (* 4 1000 1000)))                                   ; fun fact: the highest is already fib (33) = 3.524.578
+  ([] (p002 (* 4 1000 1000)))
   ([n]
-    (->> fibs
-      (take-while #(< % n))
-      (filter even?)
-      (reduce +))))
-
-; Lazy implementation
-(defn fib-lazy
-  "Computing the whole fibonacci sequence - lazily and polymorphic."
-  ([] (fib-lazy 1N 1N))                                     ; base case: creates an infinite, lazy seq (aka list)
-  ([x y] (cons x (lazy-seq (fib-lazy y (+ x y)))))          ; fib (x, y) -> fib (y, x+y) = infinite, lazy seq starting from x
-  ([x] (first (drop (dec x) (take x (fib-lazy))))))         ; retrieve the nth fib element
-
-(defn p002-lazy [n]
-  (->>
-   fibs
-   (take-while #(< % n))
-   (filter even?)
-   (reduce +)))
-
-; calculation
-; (p002-lazy 4000000)
+   (->> fibs
+        (take-while #(< % n))
+        (filter even?)
+        (reduce +))))
 
 
 ; Problem 3 - Largest prime factor
