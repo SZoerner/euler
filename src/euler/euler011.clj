@@ -44,13 +44,13 @@ Converts a string into a dimension x dimension vector of integers."
         ; only works for square grids
         product (fn [size grid]
                   ; get the highest value
-                  (apply max
+                  (reduce max
                          (for [sx (range 0 size)
                                sy (range 0 size)
                                ;          \/    \     ->     /
                                delta-yx [[1 0] [1 1] [0 1] [-1 1]]]
                            ; compute the product
-                           (apply *
+                           (reduce *
                                   ; partition into sequences of four
                                   (for [yx (take 4 (iterate #(map + delta-yx %) [sy sx]))
                                         :while (every? #(< -1 % size) yx)]
@@ -144,7 +144,7 @@ Converts a string into a dimension x dimension vector of integers."
      (map map-collatz)
      (reduce conj)
       ; and retrieve the key with the highest value
-     (apply max-key val)
+     (reduce max-key val)
      (key))))
 
 
@@ -268,7 +268,7 @@ Converts a string into a dimension x dimension vector of integers."
     (fn [a b]
        ; look at the two elements in the row below it,
        ; take the max of those two elements, and sum them to the original element.
-      (map + (map #(apply max %) (partition 2 1 a)) b))]
+      (map + (map #(reduce max %) (partition 2 1 a)) b))]
     (first (reduce merge-rows (reverse triangle)))))
 
 

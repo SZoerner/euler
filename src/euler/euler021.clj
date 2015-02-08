@@ -175,7 +175,7 @@
                    (conj acc div)
                    (conj rems rem)))))))
 (defn p026 []
-  (apply max-key second (map #(vector % (count (rec-cycle 1 %)))
+  (reduce max-key second (map #(vector % (count (rec-cycle 1 %)))
                              (take 1000 (iterate dec 1000)))))
 
 
@@ -248,7 +248,7 @@
   {:pre [(odd? n)]}                                         ; precondition: spirals can only have an odd length
   (if (= n 1)                                               ; base case: f(1) = 1
       1
-      (apply + (cons
+      (reduce + (cons
                 (p028 (- n 2))                               ; recursive case: cons it to the recusive call of f(n -2)
                 (take 4                                      ; take four values per 'ring'
                       (iterate #(- % (dec n)) (* n n)))))))  ; creating 'ring': from n * n, decrementing in steps of n- 1
