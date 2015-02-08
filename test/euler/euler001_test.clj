@@ -14,7 +14,7 @@
         (p002 4000000) => 4613732)
 
   (fact "Problem 3"
-        (p003 13195) => 29; (p003 600851475143) => 6857 ; StackOverflow :(
+        (p003 13195) => 29;; (p003 600851475143) => 6857 ; StackOverflow :(
 )  
 
   (fact "Problem 3"
@@ -33,16 +33,17 @@
         (p006 100) => 25164150)
 
   (fact "Problem 7"
-        (p007 6) => 13; (p007 10001) => 104743     ;; too slow - makes cloverage abort
+        (p007 6) => 13;; (p007 10001) => 104743     ;; too slow - makes cloverage abort
 )  
 
   (fact "Problem 8"
-        (p008 5 123456789) => 15120)
+        (p008 5 123456789) => 15120
+        (p008) => 40824)
 
   (fact "Problem 9"
         (p009 (+ 3 4 5)) => (* 3 4 5)
         (p009 1000) => (* 200 375 425))
 
   (fact "Problem 10"
-        (p010 10) => 17; (p010 2000000) => 142913828922) ;; too slow - makes cloverage abort
+        (p010 10) => 17;; (p010 2000000) => 142913828922) ;; too slow - makes cloverage abort
 ))

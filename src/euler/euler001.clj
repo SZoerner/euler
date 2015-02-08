@@ -29,9 +29,12 @@
   Sums up the multiples of all integers below limit."
   ([] (p001 1000 3 5))
   ([limit & divisors]
-   (->> (range limit)                                         ;; for the range 0 to (limit - 1)
-        (filter (reduce factor-any divisors))                  ;; filter the multiples (at least one divisor)
-        (reduce +))))                                         ;; and sum up the resulting list
+    ;; for the range 0 to (limit - 1)
+   (->> (range limit)
+         ;; filter the multiples (at least one divisor)
+        (filter (reduce factor-any divisors))
+         ;; and sum up the resulting list
+        (reduce +))))
 
 
 ;; # Problem 2 - Even Fibonacci numbers
@@ -77,9 +80,11 @@
 ;; returns a list of factors
 (defn factors [n]
   (let [lower (filter #(factor? n %)
-                      (range 1 (inc (Math/sqrt n))))        ;; calculate up to sqrt(n)
-        upper (map #(/ n %) lower)]                         ;; add the coresponding pairs by division
-       (set (concat lower upper))))
+                      ;; calculate up to sqrt(n)
+                      (range 1 (inc (Math/sqrt n))))
+        ;; add the coresponding pairs by division
+        upper (map #(/ n %) lower)]
+    (set (concat lower upper))))
 
 ;; predicate checking for prime numbers
 (defn prime? [n]
@@ -87,19 +92,27 @@
 
 ;; predicate checking for prime number (using Java's BigInteger)
 (defn prime-java? [n]
-  (.isProbablePrime (BigInteger/valueOf n) 5))              ; certainty of 5 - 96.875%
+  ;; certainty of 5 - 96.875%
+  (.isProbablePrime (BigInteger/valueOf n) 5))
 
 
 ;; iterative approach
 (defn get-primes
-  ([n]                                                      ; entry point - one parameter
-   (get-primes n 2 '()))                                   ; start with 2 and empty list
-  ([n p primes]                                             ; overloaded function
+  ;; entry point - one parameter
+  ([n]
+    ;; start with 2 and empty list
+   (get-primes n 2 '()))
+  ;; overloaded function
+  ([n p primes]
    (cond
-     (< n p) primes                                        ; no more factors - stop iteration
-     (and (factor? n p) (prime? p))                        ; if factor and prime (fun fact: 10x speedup changing the order)
-     (get-primes (/ n p) p (conj primes p))                ; add to set of prime factors
-     :else (get-primes n (inc p) primes))))                ; no match - next iteration
+      ;; no more factors - stop iteration
+     (< n p) primes
+      ;; if factor and prime (fun fact: 10x speedup changing the order)
+     (and (factor? n p) (prime? p))
+      ;; add to set of prime factors
+     (get-primes (/ n p) p (conj primes p))
+      ;; no match - next iteration
+     :else (get-primes n (inc p) primes))))
 
 (defn p003 [n]
   (reduce max (get-primes n)))
@@ -111,15 +124,20 @@
 ;; lazy stream approach
 (def lazy-primes
   "lazy stream of prime numbers"
-  (filter prime?                                            ; filter primes
-          (conj (iterate #(+ 2 %) 3) 2)))                   ; append all odd numbers to 2
+  ;; filter primes
+  (filter prime?
+          ;; append all odd numbers to 2
+          (conj (iterate #(+ 2 %) 3) 2)))
 
 (defn max-prime [n primes]
-  (let [div (first primes)]                                 ; local variable - head of prime list
-       (cond
-         (= n div) div                                         ; termination - found max prime
-         (factor? n div) (max-prime (/ n div) primes)
-         :else (max-prime n (rest primes)))))                  ; list eater
+  ;; local variable - head of prime list
+  (let [div (first primes)]
+    (cond
+      ;; termination - found max prime
+      (= n div) div
+      (factor? n div) (max-prime (/ n div) primes)
+      ;; list eater
+      :else (max-prime n (rest primes)))))
 
 (defn p003-lazy [n]
   (max-prime n lazy-primes))
@@ -135,13 +153,18 @@
 ;; Find the largest palindrome made from the product of two 3-digit numbers.
 
 (defn p004 [n]
-  (reduce max                                                ; get the largest result of
-         (for [num1 (range n 0 -1)
-               num2 (range n 0 -1)                          ; all numbers from 100 to 1000
-               :let [pal (* num1 num2)]                     ; compute the product of the two
-               :when (= (str pal)                           ; and filter those who are palindromes
-                        (clojure.string/reverse (str pal)))] ; by converting to string and compare to the reversed string
-              pal)))
+  ;; get the largest result of
+  (reduce max
+          (for [num1 (range n 0 -1)
+                ;; all numbers from 100 to 1000
+                num2 (range n 0 -1)
+                ;; compute the product of the two
+                :let [pal (* num1 num2)]
+                ;; and filter those who are palindromes
+                :when (= (str pal)
+                         ;; by converting to string and compare to the reversed string
+                         (clojure.string/reverse (str pal)))]
+            pal)))
 
 ;; calculation
 ;(p004 1000)
@@ -204,11 +227,16 @@
 ;; type: number => number
 (defn p007 [n]
   (->>
-   (range 1 Integer/MAX_VALUE)                             ; for all positive integers
-   (take-nth 2)                                            ; shortcut to remove even numbers
-   (filter prime?)                                         ; only prime numbers left
-   (take (dec n))                                          ; realize n items
-   last))                                                  ; pick the nth element
+    ;; for all positive integers
+   (range 1 Integer/MAX_VALUE)
+    ;; shortcut to remove even numbers
+   (take-nth 2)
+    ;; only prime numbers left
+   (filter prime?)
+    ;; realize n items
+   (take (dec n))
+    ;; pick the nth element
+   last))
 
 ;; calculation
 ;; (p007 10001)
@@ -219,16 +247,20 @@
 ;; **Task:**
 ;; Find the greatest product of five consecutive digits in the 1000-digit number.
 
-(defn p008 [n series]
-  (->>
-   (str series)                                            ; hack to retrieve individual digits
-   (map #(Integer/parseInt (str %)))                       ; Int => List[Int]
-   (partition n 1)                                         ; partition into lists of 5
-   (map #(reduce * %))                                      ; calculate the product
-   (reduce max)))                                           ; get the highest product
-
-;; calculation
-;; (p008 5 7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450)
+(defn p008
+  ([] (p008 5 (bigdec (slurp "resources/p008_digit.txt"))))
+  ([n series]
+   (->>
+      ;; hack to retrieve individual digits
+    (str series)
+      ;; Int => List[Int]
+    (map #(Integer/parseInt (str %)))
+      ;; partition into lists of 5
+    (partition n 1)
+      ;; calculate the product
+    (map #(reduce * %))
+      ;; get the highest product
+    (reduce max))))
 
 
 ;; # Problem 9 - Special Pythagorean triplet
@@ -240,17 +272,16 @@
 ;; **Task:**
 ;; There exists exactly one Pythagorean triplet for which a + b + c = 1000. Find the product abc.
 
-(defn p009 [n]
-  (first (for [a (range n)
-               b (range (- n a))
-               :let [c (- n (+ a b))]
-               :when (and (< a b c)
-                          (= (+ (Math/pow a 2) (Math/pow b 2))
-                             (Math/pow c 2)))]
-           (* a b c))))
-
-;; calculation
-;; (p009 1000)
+(defn p009
+  ([] (p009 1000))
+  ([n]
+   (first (for [a (range n)
+                b (range (- n a))
+                :let [c (- n (+ a b))]
+                :when (and (< a b c)
+                           (= (+ (Math/pow a 2) (Math/pow b 2))
+                              (Math/pow c 2)))]
+            (* a b c)))))
 
 
 ;; # Problem 10 - Summation of primes

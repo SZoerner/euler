@@ -40,16 +40,16 @@
 (defn p022 []
   (let
    [input (sort (re-seq #"\w+" (slurp "resources/p022_names.txt")))
-     ; sum of the numerical representation of each character
+     ;; sum of the numerical representation of each character
     get-value (fn [name]
                 (->> name
                      (map int)
                      (map #(- % 64))
                      (reduce +)))
-     ; get the position
+     ;; get the position
     get-index (fn [name]
                 (inc (.indexOf input name)))]
-    ; compute the product of value and position
+    ;; compute the product of value and position
     (reduce + (map #(* (get-index %) (get-value %)) input))))
 
 
@@ -70,28 +70,28 @@
 
 (defn p023 []
   (let
-    ; Number -> List[Numbers] - divisors of n (excluding n)
+    ;; Number -> List[Numbers] - divisors of n (excluding n)
    [divisors
     (fn [n]
       (filter #(zero? (mod n %)) (range 1 n)))
 
-     ; Number -> Boolean - is n an abundant number?
+     ;; Number -> Boolean - is n an abundant number?
     abundant?
     (fn [n]
       (< n (reduce + (divisors n))))
 
-     ; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
+     ;; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
     sum-of-abundants?
     (fn [i abundants]
       (some (fn [a] (abundants (- i a))) abundants))
 
-     ; List[Numbers] - input numbers from 1 up to 28124
+     ;; List[Numbers] - input numbers from 1 up to 28124
     input (range 1 (inc 28123))
 
-     ; Set[Numbers] - all abundant numbers up to input
+     ;; Set[Numbers] - all abundant numbers up to input
     abundants (into (sorted-set) (filter abundant? input))]
 
-    ; calculation - sum up all 'non-abundant-sums' up to input
+    ;; calculation - sum up all 'non-abundant-sums' up to input
     (reduce + (filter #(not (sum-of-abundants? % abundants)) input))))
 
 
@@ -129,10 +129,14 @@
 ;; **Task:** What is the first term in the Fibonacci sequence to contain 1000 digits?
 
 ;; compute the nth element in the Fibonacci sequence
-(defn- fib                                                  ; overloaded function
-  ([n] (if (zero? n) 0 (fib n (BigInteger. "0")             ; using Java's BigInteger
-                            (BigInteger. "1"))))            ; cached version using an accumulator
-  ([n p0 p1]                                                ; with three parameters
+;; overloaded function
+(defn- fib
+  ;; using Java's BigInteger
+  ([n] (if (zero? n) 0 (fib n (BigInteger. "0")
+                            ;; cached version using an accumulator
+                            (BigInteger. "1"))))
+  ;; with three parameters
+  ([n p0 p1]
    (if (= n 1) p1 (fib (dec n) p1 (+ p0 p1)))))
 
 (defn p025 []
@@ -176,7 +180,7 @@
                    (conj rems rem)))))))
 (defn p026 []
   (reduce max-key second (map #(vector % (count (rec-cycle 1 %)))
-                             (take 1000 (iterate dec 1000)))))
+                              (take 1000 (iterate dec 1000)))))
 
 
 ;; # Problem 27 - Quadratic primes
@@ -204,7 +208,8 @@
 
 ;; predicate checking for prime number (using Java's BigInteger)
 (defn- prime-java? [n]
-  (.isProbablePrime (BigInteger/valueOf n) 5))              ; certainty of 5 - 96.875%
+  ;; certainty of 5 - 96.875%
+  (.isProbablePrime (BigInteger/valueOf n) 5))
 
 ;; Validator function
 (defn consec-primes
@@ -212,17 +217,22 @@
   [a b]
   (->>
    (iterate inc 0)
-   (map #(+ (* (+ % a) %) b))                              ; returns a generator of the form: n² + an + b
-   (take-while #(and (pos? %) (prime-java? %)))            ; filter as long as primes are generated
-   (count)))                                               ; count # of primes
+    ;; returns a generator of the form: n² + an + b
+   (map #(+ (* (+ % a) %) b))
+    ;; filter as long as primes are generated
+   (take-while #(and (pos? %) (prime-java? %)))
+    ;; count # of primes
+   (count)))
 
 (defn p027
   "list comprehension for finding the max prime generator"
   []
   (let [nums (range -999 1000)
-        quads (for [a nums                                  ; all quadratic prime generators
-                    b nums]                                 ; between -999 and 999
-                   [a b (consec-primes a b)])
+        ;; all quadratic prime generators
+        quads (for [a nums
+                    ;; between -999 and 999
+                    b nums]
+                [a b (consec-primes a b)])
         [a b _] (reduce #(if (> (nth %1 2) (nth %2 2)) %1 %2) quads)]
     (* a b)))
 
@@ -245,13 +255,18 @@
 ;; What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?
 
 (defn p028 [n]
-  {:pre [(odd? n)]}                                         ; precondition: spirals can only have an odd length
-  (if (= n 1)                                               ; base case: f(1) = 1
-      1
-      (reduce + (cons
-                (p028 (- n 2))                               ; recursive case: cons it to the recusive call of f(n -2)
-                (take 4                                      ; take four values per 'ring'
-                      (iterate #(- % (dec n)) (* n n)))))))  ; creating 'ring': from n * n, decrementing in steps of n- 1
+  ;; precondition: spirals can only have an odd length
+  {:pre [(odd? n)]}
+  ;; base case: f(1) = 1
+  (if (= n 1)
+    1
+    (reduce + (cons
+                ;; recursive case: cons it to the recusive call of f(n -2)
+               (p028 (- n 2))
+                ;; take four values per 'ring'
+               (take 4
+                      ;; creating 'ring': from n * n, decrementing in steps of n- 1
+                     (iterate #(- % (dec n)) (* n n)))))))
 
 
 ;; # Problem 29 - Distinct powers
@@ -272,11 +287,16 @@
 
 (defn p029 [n]
   (->>
-   (for [a (range 2 (inc n))                               ; typical list comprehension problem
-         b (range 2 (inc n))]                              ; for 2 to n
-        (Math/pow a b))                                       ; return a^b
-   (set)                                                   ; distinct elements
-   (count)))                                               ; count them
+    ;; typical list comprehension problem
+   (for [a (range 2 (inc n))
+          ;; for 2 to n
+         b (range 2 (inc n))]
+      ;; return a^b
+     (Math/pow a b))
+    ;; distinct elements
+   (set)
+    ;; count them
+   (count)))
 
 
 ;; # Problem 30 - Digit fifth powers
@@ -295,13 +315,17 @@
 ;; Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
 
 (defn p030 [exp]
-  (let [powers?                                             ; predicate checking for being a sum of powers
+  ;; predicate checking for being a sum of powers
+  (let [powers?
         (fn [n]
           (->> (str n)
-               (map #(Character/digit % 10))                ; convert to list of digits
+               ;; convert to list of digits
+               (map #(Character/digit % 10))
                (map #(Math/pow % exp))
                (reduce +)
-               (int)                                        ; cast to in for comparison
+               ;; cast to in for comparison
+               (int)
                (= n)))]
     (reduce + (filter powers?
-                      (range 2 (Math/pow 10 (inc exp))))))) ; not really sure what the upper limit is..
+                      ;; not really sure what the upper limit is..
+                      (range 2 (Math/pow 10 (inc exp)))))))

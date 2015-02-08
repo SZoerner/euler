@@ -10,7 +10,7 @@
 ;; What is the greatest product of four adjacent numbers in the same direction
 ;; - up, down, left, right, or diagonally - in the 20x20 grid?
 
-(defn parse-grid 
+(defn parse-grid
   "*String -> [[Int]]*  
 Converts a string into a dimension x dimension vector of integers."
   [grid-str dimension]
@@ -18,7 +18,7 @@ Converts a string into a dimension x dimension vector of integers."
 
 (defn p011 []
   (let [input-str
-        ; reference the input matrix as a local variable
+        ;; reference the input matrix as a local variable
         "08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
         49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
         81 49 31 73 55 79 14 29 93 71 40 67 53 88 30 03 49 13 36 65
@@ -40,23 +40,23 @@ Converts a string into a dimension x dimension vector of integers."
         20 73 35 29 78 31 90 01 74 31 49 71 48 86 81 16 23 57 05 54
         01 70 54 71 83 51 54 69 16 92 33 48 61 43 52 01 89 19 67 48"
 
-        ; -- by Chouser
-        ; only works for square grids
+        ;; -- by Chouser
+        ;; only works for square grids
         product (fn [size grid]
-                  ; get the highest value
+                  ;; get the highest value
                   (reduce max
-                         (for [sx (range 0 size)
-                               sy (range 0 size)
-                               ;          \/    \     ->     /
-                               delta-yx [[1 0] [1 1] [0 1] [-1 1]]]
-                           ; compute the product
-                           (reduce *
-                                  ; partition into sequences of four
-                                  (for [yx (take 4 (iterate #(map + delta-yx %) [sy sx]))
-                                        :while (every? #(< -1 % size) yx)]
-                                    (reduce nth grid yx))))))]
+                          (for [sx (range 0 size)
+                                sy (range 0 size)
+                                ;;          \/    \     ->     /
+                                delta-yx [[1 0] [1 1] [0 1] [-1 1]]]
+                            ;; compute the product
+                            (reduce *
+                                    ;; partition into sequences of four
+                                    (for [yx (take 4 (iterate #(map + delta-yx %) [sy sx]))
+                                          :while (every? #(< -1 % size) yx)]
+                                      (reduce nth grid yx))))))]
 
-    ; calculation
+    ;; calculation
     (product 20 (parse-grid input-str 20))))
 
 
@@ -77,7 +77,7 @@ Converts a string into a dimension x dimension vector of integers."
   [n]
   (* 2 (count (filter #(zero? (rem n %)) (range 1 (Math/sqrt n))))))
 
-(defn p012 
+(defn p012
   "*Int -> Int*  
   Value of the first triangle number up to n."
   ([] p012 500)
@@ -93,19 +93,19 @@ Converts a string into a dimension x dimension vector of integers."
 ;; **Task:** 
 ;; Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
 
-(defn truncate 
+(defn truncate
   "*Int, Int -> Int* 
   Truncates the given number up to the first n digits."
   [number digits]
   (Math/floor (/ number (Math/pow 10 (- (count (str number)) (inc digits))))))
 
-(defn p013 
+(defn p013
   "*[Int] -> Int*  
   The sum of the first n digits of the given list of numbers."
   ([] (p013 10 "resources/p013_numbers.txt"))
   ([n input]
    (long (reduce +
-    ; truncate to the first eleven digits
+                  ;; truncate to the first eleven digits
                  (map #(truncate % n)
                       (map bigdec (re-seq #"\d+" (slurp input))))))))
 
@@ -127,23 +127,25 @@ Converts a string into a dimension x dimension vector of integers."
 (defn p014 []
   (let [next-collatz
         (fn [num]
-          ; calculate the next iteration
+          ;; calculate the next iteration
           (if (odd? num) (inc (* 3 num))
               (/ num 2)))
 
-        map-collatz                                         ; lazily retrieving the sequence up to (excluding) 1
-        (fn [n]                                             ; and return a the number of elements
+        ;; lazily retrieving the sequence up to (excluding) 1
+        map-collatz
+        ;; and return a the number of elements
+        (fn [n]
           {n (count (take-while #(not= 1 %)
                                 (iterate next-collatz n)))})]
 
-    ; calculation
+    ;; calculation
     (->>
-      ; for all numbers 1 to 10^6,
+      ;; for all numbers 1 to 10^6,
      (range 1 (Math/pow 10 6))
-      ; create map entries with {n map-collatz}
+      ;; create map entries with {n map-collatz}
      (map map-collatz)
      (reduce conj)
-      ; and retrieve the key with the highest value
+      ;; and retrieve the key with the highest value
      (reduce max-key val)
      (key))))
 
@@ -164,17 +166,17 @@ Converts a string into a dimension x dimension vector of integers."
 (defn p015 []
   (let [factorial
         (fn [n]
-          ; multiply all natural numbers from 1 to n+1
+          ;; multiply all natural numbers from 1 to n+1
           (reduce * (range 1.0 (inc n))))
 
         lattice-paths
         (fn [n]
-          ; divide the factorial of 2n
+          ;; divide the factorial of 2n
           (long (/ (factorial (* 2.0 n))
-                   ; by (fac(n))^2
+                   ;; by (fac(n))^2
                    (Math/pow (factorial n) 2))))]
 
-    (lattice-paths 20)))                                    ; calculation
+    (lattice-paths 20)))                                    ;; calculation
 
 
 ;; # Problem 16 - Power digit sum
@@ -203,13 +205,13 @@ Converts a string into a dimension x dimension vector of integers."
 ;; The use of "and" when writing out numbers is in compliance with British usage.
 
 (defn p017 []
-  ; string maps
+  ;; string maps
   (let [singles
         ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve"
          "thirteen" "fourteen" "fifteen" "sixteen" "seventeen" "eighteen" "nineteen"]
         tens ["twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"]
 
-        ; concatenate function
+        ;; concatenate function
         to-words
         (fn to-words [n]
           (cond
@@ -222,12 +224,17 @@ Converts a string into a dimension x dimension vector of integers."
                          (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
             (= n 1000) "onethousand"))]
 
-    ; calculation
-    (->>                                                    ; threading macro
-     (range 1 1001)                                        ; for all numbers 1 to 1000
-     (map to-words)                                        ; map to corresponding string
-     (reduce str)                                          ; concatenate
-     count)))                                              ; count the number of chars
+    ;; calculation
+    ;; threading macro
+    (->>
+      ;; for all numbers 1 to 1000
+     (range 1 1001)
+      ;; map to corresponding string
+     (map to-words)
+      ;; concatenate
+     (reduce str)
+      ;; count the number of chars
+     count)))
 
 
 ;; # Problem 18 - Maximum path sum I
@@ -266,8 +273,8 @@ Converts a string into a dimension x dimension vector of integers."
 
     merge-rows
     (fn [a b]
-       ; look at the two elements in the row below it,
-       ; take the max of those two elements, and sum them to the original element.
+       ;; look at the two elements in the row below it,
+       ;; take the max of those two elements, and sum them to the original element.
       (map + (map #(reduce max %) (partition 2 1 a)) b))]
     (first (reduce merge-rows (reverse triangle)))))
 
