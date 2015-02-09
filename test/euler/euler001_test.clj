@@ -40,11 +40,11 @@
         (p005 10) => 2520
         (p005 20) => 232792560
         ; (fact-qc "p005-quickcheck"
-;          [n (gen/elements (vec (range 2 23)))] ; input: numbers
-;           (let [res (p005 n)                  ; result: smallest common multiple
-;           nums (range 2 (+ 1 n))              ; all divisors
-;           not-div-by? (fn [x] (not (= 0 (rem res x))))]
-;           filter not-div-by? nums => '()))
+        ;  [n (gen/elements (vec (range 2 23)))] ; input: numbers
+        ;   (let [res (p005 n)                  ; result: smallest common multiple
+        ;   nums (range 2 (+ 1 n))              ; all divisors
+        ;   not-div-by? (fn [x] (not (= 0 (rem res x))))]
+        ;   filter not-div-by? nums => '()))
         )
 
   (fact "Problem 6"
