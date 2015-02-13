@@ -20,7 +20,7 @@
 
   (fact "Problem 3"
         (p003 13195) => 29
-        (p003 600851475143) => 6857)
+        (p003) => 6857)
 
   (fact "Problem 4"
         (p004 100) => 9009
@@ -32,12 +32,12 @@
   (fact "Problem 5"
         (p005 10) => 2520
         (p005 20) => 232792560
-        ; (fact-qc "p005-quickcheck"
-        ;  [n (gen/elements (vec (range 2 23)))] ; input: numbers
-        ;   (let [res (p005 n)                  ; result: smallest common multiple
-        ;   nums (range 2 (+ 1 n))              ; all divisors
-        ;   not-div-by? (fn [x] (not (= 0 (rem res x))))]
-        ;   filter not-div-by? nums => '()))
+        (fact-qc "p005-quickcheck"
+         [n gen/int] ; input: numbers
+          (let [res (p005 n)                  ; result: smallest common multiple
+          nums (range 2 (+ 1 n))              ; all divisors
+          not-div-by? (fn [x] (not (= 0 (rem res x))))]
+          (filter not-div-by? nums) => '()))
         )
 
   (fact "Problem 6"
@@ -45,7 +45,9 @@
         (p006 100) => 25164150)
 
   (fact "Problem 7"
-        (p007 6) => 13;; (p007 10001) => 104743     ;; too slow - makes cloverage abort
+        (p007 6) => 13
+        (p007 10) => 29
+        (p007 10001) => 104743
 )  
 
   (fact "Problem 8"

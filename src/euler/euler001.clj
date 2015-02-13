@@ -40,11 +40,6 @@
 ;; - base case: ``fib(n <= 1) = n``  
 ;; - rec case: ``fib (n > 1) = fib(n - 1) + fib(n - 2)``
 
-(def fibs
-  "*(Int)*  
-  Lazy sequence of all Fibonacci numbers."
-  (lazy-cat [0 1] (map + (rest fibs) fibs)))
-
 (defn p002
   "*Int -> Int*  
   Retrieve the sum of all even Fibonacci numbers up to n."
@@ -64,23 +59,9 @@
 ;; **Task:**
 ;; What is the largest prime factor of the number 600851475143 ?
 
-(defn max-prime 
-  "Given a number n and a list of prime numbers ps, returns the largest prime factor of n."
-  [n ps]
-  ;; local variable - head of prime list
-  (let [div (first ps)]
-    (cond
-      ;; termination - found max prime
-      (= n div) div
-      (factor? n div) (max-prime (/ n div) ps)
-      ;; list eater
-      :else (max-prime n (rest ps)))))
-
-(defn p003 [n]
-  (max-prime n primes))
-
-;; calculation
-;; (p003-lazy 600851475143)
+(defn p003 
+  ([] (p003 600851475143))
+  ([n] (max-prime n primes)))
 
 
 ;; # Problem 4 - Largest palindrome product
@@ -163,17 +144,7 @@
 
 ;; type: number => number
 (defn p007 [n]
-  (->>
-    ;; for all positive integers
-   (range 1 Integer/MAX_VALUE)
-    ;; shortcut to remove even numbers
-   (take-nth 2)
-    ;; only prime numbers left
-   (filter prime?)
-    ;; realize n items
-   (take (dec n))
-    ;; pick the nth element
-   last))
+  (last (take n primes)))
 
 ;; calculation
 ;; (p007 10001)
