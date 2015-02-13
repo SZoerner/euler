@@ -20,14 +20,7 @@
 
   (fact "Problem 3"
         (p003 13195) => 29
-        ;; (p003 600851475143) => 6857 ; StackOverflow :(
-        (fact-qc "both algorithms return the same results"
-           [n (gen/such-that #(> % 1) gen/nat)]
-           (p003-lazy n) => (p003 n)))  
-
-  (fact "Problem 3"
-        (p003-lazy 13195) => 29
-        (p003-lazy 600851475143) => 6857)
+        (p003 600851475143) => 6857)
 
   (fact "Problem 4"
         (p004 100) => 9009

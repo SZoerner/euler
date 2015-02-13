@@ -1,4 +1,5 @@
-(ns euler.euler001)
+(ns euler.euler001
+  (:use euler.helper))
 
 ;; # Problem 1 - Multiples of 3 and 5
 ;;
@@ -9,20 +10,6 @@
 ;;
 ;; **Task**: 
 ;; Find the sum of all the multiples of 3 or 5 below 1000.
-
-(defn factor?
-  "*Int, Int -> Bool*  
-  Predicate that tests whether the divisor evenly divides the dividend."
-  [dividend divisor]
-  (zero? (mod dividend divisor)))
-
-(defn factor-any
-  "*(Int) -> Int -> Bool*  
-  Returns a predicate that tests whether its argument 
-  can be evenly divided by any of the divisors."
-  [& divisors]
-  (fn [argument]
-    (boolean (some #(factor? argument %) divisors))))
 
 (defn p001
   "*Int, (Int) -> Int* 
@@ -77,70 +64,20 @@
 ;; **Task:**
 ;; What is the largest prime factor of the number 600851475143 ?
 
-;; returns a list of factors
-(defn factors [n]
-  (let [lower (filter #(factor? n %)
-                      ;; calculate up to sqrt(n)
-                      (range 1 (inc (Math/sqrt n))))
-        ;; add the coresponding pairs by division
-        upper (map #(/ n %) lower)]
-    (set (concat lower upper))))
-
-;; predicate checking for prime numbers
-(defn prime? [n]
-  (= (count (factors n)) 2))
-
-;; predicate checking for prime number (using Java's BigInteger)
-(defn prime-java? [n]
-  ;; certainty of 5 - 96.875%
-  (.isProbablePrime (BigInteger/valueOf n) 5))
-
-
-;; iterative approach
-(defn get-primes
-  ;; entry point - one parameter
-  ([n]
-    ;; start with 2 and empty list
-   (get-primes n 2 '()))
-  ;; overloaded function
-  ([n p primes]
-   (cond
-      ;; no more factors - stop iteration
-     (< n p) primes
-      ;; if factor and prime (fun fact: 10x speedup changing the order)
-     (and (factor? n p) (prime? p))
-      ;; add to set of prime factors
-     (get-primes (/ n p) p (conj primes p))
-      ;; no match - next iteration
-     :else (get-primes n (inc p) primes))))
-
-(defn p003 [n]
-  (reduce max (get-primes n)))
-
-;; calculation
-;; (p003 600851475143)
-
-
-;; lazy stream approach
-(def lazy-primes
-  "lazy stream of prime numbers"
-  ;; filter primes
-  (filter prime?
-          ;; append all odd numbers to 2
-          (conj (iterate #(+ 2 %) 3) 2)))
-
-(defn max-prime [n primes]
+(defn max-prime 
+  "Given a number n and a list of prime numbers ps, returns the largest prime factor of n."
+  [n ps]
   ;; local variable - head of prime list
-  (let [div (first primes)]
+  (let [div (first ps)]
     (cond
       ;; termination - found max prime
       (= n div) div
-      (factor? n div) (max-prime (/ n div) primes)
+      (factor? n div) (max-prime (/ n div) ps)
       ;; list eater
-      :else (max-prime n (rest primes)))))
+      :else (max-prime n (rest ps)))))
 
-(defn p003-lazy [n]
-  (max-prime n lazy-primes))
+(defn p003 [n]
+  (max-prime n primes))
 
 ;; calculation
 ;; (p003-lazy 600851475143)
@@ -294,7 +231,7 @@
 
 (defn p010 [n]
   (->>
-   lazy-primes
+   primes
    (take-while #(< % n))
    (reduce +)))
 
