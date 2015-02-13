@@ -31,7 +31,7 @@
 
   (fact "Problem 5"
         (p005 10) => 2520
-        (p005 20) => 232792560
+        (p005) => 232792560
         (fact-qc "p005-quickcheck"
          [n gen/int] ; input: numbers
           (let [res (p005 n)                  ; result: smallest common multiple
@@ -42,12 +42,12 @@
 
   (fact "Problem 6"
         (p006 10) => 2640
-        (p006 100) => 25164150)
+        (p006) => 25164150)
 
   (fact "Problem 7"
         (p007 6) => 13
         (p007 10) => 29
-        (p007 10001) => 104743
+        (p007) => 104743
 )  
 
   (fact "Problem 8"

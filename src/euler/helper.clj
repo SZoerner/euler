@@ -103,3 +103,21 @@ Example: (prime-factors 12) => (2 2 3)"
 			:else (recur div factors cdr)))]
 		(step n [] (take-while #(< % n) primes))))
 
+
+(defn palindrome? 
+	"*Int -> Bool*  
+	Checks whether the given number n is a palindrome. 
+	Uses reversed string comparison"
+	[n] (= (str n) (clojure.string/reverse (str n))))
+
+
+(defn least-common-multiple
+	"*[Int] -> Int*  
+	Computes the smallest number divisible by all of the given input numbers."
+	[input] 
+	(->> input
+   (map #(frequencies (get-primes %)))
+   (apply merge-with max)
+   (map #(Math/pow (first %) (second %)))
+   (reduce *)
+   (int)))

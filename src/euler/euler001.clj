@@ -70,7 +70,9 @@
 ;; A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 ;; Find the largest palindrome made from the product of two 3-digit numbers.
 
-(defn p004 [n]
+(defn p004 
+  ([] (p004 1000))
+  ([n]
   ;; get the largest result of
   (reduce max
           (for [num1 (range n 0 -1)
@@ -79,13 +81,8 @@
                 ;; compute the product of the two
                 :let [pal (* num1 num2)]
                 ;; and filter those who are palindromes
-                :when (= (str pal)
-                         ;; by converting to string and compare to the reversed string
-                         (clojure.string/reverse (str pal)))]
-            pal)))
-
-;; calculation
-;(p004 1000)
+                :when (palindrome? pal)]
+            pal))))
 
 
 ;; # Problem 5 - Smallest multiple
@@ -99,17 +96,9 @@
 ;; reference for computing the least common multiple
 ;; http://en.wikipedia.org/wiki/Least_common_multiple
 
-(defn p005 [n]
-  (->>
-   (range (inc n))
-   (map #(frequencies (get-primes %)))
-   (apply merge-with max)
-   (map #(Math/pow (first %) (second %)))
-   (reduce *)
-   (int)))
-
-;; calculation
-;; (p005 20)
+(defn p005 
+  ([] (p005 20))
+  ([n] (least-common-multiple (range (inc n)))))
 
 
 ;; #Problem 6 - Sum square difference
@@ -122,17 +111,13 @@
 ;; **Task:**
 ;; Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
-(defn p006 [n]
-  (int (- (Math/pow (reduce + (range (inc n))) 2)
-          (reduce + (map #(Math/pow % 2) (range (inc n)))))))
-
-(defn p006 [n]
+(defn p006 
+  ([] (p006 100))
+  ([n]
   (let [nums (range (inc n))]
     (int (- (Math/pow (reduce + nums) 2)
-            (reduce + (map #(Math/pow % 2) nums))))))
+            (reduce + (map #(Math/pow % 2) nums)))))))
 
-;; calculation
-;; (p006 100)
 
 ;; # Problem 7 - 10001st prime
 ;; 
@@ -142,12 +127,9 @@
 ;; **Task:**
 ;; What is the 10 001st prime number?
 
-;; type: number => number
-(defn p007 [n]
-  (last (take n primes)))
-
-;; calculation
-;; (p007 10001)
+(defn p007 
+  ([] (p007 10001))
+  ([n] (last (take n primes))))
 
 
 ;; # Problem 8 - Largest product in a series
