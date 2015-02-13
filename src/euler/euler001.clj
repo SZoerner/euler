@@ -12,8 +12,6 @@
 ;; Find the sum of all the multiples of 3 or 5 below 1000.
 
 (defn p001
-  "*Int, (Int) -> Int* 
-  Sums up the multiples of all integers below limit."
   ([] (p001 1000 3 5))
   ([limit & divisors]
     ;; for the range 0 to (limit - 1)
@@ -41,8 +39,6 @@
 ;; - rec case: ``fib (n > 1) = fib(n - 1) + fib(n - 2)``
 
 (defn p002
-  "*Int -> Int*  
-  Retrieve the sum of all even Fibonacci numbers up to n."
   ([] (p002 (* 4 1000 1000)))
   ([n]
    (->> fibs
@@ -182,11 +178,10 @@
 ;; **Task:**
 ;; Find the sum of all the primes below two million.
 
-(defn p010 [n]
+(defn p010 
+  ([] (p010 2000000))
+  ([n]
   (->>
    primes
    (take-while #(< % n))
-   (reduce +)))
-
-;; calculation
-;; (p010 2000000)
+   (reduce +))))
