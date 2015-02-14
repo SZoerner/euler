@@ -163,9 +163,11 @@
             (recur (* rem 10) d
                    (conj acc div)
                    (conj rems rem)))))))
+(def kvs
+  (map #(vector % (count (rec-cycle 1 %)))
+                              (take 1000 (iterate dec 1000))))
 (defn p026 []
-  (reduce max-key second (map #(vector % (count (rec-cycle 1 %)))
-                              (take 1000 (iterate dec 1000)))))
+  (first (apply max-key second kvs)))
 
 
 ;; # Problem 27 - Quadratic primes
