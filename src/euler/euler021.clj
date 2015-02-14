@@ -131,26 +131,8 @@
 ;; 
 ;; **Task:** What is the first term in the Fibonacci sequence to contain 1000 digits?
 
-;; compute the nth element in the Fibonacci sequence
-;; overloaded function
-(defn- fib
-  ;; using Java's BigInteger
-  ([n] (if (zero? n) 0 (fib n (BigInteger. "0")
-                            ;; cached version using an accumulator
-                            (BigInteger. "1"))))
-  ;; with three parameters
-  ([n p0 p1]
-   (if (= n 1) p1 (fib (dec n) p1 (+ p0 p1)))))
-
 (defn p025 []
-  (->>
-   (iterate inc 1)
-   (drop-while
-    (comp
-     #(> 1000 %)
-     #(count (str %))
-     fib))
-   (first)))
+   (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs))))
 
 
 ;; # Problem 26 - Reciprocal cycles

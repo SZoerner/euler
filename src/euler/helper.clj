@@ -27,8 +27,8 @@
 
 (def fibs
   "*(Int)*  
-  Lazy sequence of all Fibonacci numbers."
-  (lazy-cat [0 1] (map + (rest fibs) fibs)))
+  Lazy sequence of all Fibonacci numbers. Using BigIntegers."
+  (lazy-cat [0N 1N] (map + (rest fibs) fibs)))
 
 (def primes
   "*[Int]*  
@@ -121,3 +121,8 @@ Example: (prime-factors 12) => (2 2 3)"
    (map #(Math/pow (first %) (second %)))
    (reduce *)
    (int)))
+
+(defn abundant?
+  "*Int -> Bool*  
+  Checks whether the sum of the factors of n is greater than n."
+  [n] (< n (reduce + (factors n))))

@@ -17,8 +17,8 @@
   (fact "Problem 24"
         (p024) => '(2 7 8 3 9 1 5 4 6 0))
 
-  ; (fact "Problem 25" ;; too slow - makes cloverage abort
-  ;     (p025) => 4782)                            ; n² + n + 41
+   (fact "Problem 25" ;; too slow - makes cloverage abort
+       (p025) => 4782)                            ; n² + n + 41
   
   ; (fact "Problem 27" ;; too slow - makes cloverage abort
   ;     (consec-primes 1 41) => 40                       ; n² + n + 41
