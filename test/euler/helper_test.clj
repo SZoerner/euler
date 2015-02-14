@@ -5,7 +5,7 @@
             [euler.helper :refer :all])
   (:use midje.sweet))
 
-; (deftest helper-tests
-;   (fact "prime-factors"
-;         (prime-factors 12) => (2 2 3)
-;         (prime-factors 123) => (2 2 2 3 5)))
+(deftest helper-tests
+  (fact "prime-factors"
+        (prime-factors 12) => '(2 2 3)
+        (prime-factors 123) => '(3 41)))

@@ -61,21 +61,16 @@
 
 ;; iterative approach
 (defn get-primes
-  ;; entry point - one parameter
-  ([n]
-    ;; start with 2 and empty list
-   (get-primes n 2 '()))
-  ;; overloaded function
-  ([n p primes]
+  ;; entry point - start with the list of primes and the empty vector as accumulator
+  ([n] (get-primes n primes [])) 
+  ([n ps acc]
    (cond
       ;; no more factors - stop iteration
-     (< n p) primes
-      ;; if factor and prime (fun fact: 10x speedup changing the order)
-     (and (factor? n p) (prime? p))
-      ;; add to set of prime factors
-     (get-primes (/ n p) p (conj primes p))
+     (< n (first ps)) acc
+      ;; if factor - add to set of prime factors
+     (factor? n (first ps)) (get-primes (/ n (first ps)) ps (conj acc (first ps)))
       ;; no match - next iteration
-     :else (get-primes n (inc p) primes))))
+     :else (get-primes n (rest ps) acc))))
 
 (defn max-prime 
   "*Int, [Int] -> Int*  
@@ -94,15 +89,12 @@
 "*Int -> [Int]*  
 Given a number, returns the list of prime factors of n.  
 Example: (prime-factors 12) => (2 2 3)"
-	[n]
-	(letfn [(step [div factors [car cdr]]
-		(cond 
-			(< div car) factors
-			(= 1 div) factors
-			(factor? div car) (recur (/ div car) (conj car factors) '(car cdr))
-			:else (recur div factors cdr)))]
-		(step n [] (take-while #(< % n) primes))))
-
+	([n] (prime-factors n [] primes))
+  ([num factors ps]         ;; TODO use destructuring
+    (cond 
+      (= 1 num) factors
+      (factor? num (first ps)) (prime-factors (/ num (first ps)) (conj factors (first ps)) ps)
+      :else (prime-factors num factors (rest ps)))))
 
 (defn palindrome? 
 	"*Int -> Bool*  

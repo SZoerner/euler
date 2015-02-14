@@ -207,7 +207,7 @@
     ;; returns a generator of the form: n² + an + b
    (map #(+ (* (+ % a) %) b))
     ;; filter as long as primes are generated
-   (take-while #(and (pos? %) (prime-java? %)))
+   (take-while #(and (pos? %) (prime? %)))
     ;; count # of primes
    (count)))
 
