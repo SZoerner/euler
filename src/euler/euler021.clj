@@ -1,4 +1,5 @@
-(ns euler.euler021)
+(ns euler.euler021
+  (:use euler.helper))
 
 ;; # Problem 21 - Amicable numbers
 ;; 
@@ -11,19 +12,21 @@
 ;; **Task:**
 ;; Evaluate the sum of all the amicable numbers under 10000.
 
-(defn p021 []
-  (let
-   [amicable
-    (fn [n]
-      (reduce + (filter #(zero? (mod n %)) (range 1 (inc (/ n 2))))))
+(defn amicable
+  ""
+    [n]
+      (reduce + (filter #(factor? n %) (range 1 (inc (/ n 2))))))
 
-    amicable?
-    (fn [a]
-      (let [b (amicable a)]
-        (if (and (= (amicable b) a) (not= a b))
-          [a b] ())))]
+(defn amicable?
+  [a]
+  (let [b (amicable a)]
+    (if (and (= (amicable b) a) (not= a b))
+      [a b] ())))
 
-    (reduce + (distinct (flatten (map amicable? (range 1 10001)))))))
+(defn p021 
+  ([] (p021 10000))
+  ([n]
+    (reduce + (distinct (flatten (map amicable? (range 1 (inc n))))))))
 
 
 ;; # Problem 22 - Names scores

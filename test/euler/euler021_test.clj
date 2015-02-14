@@ -4,8 +4,8 @@
   (:use midje.sweet))
 
 (deftest euler021-tests
-  ; (fact "Problem 21"
-  ;     (p021) => 31626) ;; too slow - makes cloverage abort
+  (fact "Problem 21"
+     (p021) => 31626) ;; too slow - makes cloverage abort
   
   (fact "Problem 22"
         (p022) => 871198282)
