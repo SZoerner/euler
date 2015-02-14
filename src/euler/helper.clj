@@ -16,14 +16,14 @@
 
 ;; returns a list of factors
 (defn factors 
-"*Int -> [Int]*"
-	[n]
+  "*Int -> [Int]*"
+  [n]
   (lazy-seq (let [lower (filter #(factor? n %)
                       ;; calculate up to sqrt(n)
-                      (range 1 (inc (Math/sqrt n))))
+                                (range 1 (inc (Math/sqrt n))))
         ;; add the coresponding pairs by division
-        upper (map #(/ n %) lower)]
-    (set (concat lower upper)))))
+                  upper (map #(/ n %) lower)]
+              (set (concat lower upper)))))
 
 (def fibs
   "*(Int)*  
@@ -54,9 +54,9 @@
 
 
 (defn prime?
-	"*Int -> Bool*  
+  "*Int -> Bool*  
 	Checks whether a given number n is a prime number."
-	[n]
+  [n]
   (= (count (factors n)) 2))
 
 ;; iterative approach
@@ -86,33 +86,33 @@
       :else (max-prime n (rest ps)))))
 
 (defn prime-factors 
-"*Int -> [Int]*  
+  "*Int -> [Int]*  
 Given a number, returns the list of prime factors of n.  
 Example: (prime-factors 12) => (2 2 3)"
-	([n] (prime-factors n [] primes))
+  ([n] (prime-factors n [] primes))
   ([num factors ps]         ;; TODO use destructuring
-    (cond 
-      (= 1 num) factors
-      (factor? num (first ps)) (prime-factors (/ num (first ps)) (conj factors (first ps)) ps)
-      :else (prime-factors num factors (rest ps)))))
+   (cond 
+     (= 1 num) factors
+     (factor? num (first ps)) (prime-factors (/ num (first ps)) (conj factors (first ps)) ps)
+     :else (prime-factors num factors (rest ps)))))
 
 (defn palindrome? 
-	"*Int -> Bool*  
+  "*Int -> Bool*  
 	Checks whether the given number n is a palindrome. 
 	Uses reversed string comparison"
-	[n] (= (str n) (clojure.string/reverse (str n))))
+  [n] (= (str n) (clojure.string/reverse (str n))))
 
 
 (defn least-common-multiple
-	"*[Int] -> Int*  
+  "*[Int] -> Int*  
 	Computes the smallest number divisible by all of the given input numbers."
-	[input] 
-	(->> input
-   (map #(frequencies (get-primes %)))
-   (apply merge-with max)
-   (map #(Math/pow (first %) (second %)))
-   (reduce *)
-   (int)))
+  [input] 
+  (->> input
+       (map #(frequencies (get-primes %)))
+       (apply merge-with max)
+       (map #(Math/pow (first %) (second %)))
+       (reduce *)
+       (int)))
 
 (defn abundant?
   "*Int -> Bool*  

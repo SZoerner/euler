@@ -70,15 +70,15 @@
   ([] (p004 1000))
   ([n]
   ;; get the largest result of
-  (reduce max
-          (for [num1 (range n 0 -1)
+   (reduce max
+           (for [num1 (range n 0 -1)
                 ;; all numbers from 100 to 1000
-                num2 (range n 0 -1)
+                 num2 (range n 0 -1)
                 ;; compute the product of the two
-                :let [pal (* num1 num2)]
+                 :let [pal (* num1 num2)]
                 ;; and filter those who are palindromes
-                :when (palindrome? pal)]
-            pal))))
+                 :when (palindrome? pal)]
+             pal))))
 
 
 ;; # Problem 5 - Smallest multiple
@@ -110,9 +110,9 @@
 (defn p006 
   ([] (p006 100))
   ([n]
-  (let [nums (range (inc n))]
-    (int (- (Math/pow (reduce + nums) 2)
-            (reduce + (map #(Math/pow % 2) nums)))))))
+   (let [nums (range (inc n))]
+     (int (- (Math/pow (reduce + nums) 2)
+             (reduce + (map #(Math/pow % 2) nums)))))))
 
 
 ;; # Problem 7 - 10001st prime
@@ -181,7 +181,7 @@
 (defn p010 
   ([] (p010 2000000))
   ([n]
-  (->>
-   primes
-   (take-while #(< % n))
-   (reduce +))))
+   (->>
+    primes
+    (take-while #(< % n))
+    (reduce +))))

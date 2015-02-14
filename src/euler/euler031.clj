@@ -19,6 +19,6 @@
           (cond (zero? n) 1                                 ; valid combination
                 (neg? n) 0                                  ; no valid combination
                 :else (if (< n (first coins))               ; first item is bigger than n
-                          (step n (rest coins))
-                          (reduce + (map #(step n %) coins)))))]
+                        (step n (rest coins))
+                        (reduce + (map #(step n %) coins)))))]
     (step n '(200 100 50 20 10 5 2 1))))

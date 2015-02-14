@@ -14,8 +14,8 @@
 
 (defn amicable
   ""
-    [n]
-      (reduce + (filter #(factor? n %) (range 1 (inc (/ n 2))))))
+  [n]
+  (reduce + (filter #(factor? n %) (range 1 (inc (/ n 2))))))
 
 (defn amicable?
   [a]
@@ -26,7 +26,7 @@
 (defn p021 
   ([] (p021 10000))
   ([n]
-    (reduce + (distinct (flatten (map amicable? (range 1 (inc n))))))))
+   (reduce + (distinct (flatten (map amicable? (range 1 (inc n))))))))
 
 
 ;; # Problem 22 - Names scores
@@ -132,7 +132,7 @@
 ;; **Task:** What is the first term in the Fibonacci sequence to contain 1000 digits?
 
 (defn p025 []
-   (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs))))
+  (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs))))
 
 
 ;; # Problem 26 - Reciprocal cycles
@@ -165,7 +165,7 @@
                    (conj rems rem)))))))
 (def kvs
   (map #(vector % (count (rec-cycle 1 %)))
-                              (take 1000 (iterate dec 1000))))
+       (take 1000 (iterate dec 1000))))
 (defn p026 []
   (first (apply max-key second kvs)))
 
