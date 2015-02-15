@@ -12,15 +12,15 @@ My Project Euler solutions, written in Clojure
 ## Code Quality
 
 - This project runs example-based tests using [Midje](https://github.com/marick/Midje), as well as property-based tests via [clojure.test.check](https://github.com/clojure/test.check).
-- Test coverage ist tracked via [Cloverage](https://github.com/lshift/cloverage) (for compatibility, midje tests are wrapped in ``deftest`` blocks).
-- Dependencies are checked for updates with [VersionEye](https://www.versioneye.com/).
+- [Test coverage](https://coveralls.io/r/SZoerner/euler?branch=master) ist tracked via [Cloverage](https://github.com/lshift/cloverage) (for compatibility, midje tests are wrapped in ``deftest`` blocks).
+- [Dependencies](http://jarkeeper.com/szoerner/euler) are checked for updates with [Jarkeeper](http://jarkeeper.com/).
 
 ## Documentation
 > No one will give a crap about your crap if your documentation is crap  
 > – [fogus](http://blog.fogus.me/2011/01/05/the-marginalia-manifesto/)
 
-- [Codox](https://github.com/weavejester/codox) is used for API documentation.
-- [Marginalia](https://github.com/gdeer81/marginalia) to support (almost) literate programming.
+- [Marginalia](https://github.com/gdeer81/marginalia) supports (almost) [literate programming](http://szoerner.github.io/euler/uberdoc).
+- [Codox](https://github.com/weavejester/codox) is used for [API documentation](http://szoerner.github.io/euler/codox/).
 
 ## Inspiration
 
