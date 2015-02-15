@@ -13,8 +13,10 @@
                                             [midje-notifier "0.2.0"]
                                             [org.clojure/test.check "0.7.0"]]}}
             :marginalia {:css ["marg.css"]
-                         :javascript ["http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]}
+                         :javascript ["http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]
+                         :dir ["doc"]}
             :codox {:defaults {:doc/format :markdown}
                     :sources ["src"]
+                    :output-dir "doc/codox"
                     :src-dir-uri "https://github.com/SZoerner/euler/blob/master/"
                     :src-linenum-anchor-prefix "L"})

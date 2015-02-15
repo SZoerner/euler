@@ -9,9 +9,18 @@ cd `dirname $0`
 # latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
 # git checkout $latestTag
 
-lein doc
+# To be sure you're on the right branch
+git checkout gh-pages 
 cd ../doc
-git checkout gh-pages # To be sure you're on the right branch
+
+# remove everything except the .git directory
+ls -1 | grep -v '.git' | xargs rm -rf 
+
+# generate the docs
+lein doc
+lein marg -d "./doc"
+
+# create a new commit
 git add .
 git commit -am "new documentation push."
 git push -u origin gh-pages
