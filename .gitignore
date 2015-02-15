@@ -1,5 +1,0 @@
-.lein-failures
-.lein-repl-history
-.nrepl-port
-/target/
-/doc/
