@@ -10,8 +10,8 @@ cd `dirname $0`
 # git checkout $latestTag
 
 # To be sure you're on the right branch
-git checkout gh-pages 
 cd ../doc
+git checkout gh-pages 
 
 # remove everything except the .git directory
 ls -1 | grep -v '.git' | xargs rm -rf 
