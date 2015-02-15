@@ -5,9 +5,9 @@ set -e
 # https://github.com/weavejester/codox/wiki/Deploying-to-GitHub-Pages
 cd `dirname $0`
 
-git fetch --tags
-latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
-git checkout $latestTag
+# git fetch --tags
+# latestTag=$(git describe --tags `git rev-list --tags --max-count=1`)
+# git checkout $latestTag
 
 lein doc
 cd ../doc
