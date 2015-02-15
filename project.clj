@@ -12,7 +12,8 @@
             :profiles {:dev {:dependencies [[midje "1.6.3"]
                                             [midje-notifier "0.2.0"]
                                             [org.clojure/test.check "0.7.0"]]}}
-            :marginalia {:css ["marg.css"]}
+            :marginalia {:css ["marg.css"]
+                         :javascript ["http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]}
             :codox {:defaults {:doc/format :markdown}
                     :sources ["src"]
                     :src-dir-uri "https://github.com/SZoerner/euler/blob/master/"
