@@ -17,8 +17,9 @@
   (fact "Problem 24"
         (p024) => '(2 7 8 3 9 1 5 4 6 0))
 
-  (fact "Problem 25" ;; too slow - makes cloverage abort
-        (p025) => 4782)                            ; n² + n + 41
+  (fact "Problem 25" 
+        (p025) => 4782   ;; too slow - makes cloverage abort
+        )
   
   (fact "Problem 26"
         (rec-cycle 1 6) => '(6)
@@ -26,9 +27,10 @@
         (p026) => 983)
   
   (fact "Problem 27" ;; too slow - makes cloverage abort
-        (consec-primes 1 41) => 40                       ; n² + n + 41
-        (consec-primes -79 1601) => 80                    ; n² − 79n + 1601
-        (p027) => -59231)                              ; spoiler alert!
+        ; (consec-primes 1 41) => 40                       ; n² + n + 41
+        ; (consec-primes -79 1601) => 80                    ; n² − 79n + 1601
+        ; (p027) => -59231
+        )                              
   
   (fact "Problem 28"
         (p028 3) => 25
