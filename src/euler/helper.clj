@@ -64,7 +64,6 @@
                        (next-prime (+ x 2) (assoc sieve (* x x) (* x 2))))))))]
     (cons 2 (lazy-seq (next-prime 3 {})))))
 
-
 (defn prime?
   "*Int -> Bool*  
 	Checks whether a given number n is a prime number."
@@ -114,7 +113,6 @@ Example: (prime-factors 12) => (2 2 3)"
 	Uses reversed string comparison"
   [n] (= (str n) (clojure.string/reverse (str n))))
 
-
 (defn least-common-multiple
   "*[Int] -> Int*  
 	Computes the smallest number divisible by all of the given input numbers."
@@ -140,3 +138,12 @@ Example: (prime-factors 12) => (2 2 3)"
   "*Int -> Bool*  
   Checks whether the sum of the factors of n is greater than n."
   [n] (< n (reduce + (divisors n))))
+
+(defn sum-of-abundants?
+  "Int, Set[Number] -> Boolean - are there two elements in abundants which sum is i?"
+  [i abundants]
+  (some (fn [a] (abundants (- i a))) abundants))
+
+(def phi 
+  "The Golden Ratio - (1+sqrt5)/2."
+  (/ (+ 1 (Math/sqrt 5)) 2))

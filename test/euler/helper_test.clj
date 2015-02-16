@@ -8,4 +8,8 @@
 (deftest helper-tests
   (fact "prime-factors"
         (prime-factors 12) => '(2 2 3)
-        (prime-factors 123) => '(3 41)))
+        (prime-factors 123) => '(3 41))
+  
+  (fact "amicable"
+  	    (amicable? 220) => [220 284]
+        (amicable? 284) => [284 220]))

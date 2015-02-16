@@ -65,18 +65,6 @@
 ;; **Task:**  
 ;; Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
-
-; (defn abundant?
-;   "Int -> Bool - is n an abundant number?"
-;   [n]
-;   ;(< n (sum-of-factors n))
-;   (< n (reduce + (divisors n))))
-
-(defn sum-of-abundants?
-  "Int, Set[Number] -> Boolean - are there two elements in abundants which sum is i?"
-  [i abundants]
-  (some (fn [a] (abundants (- i a))) abundants))
-
 (defn p023
   ([] (p023 (range 1 (inc 28123))))
   ([input]
@@ -122,9 +110,15 @@
 ;;
 ;; **Task:** What is the first term in the Fibonacci sequence to contain 1000 digits?
 
-(defn p025 []
-  (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs))))
-
+(defn p025 
+  "Fibonacci terms converge to (n)*Phi=(n+1), where Phi is the Golden Ratio (1+sqrt5)/2."
+  ([] (p025 1000))
+  ([n] (int (Math/ceil 
+                  (/ (+ (dec n) (Math/log10 (Math/sqrt 5))) 
+                     (Math/log10 phi))))))
+;; brute force - too slow
+;; (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs)))) 
+  
 
 ;; # Problem 26 - Reciprocal cycles
 ;;
