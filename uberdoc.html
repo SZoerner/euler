@@ -3300,53 +3300,50 @@ Find the sum of the digits in the number 100!</p>
 </td><td class="codes"><pre class="brush: clojure">(ns euler.euler021
   (:use euler.helper))</pre></td></tr><tr><td class="docs"><h1>Problem 21 - Amicable numbers</h1>
 
-<p><strong>Description:</strong> 
+<p><strong>Description:</strong> <br />
 Let d(n) be defined as the sum of proper divisors of n (numbers less than n which divide evenly into n).
 If d(a) = b and d(b) = a, where a ≠ b, then a and b are an amicable pair and each of a and b are called amicable numbers.
 For example, the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44, 55 and 110; therefore d(220) = 284.
 The proper divisors of 284 are 1, 2, 4, 71 and 142; so d(284) = 220.</p>
 
-<p><strong>Task:</strong>
+<p><strong>Task:</strong> <br />
 Evaluate the sum of all the amicable numbers under 10000.</p>
 </td><td class="codes"></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn amicable
-  [n]
-  (reduce + (filter #(factor? n %) (range 1 (inc (/ n 2))))))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn amicable?
-  [a]
-  (let [b (amicable a)]
-    (if (and (= (amicable b) a) (not= a b))
-      [a b] ())))</pre></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn p021 
+</td><td class="codes"><pre class="brush: clojure">(defn p021
   ([] (p021 10000))
-  ([n]
-   (reduce + (distinct (flatten (map amicable? (range 1 (inc n))))))))</pre></td></tr><tr><td class="docs"><h1>Problem 22 - Names scores</h1>
+  ([n] (-&gt;&gt; (range 1 (inc n))
+            (map amicable?)
+            (flatten)
+            (distinct)
+            (reduce +))))</pre></td></tr><tr><td class="docs"><h1>Problem 22 - Names scores</h1>
 
-<p><strong>Description:</strong> 
+<p><strong>Description:</strong> <br />
 Using 'http://projecteuler.net/project/names.txt', a 46K text file containing over five-thousand first names, begin by sorting it into alphabetical order.
 Then working out the alphabetical value for each name, multiply this value by its alphabetical position in the list to obtain a name score.
 For example, when the list is sorted into alphabetical order, COLIN, which is worth 3 + 15 + 12 + 9 + 14 = 53, is the 938th name in the list.
 So, COLIN would obtain a score of 938 × 53 = 49714.</p>
 
-<p><strong>Task:</strong>
+<p><strong>Task:</strong> <br />
 What is the total of all the name scores in the file?</p>
 </td><td class="codes"></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn p022 []
-  (let
-   [input (sort (re-seq #&quot;\w+&quot; (slurp &quot;resources/p022_names.txt&quot;)))
-     ;; sum of the numerical representation of each character
-    get-value (fn [name]
-                (-&gt;&gt; name
-                     (map int)
-                     (map #(- % 64))
-                     (reduce +)))
-     ;; get the position
-    get-index (fn [name]
-                (inc (.indexOf input name)))]
-    ;; compute the product of value and position
-    (reduce + (map #(* (get-index %) (get-value %)) input))))</pre></td></tr><tr><td class="docs"><h1>Problem 23 - Non-abundant sums</h1>
+</td><td class="codes"><pre class="brush: clojure">(defn p022
+  ([] (p022 (re-seq #&quot;\w+&quot; (slurp &quot;resources/p022_names.txt&quot;))))
+  ([names]
+    (let
+        [input (sort names)
+         ;; sum of the numerical representation of each character
+         get-value (fn [name]
+                     (-&gt;&gt; name
+                          (map int)
+                          (map #(- % 64))
+                          (reduce +)))
+         ;; get the position
+         get-index (fn [name]
+                     (inc (.indexOf input name)))]
+      ;; compute the product of value and position
+      (reduce + (map #(* (get-index %) (get-value %)) input)))))</pre></td></tr><tr><td class="docs"><h1>Problem 23 - Non-abundant sums</h1>
 
-<p><strong>Description:</strong> 
+<p><strong>Description:</strong> <br />
 A perfect number is a number for which the sum of its proper divisors is exactly equal to the number.
 For example, the sum of the proper divisors of 28 would be 1 + 2 + 4 + 7 + 14 = 28, which means that 28 is a perfect number.
 A number n is called deficient if the sum of its proper divisors is less than n and it is called abundant if this sum exceeds n.</p>
@@ -3356,39 +3353,28 @@ By mathematical analysis, it can be shown that all integers greater than 28123 c
 However, this upper limit cannot be reduced any further by analysis even though it is known that the greatest number
 that cannot be expressed as the sum of two abundant numbers is less than this limit.</p>
 
-<p><strong>Task:</strong>
+<p><strong>Task:</strong> <br />
 Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.</p>
 </td><td class="codes"></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn p023 []
-  (let
-    ;; Number -&gt; List[Numbers] - divisors of n (excluding n)
-   [divisors
-    (fn [n]
-      (filter #(zero? (mod n %)) (range 1 n)))
-     ;; Number -&gt; Boolean - is n an abundant number?
-    abundant?
-    (fn [n]
-      (&lt; n (reduce + (divisors n))))
-     ;; Number, Set[Number] -&gt; Boolean - are there two elements in abundants which sum is i?
-    sum-of-abundants?
-    (fn [i abundants]
-      (some (fn [a] (abundants (- i a))) abundants))
-     ;; List[Numbers] - input numbers from 1 up to 28124
-    input (range 1 (inc 28123))
-     ;; Set[Numbers] - all abundant numbers up to input
-    abundants (into (sorted-set) (filter abundant? input))]
-    ;; calculation - sum up all 'non-abundant-sums' up to input
-    (reduce + (filter #(not (sum-of-abundants? % abundants)) input))))</pre></td></tr><tr><td class="docs"><h1>Problem 24 - Lexicographic permutations</h1>
+</td><td class="codes"><pre class="brush: clojure">(defn p023
+  ([] (p023 (range 1 (inc 28123))))
+  ([input]
+    (let 
+        [
+         ;; Set[Numbers] - all abundant numbers up to input
+         abundants (into (sorted-set) (filter abundant? input))]
+      ;; calculation - sum up all 'non-abundant-sums' up to input
+      (reduce + (filter #(not (sum-of-abundants? % abundants)) input)))))</pre></td></tr><tr><td class="docs"><h1>Problem 24 - Lexicographic permutations</h1>
 
-<p><strong>Description:</strong> 
+<p><strong>Description:</strong> <br />
 A permutation is an ordered arrangement of objects. For example, 3124 is one possible permutation of the digits 1, 2, 3 and 4.
 If all of the permutations are listed numerically or alphabetically, we call it lexicographic order.
 The lexicographic permutations of 0, 1 and 2 are: 012   021   102   120   201   210</p>
 
-<p><strong>Task:</strong>
+<p><strong>Task:</strong> <br />
 What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?</p>
 
-<p><strong>Background:</strong>
+<p><strong>Background:</strong> <br />
 http://clojure-euler.wikispaces.com/Problem+024
 With n elements, there are n! permutations; grouping based on the first element in the permutation, there are n permutation groups,
 each of size (n-1)! . To find the first element of the ith permutation is therefore to find its first element (quotient of (i-1) and n),
@@ -3406,11 +3392,16 @@ To avoid having to subtract by 1 each time, the recursive loop uses 0-based inde
   (permute-nth (range 10) (dec 1000000)))</pre></td></tr><tr><td class="docs"><h1>Problem 25 - 1000-digit Fibonacci number</h1>
 
 <p><strong>Task:</strong> What is the first term in the Fibonacci sequence to contain 1000 digits?</p>
-</td><td class="codes"></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn p025 []
-  (.indexOf fibs (first (drop-while #(&gt; 1000 (count (str %))) fibs))))</pre></td></tr><tr><td class="docs"><h1>Problem 26 - Reciprocal cycles</h1>
+</td><td class="codes"></td></tr><tr><td class="docs"><p>Fibonacci terms converge to (n)*Phi=(n+1), where Phi is the Golden Ratio (1+sqrt5)/2.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn p025 
+  ([] (p025 1000))
+  ([n] (int (Math/ceil 
+                  (/ (+ (dec n) (Math/log10 (Math/sqrt 5))) 
+                     (Math/log10 phi))))))</pre></td></tr><tr><td class="docs"><p>brute force - too slow
+(.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs)))) </p>
+</td><td class="codes"></td></tr><tr><td class="docs"><h1>Problem 26 - Reciprocal cycles</h1>
 
-<p><strong>Description:</strong> 
+<p><strong>Description:</strong> <br />
 A unit fraction contains 1 in the numerator.
 The decimal representation of the unit fractions with denominators 2 to 10 are given:</p>
 
@@ -3422,7 +3413,7 @@ The decimal representation of the unit fractions with denominators 2 to 10 are g
 
 <p>Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle. It can be seen that 1/7 has a 6-digit recurring cycle.</p>
 
-<p><strong>Task:</strong>
+<p><strong>Task:</strong> <br />
 Find the value of d &lt; 1000 for which 1/d contains the longest recurring cycle in its decimal fraction part.</p>
 </td><td class="codes"></td></tr><tr><td class="docs"><p>find the longest recurring cycle in a fraction</p>
 </td><td class="codes"><pre class="brush: clojure">(defn rec-cycle [n d]
@@ -3441,15 +3432,15 @@ Find the value of d &lt; 1000 for which 1/d contains the longest recurring cycle
 (defn p026 []
   (first (apply max-key second kvs)))</pre></td></tr><tr><td class="docs"><h1>Problem 27 - Quadratic primes</h1>
 
-<p><strong>Description:</strong> 
+<p><strong>Description:</strong> <br />
 Euler discovered the remarkable quadratic formula:</p>
 
 <p>n² + n + 41</p>
 
-<p>It turns out that the formula will produce 40 primes for the consecutive values n = 0 to 39. 
+<p>It turns out that the formula will produce 40 primes for the consecutive values n = 0 to 39.
 However, when n = 40, 402 + 40 + 41 = 40(40 + 1) + 41 is divisible by 41, and certainly when n = 41, 41² + 41 + 41 is clearly divisible by 41.</p>
 
-<p>The incredible formula  n² − 79n + 1601 was discovered, which produces 80 primes for the consecutive values n = 0 to 79. 
+<p>The incredible formula  n² − 79n + 1601 was discovered, which produces 80 primes for the consecutive values n = 0 to 79.
 The product of the coefficients, −79 and 1601, is −126479.
 Considering quadratics of the form:</p>
 
@@ -3458,8 +3449,8 @@ Considering quadratics of the form:</p>
 <p>where |n| is the modulus/absolute value of n
 e.g. |11| = 11 and |−4| = 4</p>
 
-<p><strong>Task:</strong>
-Find the product of the coefficients, a and b, for the quadratic expression that produces 
+<p><strong>Task:</strong> <br />
+Find the product of the coefficients, a and b, for the quadratic expression that produces
 the maximum number of primes for consecutive values of n, starting with n = 0.</p>
 </td><td class="codes"></td></tr><tr><td class="docs"><p>predicate checking for prime number (using Java's BigInteger)</p>
 </td><td class="codes"><pre class="brush: clojure">(defn- prime-java? [n]
@@ -3488,7 +3479,7 @@ the maximum number of primes for consecutive values of n, starting with n = 0.</
         [a b _] (reduce #(if (&gt; (nth %1 2) (nth %2 2)) %1 %2) quads)]
     (* a b)))</pre></td></tr><tr><td class="docs"><h1>Problem 28 - Number spiral diagonals</h1>
 
-<p><strong>Description:</strong>
+<p><strong>Description:</strong> <br />
 Starting with the number 1 and moving to the right in a clockwise direction
 a 5 by 5 spiral is formed as follows:</p>
 </td><td class="codes"></td></tr><tr><td class="docs"><p>21 22 23 24 25
@@ -3498,10 +3489,12 @@ a 5 by 5 spiral is formed as follows:</p>
 17 16 15 14 13</p>
 </td><td class="codes"></td></tr><tr><td class="docs"><p>It can be verified that the sum of the numbers on the diagonals is 101.</p>
 
-<p><strong>Task:</strong>
+<p><strong>Task:</strong> <br />
 What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed in the same way?</p>
 </td><td class="codes"></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn p028 [n]
+</td><td class="codes"><pre class="brush: clojure">(defn p028 
+  ([] (p028 1001))
+  ([n]
   ;; precondition: spirals can only have an odd length
   {:pre [(odd? n)]}
   ;; base case: f(1) = 1
@@ -3513,23 +3506,25 @@ What is the sum of the numbers on the diagonals in a 1001 by 1001 spiral formed 
                 ;; take four values per 'ring'
                (take 4
                       ;; creating 'ring': from n * n, decrementing in steps of n- 1
-                     (iterate #(- % (dec n)) (* n n)))))))</pre></td></tr><tr><td class="docs"><h1>Problem 29 - Distinct powers</h1>
+                     (iterate #(- % (dec n)) (* n n))))))))</pre></td></tr><tr><td class="docs"><h1>Problem 29 - Distinct powers</h1>
 
-<p><strong>Description:</strong> 
+<p><strong>Description:</strong> <br />
 Consider all integer combinations of ab for 2 ≤ a ≤ 5 and 2 ≤ b ≤ 5:</p>
 
-<p>22=4, 23=8, 24=16, 25=32
-32=9, 33=27, 34=81, 35=243
-42=16, 43=64, 44=256, 45=1024
-52=25, 53=125, 54=625, 55=3125
+<p>2^2=4,  2^3=8,   2^4=16,  2^5=32
+3^2=9,  3^3=27,  3^4=81,  3^5=243
+4^2=16, 4^3=64,  4^4=256, 4^5=1024
+5^2=25, 5^3=125, 5^4=625, 5^5=3125
 If they are then placed in numerical order, with any repeats removed, we get the following sequence of 15 distinct terms:</p>
 
 <p>4, 8, 9, 16, 25, 27, 32, 64, 81, 125, 243, 256, 625, 1024, 3125</p>
 
-<p><strong>Task:</strong>
+<p><strong>Task:</strong> <br />
 How many distinct terms are in the sequence generated by ab for 2 ≤ a ≤ 100 and 2 ≤ b ≤ 100?</p>
 </td><td class="codes"></td></tr><tr><td class="docs">
-</td><td class="codes"><pre class="brush: clojure">(defn p029 [n]
+</td><td class="codes"><pre class="brush: clojure">(defn p029 
+  ([] (p029 100))
+  ([n]
   (-&gt;&gt;
     ;; typical list comprehension problem
    (for [a (range 2 (inc n))
@@ -3540,9 +3535,9 @@ How many distinct terms are in the sequence generated by ab for 2 ≤ a ≤ 100 
     ;; distinct elements
    (set)
     ;; count them
-   (count)))</pre></td></tr><tr><td class="docs"><h1>Problem 30 - Digit fifth powers</h1>
+   (count))))</pre></td></tr><tr><td class="docs"><h1>Problem 30 - Digit fifth powers</h1>
 
-<p><strong>Description:</strong> 
+<p><strong>Description:</strong> <br />
 Surprisingly there are only three numbers that can be written as the sum of fourth powers of their digits:</p>
 
 <p>1634 = 1^4 + 6^4 + 3^4 + 4^4
@@ -3552,24 +3547,14 @@ As 1 = 1^4 is not a sum it is not included.</p>
 
 <p>The sum of these numbers is 1634 + 8208 + 9474 = 19316.</p>
 
-<p><strong>Task:</strong>
+<p><strong>Task:</strong> <br />
 Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.</p>
 </td><td class="codes"></td></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(defn p030 [exp]
   ;; predicate checking for being a sum of powers
-  (let [powers?
-        (fn [n]
-          (-&gt;&gt; (str n)
-               ;; convert to list of digits
-               (map #(Character/digit % 10))
-               (map #(Math/pow % exp))
-               (reduce +)
-               ;; cast to in for comparison
-               (int)
-               (= n)))]
-    (reduce + (filter powers?
+    (reduce + (filter #(narcissistic? % exp)
                       ;; not really sure what the upper limit is..
-                      (range 2 (Math/pow 10 (inc exp)))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#euler.euler031" name="euler.euler031"><h1 class="project-name">euler.euler031</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
+                      (range 2 (Math/pow 10 (inc exp))))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr><tr><td class="docs"><div class="docs-header"><a class="anchor" href="#euler.euler031" name="euler.euler031"><h1 class="project-name">euler.euler031</h1><a class="toc-link" href="#toc">toc</a></a></div></td><td class="codes" /></tr><tr><td class="docs">
 </td><td class="codes"><pre class="brush: clojure">(ns euler.euler031)</pre></td></tr><tr><td class="docs"><h1>Problem 31 - Coin sums</h1>
 
 <p><strong>Description:</strong> 
@@ -3597,27 +3582,35 @@ How many different ways can £2 be made using any number of coins?</p>
 </td><td class="codes"><pre class="brush: clojure">(defn factor?
   [dividend divisor]
   (zero? (mod dividend divisor)))</pre></td></tr><tr><td class="docs"><p><em>[Int] -> Int -> Bool</em> <br />
-  Returns a predicate that tests whether its argument 
+  Returns a predicate that tests whether its argument
   can be evenly divided by any of the divisors.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn factor-any
   [&amp; divisors]
   (fn [argument]
-    (boolean (some #(factor? argument %) divisors))))</pre></td></tr><tr><td class="docs"><p><em>Int -> [Int]</em></p>
-
-<p>returns a list of factors</p>
-</td><td class="codes"><pre class="brush: clojure">(defn factors 
+    (boolean (some #(factor? argument %) divisors))))</pre></td></tr><tr><td class="docs"><p>Int -> [Int] - divisors of n (excluding n)</p>
+</td><td class="codes"><pre class="brush: clojure">(defn divisors 
   [n]
-  (lazy-seq (let [lower (filter #(factor? n %)
-                      ;; calculate up to sqrt(n)
-                                (range 1 (inc (Math/sqrt n))))
-        ;; add the coresponding pairs by division
-                  upper (map #(/ n %) lower)]
-              (set (concat lower upper)))))</pre></td></tr><tr><td class="docs"><p><em>(Int)</em> <br />
+  ; (conj (factors n 2) 1)
+  (filter #(zero? (mod n %)) (range 1 n)))</pre></td></tr><tr><td class="docs"><p><em>Int -> [Int]</em></p>
+
+<p>returns a list of factors
+TODO - different from divisors ??? use for abundant?</p>
+</td><td class="codes"><pre class="brush: clojure">(defn factors
+  ([n] (factors 1))
+  ([n start]
+    (lazy-seq (let [lower (filter #(factor? n %)
+                                  ;; calculate up to sqrt(n)
+                                  (range start (inc (Math/sqrt n))))
+                    ;; add the coresponding pairs by division
+                    upper (map #(/ n %) lower)]
+                (set (concat lower upper))))))</pre></td></tr><tr><td class="docs"><p>Returns the list of proper divisors of n, excluding n.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn proper-divisors
+  [n] (take-while #(not= n %) (factors n)))</pre></td></tr><tr><td class="docs"><p><em>(Int)</em> <br />
   Lazy sequence of all Fibonacci numbers. Using BigIntegers.</p>
 </td><td class="codes"><pre class="brush: clojure">(def fibs
   (lazy-cat [0N 1N] (map + (rest fibs) fibs)))</pre></td></tr><tr><td class="docs"><p><em>[Int]</em> <br />
-  Lazy stream of prime numbers, generated by the sieve of Eratosthenes algorithm. <br />
-  Internally stores in a hastable the next composite number corresponding to the prime number. <br />
+  Lazy stream of prime numbers, generated by the sieve of Eratosthenes algorithm.
+  Internally stores in a hastable the next composite number corresponding to the prime number.
   Taken from http://voidmainargs.blogspot.de/2010/12/lazy-sieve-eratosthenes-in-scala-and.html</p>
 </td><td class="codes"><pre class="brush: clojure">(def primes
   (letfn [(next-composite [x step sieve]
@@ -3626,14 +3619,14 @@ How many different ways can £2 be made using any number of coins?</p>
               (recur (+ x step) step sieve)
             ;; brand new composite number
               (assoc sieve x step)))
-          (next-prime [x sieve] 
-            (let [step (sieve x)]         
+          (next-prime [x sieve]
+            (let [step (sieve x)]
               (if (sieve x)
             ;; found a composite
                 (recur (+ x 2) (next-composite (+ x step) step (dissoc sieve x)))
             ;; found a prime
-                (cons x 
-                      (lazy-seq 
+                (cons x
+                      (lazy-seq
                        (next-prime (+ x 2) (assoc sieve (* x x) (* x 2))))))))]
     (cons 2 (lazy-seq (next-prime 3 {})))))</pre></td></tr><tr><td class="docs"><p><em>Int -> Bool</em> <br />
     Checks whether a given number n is a prime number.</p>
@@ -3642,7 +3635,7 @@ How many different ways can £2 be made using any number of coins?</p>
   (= (count (factors n)) 2))</pre></td></tr><tr><td class="docs"><p>iterative approach</p>
 </td><td class="codes"><pre class="brush: clojure">(defn get-primes
   ;; entry point - start with the list of primes and the empty vector as accumulator
-  ([n] (get-primes n primes [])) 
+  ([n] (get-primes n primes []))
   ([n ps acc]
    (cond
       ;; no more factors - stop iteration
@@ -3652,7 +3645,7 @@ How many different ways can £2 be made using any number of coins?</p>
       ;; no match - next iteration
      :else (get-primes n (rest ps) acc))))</pre></td></tr><tr><td class="docs"><p><em>Int, [Int] -> Int</em> <br />
   Given a number n and a list of prime numbers ps, returns the largest prime factor of n.</p>
-</td><td class="codes"><pre class="brush: clojure">(defn max-prime 
+</td><td class="codes"><pre class="brush: clojure">(defn max-prime
   [n ps]
   ;; local variable - head of prime list
   (let [div (first ps)]
@@ -3662,31 +3655,54 @@ How many different ways can £2 be made using any number of coins?</p>
       (factor? n div) (max-prime (/ n div) ps)
       ;; list eater
       :else (max-prime n (rest ps)))))</pre></td></tr><tr><td class="docs"><p><em>Int -> [Int]</em> <br />
-Given a number, returns the list of prime factors of n. <br />
+Given a number, returns the list of prime factors of n.
 Example: (prime-factors 12) => (2 2 3)</p>
-</td><td class="codes"><pre class="brush: clojure">(defn prime-factors 
+</td><td class="codes"><pre class="brush: clojure">(defn prime-factors
   ([n] (prime-factors n [] primes))
   ([num factors ps]         ;; TODO use destructuring
-   (cond 
+   (cond
      (= 1 num) factors
      (factor? num (first ps)) (prime-factors (/ num (first ps)) (conj factors (first ps)) ps)
      :else (prime-factors num factors (rest ps)))))</pre></td></tr><tr><td class="docs"><p><em>Int -> Bool</em> <br />
-    Checks whether the given number n is a palindrome. 
+    Checks whether the given number n is a palindrome.
     Uses reversed string comparison</p>
-</td><td class="codes"><pre class="brush: clojure">(defn palindrome? 
+</td><td class="codes"><pre class="brush: clojure">(defn palindrome?
   [n] (= (str n) (clojure.string/reverse (str n))))</pre></td></tr><tr><td class="docs"><p><em>[Int] -> Int</em> <br />
     Computes the smallest number divisible by all of the given input numbers.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn least-common-multiple
-  [input] 
+  [input]
   (-&gt;&gt; input
        (map #(frequencies (get-primes %)))
        (apply merge-with max)
        (map #(Math/pow (first %) (second %)))
        (reduce *)
-       (int)))</pre></td></tr><tr><td class="docs"><p><em>Int -> Bool</em> <br />
+       (int)))</pre></td></tr><tr><td class="docs"><p>The sum of all proper divisors, excluding  n.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn sum-of-factors
+  [n] (reduce + 1 (factors n 2))) ; include 1, but ignore n</pre></td></tr><tr><td class="docs">
+</td><td class="codes"><pre class="brush: clojure">(defn amicable?
+  [a]
+  (let [b (sum-of-factors a)]
+    (if (and (not= a b) (= a (sum-of-factors b)))
+      [a b] ())))</pre></td></tr><tr><td class="docs"><p><em>Int -> Bool</em> <br />
   Checks whether the sum of the factors of n is greater than n.</p>
 </td><td class="codes"><pre class="brush: clojure">(defn abundant?
-  [n] (&lt; n (reduce + (factors n))))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/gdeer81/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_euler.euler001">euler.euler001</li><li class="floating-toc-li" id="floating-toc_euler.euler011">euler.euler011</li><li class="floating-toc-li" id="floating-toc_euler.euler021">euler.euler021</li><li class="floating-toc-li" id="floating-toc_euler.euler031">euler.euler031</li><li class="floating-toc-li" id="floating-toc_euler.helper">euler.helper</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
+  [n] (&lt; n (reduce + (divisors n))))</pre></td></tr><tr><td class="docs"><p>Int, Set[Number] -> Boolean - are there two elements in abundants which sum is i?</p>
+</td><td class="codes"><pre class="brush: clojure">(defn sum-of-abundants?
+  [i abundants]
+  (some (fn [a] (abundants (- i a))) abundants))</pre></td></tr><tr><td class="docs"><p>The Golden Ratio - (1+sqrt5)/2.</p>
+</td><td class="codes"><pre class="brush: clojure">(def phi 
+  (/ (+ 1 (Math/sqrt 5)) 2))</pre></td></tr><tr><td class="docs"><p>A number written as the sum of its nth powers.
+  Exp.: 1634 = 1^4 + 6^4 + 3^4 + 4^4.</p>
+</td><td class="codes"><pre class="brush: clojure">(defn narcissistic?
+  [n exp]
+  (-&gt;&gt; (str n)
+       ;; convert to list of digits
+       (map #(Character/digit % 10))
+       (map #(Math/pow % exp))
+       (reduce +)
+       ;; cast to int for comparison
+       (int)
+       (= n)))</pre></td></tr><tr><td class="spacer docs">&nbsp;</td><td class="codes" /></tr></table><div class="footer">Generated by <a href="https://github.com/gdeer81/marginalia">Marginalia</a>.&nbsp;&nbsp;Syntax highlighting provided by Alex Gorbatchev's <a href="http://alexgorbatchev.com/SyntaxHighlighter/">SyntaxHighlighter</a><div id="floating-toc"><ul><li class="floating-toc-li" id="floating-toc_euler.euler001">euler.euler001</li><li class="floating-toc-li" id="floating-toc_euler.euler011">euler.euler011</li><li class="floating-toc-li" id="floating-toc_euler.euler021">euler.euler021</li><li class="floating-toc-li" id="floating-toc_euler.euler031">euler.euler031</li><li class="floating-toc-li" id="floating-toc_euler.helper">euler.helper</li></ul></div></div><script type="text/javascript">SyntaxHighlighter.defaults['gutter'] = false;
 SyntaxHighlighter.all();
 
 // hackity hack
