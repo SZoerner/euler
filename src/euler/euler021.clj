@@ -12,16 +12,6 @@
 ;; **Task:**  
 ;; Evaluate the sum of all the amicable numbers under 10000.
 
-(defn sum-of-factors
-  "The sum of all proper divisors, excluding  n."
-  [n] (reduce + 1 (factors n 2))) ; include 1, but ignore n
-
-(defn amicable?
-  [a]
-  (let [b (sum-of-factors a)]
-    (if (and (not= a b) (= a (sum-of-factors b)))
-      [a b] ())))
-
 (defn p021
   ([] (p021 10000))
   ([n] (->> (range 1 (inc n))
@@ -75,29 +65,23 @@
 ;; **Task:**  
 ;; Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
+
+; (defn abundant?
+;   "Int -> Bool - is n an abundant number?"
+;   [n]
+;   ;(< n (sum-of-factors n))
+;   (< n (reduce + (divisors n))))
+
+(defn sum-of-abundants?
+  "Int, Set[Number] -> Boolean - are there two elements in abundants which sum is i?"
+  [i abundants]
+  (some (fn [a] (abundants (- i a))) abundants))
+
 (defn p023
   ([] (p023 (range 1 (inc 28123))))
   ([input]
-    (let
-        ;; Number -> List[Numbers] - divisors of n (excluding n)
-        [divisors
-         (fn [n]
-                                        ; (conj (factors n 2) 1)
-           (filter #(zero? (mod n %)) (range 1 n))
-           )
-
-         ;; Number -> Boolean - is n an abundant number?
-         abundant?
-         (fn [n]
-                                        ;(< n (sum-of-factors n))
-           (< n (reduce + (divisors n)))
-           )
-
-         ;; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
-         sum-of-abundants?
-         (fn [i abundants]
-           (some (fn [a] (abundants (- i a))) abundants))
-
+    (let 
+        [
          ;; Set[Numbers] - all abundant numbers up to input
          abundants (into (sorted-set) (filter abundant? input))]
 

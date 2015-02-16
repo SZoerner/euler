@@ -14,7 +14,14 @@
   (fn [argument]
     (boolean (some #(factor? argument %) divisors))))
 
+(defn divisors 
+  "Int -> [Int] - divisors of n (excluding n)"
+  [n]
+  ; (conj (factors n 2) 1)
+  (filter #(zero? (mod n %)) (range 1 n)))
+
 ;; returns a list of factors
+;; TODO - different from divisors ??? use for abundant?
 (defn factors
   "*Int -> [Int]*"
   ([n] (factors 1))
@@ -119,7 +126,17 @@ Example: (prime-factors 12) => (2 2 3)"
        (reduce *)
        (int)))
 
+(defn sum-of-factors
+  "The sum of all proper divisors, excluding  n."
+  [n] (reduce + 1 (factors n 2))) ; include 1, but ignore n
+
+(defn amicable?
+  [a]
+  (let [b (sum-of-factors a)]
+    (if (and (not= a b) (= a (sum-of-factors b)))
+      [a b] ())))
+
 (defn abundant?
   "*Int -> Bool*  
   Checks whether the sum of the factors of n is greater than n."
-  [n] (< n (reduce + (factors n))))
+  [n] (< n (reduce + (divisors n))))
