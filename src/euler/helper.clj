@@ -147,3 +147,16 @@ Example: (prime-factors 12) => (2 2 3)"
 (def phi 
   "The Golden Ratio - (1+sqrt5)/2."
   (/ (+ 1 (Math/sqrt 5)) 2))
+
+(defn narcissistic?
+  "A number written as the sum of its nth powers.
+  Exp.: 1634 = 1^4 + 6^4 + 3^4 + 4^4."
+  [n exp]
+  (->> (str n)
+       ;; convert to list of digits
+       (map #(Character/digit % 10))
+       (map #(Math/pow % exp))
+       (reduce +)
+       ;; cast to int for comparison
+       (int)
+       (= n)))

@@ -34,11 +34,11 @@
   (fact "Problem 28"
         (p028 3) => 25
         (p028 5) => 101
-        (p028 1001) => 669171001)
+        (p028) => 669171001)
 
   (fact "Problem 29"
         (p029 5) => 15
-        (p029 100) => 9183))
+        (p029) => 9183))
 
 ; (fact "Problem 30" ;; too slow - makes cloverage abort
 ;     (p030 4) => 19316
