@@ -75,32 +75,34 @@
 ;; **Task:**  
 ;; Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
-(defn p023 []
-  (let
-    ;; Number -> List[Numbers] - divisors of n (excluding n)
-   [divisors
-    (fn [n]
-      ;(factors n 2)
-      (filter #(zero? (mod n %)) (range 1 n)))
+(defn p023
+  ([] (p023 (range 1 (inc 28123))))
+  ([input]
+    (let
+        ;; Number -> List[Numbers] - divisors of n (excluding n)
+        [divisors
+         (fn [n]
+                                        ; (conj (factors n 2) 1)
+           (filter #(zero? (mod n %)) (range 1 n))
+           )
 
-     ;; Number -> Boolean - is n an abundant number?
-    abundant?
-    (fn [n]
-      (< n (reduce + (divisors n))))
+         ;; Number -> Boolean - is n an abundant number?
+         abundant?
+         (fn [n]
+                                        ;(< n (sum-of-factors n))
+           (< n (reduce + (divisors n)))
+           )
 
-     ;; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
-    sum-of-abundants?
-    (fn [i abundants]
-      (some (fn [a] (abundants (- i a))) abundants))
+         ;; Number, Set[Number] -> Boolean - are there two elements in abundants which sum is i?
+         sum-of-abundants?
+         (fn [i abundants]
+           (some (fn [a] (abundants (- i a))) abundants))
 
-     ;; List[Numbers] - input numbers from 1 up to 28124
-    input (range 1 (inc 28123))
+         ;; Set[Numbers] - all abundant numbers up to input
+         abundants (into (sorted-set) (filter abundant? input))]
 
-     ;; Set[Numbers] - all abundant numbers up to input
-    abundants (into (sorted-set) (filter abundant? input))]
-
-    ;; calculation - sum up all 'non-abundant-sums' up to input
-    (reduce + (filter #(not (sum-of-abundants? % abundants)) input))))
+      ;; calculation - sum up all 'non-abundant-sums' up to input
+      (reduce + (filter #(not (sum-of-abundants? % abundants)) input)))))
 
 
 ;; # Problem 24 - Lexicographic permutations
