@@ -13,7 +13,7 @@
 
   (fact "Problem 2"
         (p002 35) => 44
-        (p002 4000000) => 4613732
+        (p002) => 4613732
         (fact-qc "always returns an even result"
                  [n gen/nat]
                  (p002 n) => even?))
@@ -24,6 +24,7 @@
 
   (fact "Problem 4"
         (p004 100) => 9009
+        (p004) => 906609
         (fact-qc "each returned value is indeed a palindrome"
                  [n (gen/such-that #(> % 1) gen/nat)]
                  (let [res (str (p004 n))]
@@ -55,7 +56,7 @@
 
   (fact "Problem 9"
         (p009 (+ 3 4 5)) => (* 3 4 5)
-        (p009 1000) => (* 200 375 425)
+        (p009) => (* 200 375 425)
         (fact-qc "all Pythagorean triplets up to 300"
                  [[a b c] (gen/elements '((3 4 5) (5 12 13) (8 15 17) (7 24 25) (140 171 221)
                                                   (20 21 29) (12 35 37) (9 40 41) (28 45 53)
@@ -78,5 +79,6 @@
                  (= (* a b c) (p009 (+ a b c)))))
 
   (fact "Problem 10"
-        (p010 10) => 17;; (p010 2000000) => 142913828922) ;; too slow - makes cloverage abort
-        ))
+        (p010 10) => 17
+        (p010) => 142913828922)
+)

@@ -16,10 +16,10 @@
   ([limit & divisors]
     ;; for the range 0 to (limit - 1)
    (->> (range limit)
-         ;; filter the multiples (at least one divisor)
-        (filter (reduce factor-any divisors))
-         ;; and sum up the resulting list
-        (reduce +))))
+     ;; filter the multiples (at least one divisor)
+    (filter (reduce factor-any divisors))
+     ;; and sum up the resulting list
+    (reduce +))))
 
 
 ;; # Problem 2 - Even Fibonacci numbers
@@ -42,9 +42,9 @@
   ([] (p002 (* 4 1000 1000)))
   ([n]
    (->> fibs
-        (take-while #(< % n))
-        (filter even?)
-        (reduce +))))
+    (take-while #(< % n))
+    (filter even?)
+    (reduce +))))
 
 
 ;; # Problem 3 - Largest prime factor
@@ -136,9 +136,8 @@
 (defn p008
   ([] (p008 5 (bigdec (slurp "resources/p008_digit.txt"))))
   ([n series]
-   (->>
       ;; hack to retrieve individual digits
-    (str series)
+   (->> (str series)
       ;; Int => List[Int]
     (map #(Integer/parseInt (str %)))
       ;; partition into lists of 5
@@ -181,7 +180,6 @@
 (defn p010 
   ([] (p010 2000000))
   ([n]
-   (->>
-    primes
+   (->> primes
     (take-while #(< % n))
     (reduce +))))
