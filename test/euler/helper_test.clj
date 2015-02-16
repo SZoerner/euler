@@ -12,4 +12,9 @@
   
   (fact "amicable"
   	    (amicable? 220) => [220 284]
-        (amicable? 284) => [284 220]))
+        (amicable? 284) => [284 220])
+
+  ; (fact-qc "factors vs divisors"
+  ;         [n gen/nat]
+  ;         (factors n) => (divisors n))
+  )
