@@ -11,31 +11,6 @@
 ;; What is the greatest product of four adjacent numbers in the same direction
 ;; - up, down, left, right, or diagonally - in the 20x20 grid?
 
-(defn parse-grid
-  "*String -> [[Int]]*  
-  Converts a string into a dimension x dimension vector of integers."
-  [grid-str dimension]
-  (vec (map vec (partition dimension (map #(Integer. %) (.split grid-str "\\s+"))))))
-
-(defn product 
-  "Inspired by Chouser"
-  [size len grid]
-  ;; only works for quadratic matrices
-  {:pre [(= size (count grid) (count (first grid)))]}
-  ;; get the highest value
-  (reduce max
-          (for [sx (range 0 size)
-                sy (range 0 size)
-                ;;          \/    \     ->     /
-                delta-yx [[1 0] [1 1] [0 1] [-1 1]]]
-            ;; compute the product
-            (reduce *
-                    ;; partition into sequences of four
-                    (for [yx (take len (iterate #(map + delta-yx %) [sy sx]))
-                          :while (every? #(< -1 % size) yx)]
-                      (reduce nth grid yx))))))
-
-
 (defn p011
   ([] (p011 20 4 (slurp "resources/p011_matrix.txt")))
   ([size len input-str] (product size len (parse-grid input-str size))))
@@ -62,21 +37,12 @@
 ;; **Task:** 
 ;; Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
 
-(defn truncate
-  "*Int, Int -> Int* 
-  Truncates the given number up to the first n digits."
-  [number digits]
-  (Math/floor (/ number (Math/pow 10 (- (count (str number)) (inc digits))))))
-
 (defn p013
   "*[Int] -> Int*  
   The sum of the first n digits of the given list of numbers."
   ([] (p013 10 "resources/p013_numbers.txt"))
   ([n input]
-   (long (reduce +
-                  ;; truncate to the first eleven digits
-                 (map #(truncate % n)
-                      (map bigdec (re-seq #"\d+" (slurp input))))))))
+   (long (reduce + (map #(truncate % n) (map bigdec (re-seq #"\d+" (slurp input))))))))
 
 
 ;; # Problem 14 - Longest Collatz sequence
