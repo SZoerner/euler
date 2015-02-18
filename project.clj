@@ -9,9 +9,11 @@
                       [lein-marginalia "0.8.0"]
                       [lein-cljfmt "0.1.8"]]
             :dependencies [[org.clojure/clojure "1.6.0"]]
-            :profiles {:dev {:dependencies [[midje "1.6.3"]
-                                            [midje-notifier "0.2.0"]
-                                            [org.clojure/test.check "0.7.0"]]}}
+            :profiles {:dev {:dependencies [[midje "1.7.0-SNAPSHOT"]
+                                            [org.clojure/test.check "0.7.0"]]
+                             :injections [(require 'flare.clojure-test)
+                                          (flare.clojure-test/install!)]}}
+            :lein-release {:deploy-via :clojars}
             :marginalia {:css ["marg.css"]
                          :javascript ["http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]
                          :dir ["doc"]}
