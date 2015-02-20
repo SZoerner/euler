@@ -220,10 +220,6 @@
 ;; Find the sum of the digits in the number 100!
 
 ;; analogous to Problem 16
-(defn p020 []
-  (->>
-   (range (BigInteger. "1") 101)
-   (reduce *)
-   str
-   (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
-   (reduce +)))
+(defn p020 
+  ([] (p020 100))
+  ([n] (reduce + (digits (factorial n)))))

@@ -136,10 +136,7 @@
 (defn p008
   ([] (p008 5 (bigdec (slurp "resources/p008_digit.txt"))))
   ([n series]
-      ;; hack to retrieve individual digits
-   (->> (str series)
-      ;; Int => List[Int]
-    (map #(Integer/parseInt (str %)))
+   (->> (digits series)
       ;; partition into lists of 5
     (partition n 1)
       ;; calculate the product
