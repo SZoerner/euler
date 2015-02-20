@@ -59,27 +59,11 @@
 ;; **Task:**
 ;; Which starting number, under one million, produces the longest chain?
 
-(defn p014 []
-  (let [next-collatz
-        (fn [num]
-          ;; calculate the next iteration
-          (if (odd? num) (inc (* 3 num))
-              (/ num 2)))
-
-        ;; lazily retrieving the sequence up to (excluding) 1
-        map-collatz
-        ;; and return a the number of elements
-        (fn [n]
-          {n (count (take-while #(not= 1 %)
-                                (iterate next-collatz n)))})]
-
-    ;; calculation
-    (->>
-      ;; for all numbers 1 to 10^6,
-     (range 1 (Math/pow 10 6))
+(defn p014 
+  ([] (p014 (Math/pow 10 6)))
+  ([limit] (->> (range 1 limit)
       ;; create map entries with {n map-collatz}
-     (map map-collatz)
-     (reduce conj)
+     (map #({% (count (collatz %))})) 
       ;; and retrieve the key with the highest value
      (reduce max-key val)
      (key))))

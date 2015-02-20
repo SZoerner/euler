@@ -34,12 +34,11 @@
         (p005 10) => 2520
         (p005) => 232792560
         (fact-qc "p005-quickcheck"
-                 [n gen/int] ; input: numbers
-                 (let [res (p005 n)                  ; result: smallest common multiple
-                       nums (range 2 (+ 1 n))              ; all divisors
+                 [n gen/int] 
+                 (let [res (p005 n)
+                       nums (range 2 (+ 1 n))
                        not-div-by? (fn [x] (not (= 0 (rem res x))))]
-                   (filter not-div-by? nums) => '()))
-        )
+                   (filter not-div-by? nums) => '())))
 
   (fact "Problem 6"
         (p006 10) => 2640
@@ -80,5 +79,4 @@
 
   (fact "Problem 10"
         (p010 10) => 17
-        (p010) => 142913828922)
-)
+        (p010) => 142913828922))

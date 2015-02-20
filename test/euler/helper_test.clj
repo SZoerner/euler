@@ -21,6 +21,9 @@
                  [n gen/nat]
                  (parse-grid (str n) 1) => [[n]]))
 
+  (fact "collatz"
+        (collatz 12) => '(12 6 3 10 5 16 8 4 2 1))
+
   ; (fact-qc "factors vs divisors"
   ;         [n gen/nat]
   ;         (factors n) => (divisors n))

@@ -55,6 +55,14 @@
   Lazy sequence of all Fibonacci numbers. Using BigIntegers."
   (lazy-cat [0N 1N] (map + (rest fibs) fibs)))
 
+(defn collatz 
+  "Lazy seq of Collatz sequence of n."
+  [n] (cons n 
+        (if (= n 1) '() 
+          (collatz (if (even? n) 
+            (bit-shift-right n 1) 
+            (inc (* 3 n)))))))
+
 (defn parse-grid
   "*String -> [[Int]]*  
   Converts a string into a dimension x dimension vector of integers."
