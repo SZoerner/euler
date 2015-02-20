@@ -16,9 +16,10 @@
         (p013) => 5537376230342)
 
   (fact "Problem 14"
-        (p014 100) =future=> 97
-        (p014 1000) =future=> 871
-        (p014) =future=> 837799) ;; too slow - makes cloverage abort
+        (p014 10) => 9
+        (p014 100) => 97
+        (p014 1000) => 871
+        (p014) => 837799) ;; too slow - makes cloverage abort
     
   (fact "Problem 15"
         (p015) => 137846528820)

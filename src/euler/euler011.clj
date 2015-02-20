@@ -61,12 +61,10 @@
 
 (defn p014 
   ([] (p014 (Math/pow 10 6)))
-  ([limit] (->> (range 1 limit)
-      ;; create map entries with {n map-collatz}
-     (map #({% (count (collatz %))})) 
-      ;; and retrieve the key with the highest value
-     (reduce max-key val)
-     (key))))
+  ([limit] 
+    (let [cache (atom {1 1})]
+      (doseq [n (range 1 limit)] (memo-collatz cache n))
+      (key (apply max-key val @cache)))))
 
 
 ;; # Problem 15 - Lattice paths
