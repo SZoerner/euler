@@ -69,7 +69,8 @@
 
 ;; # Problem 15 - Lattice paths
 ;; 
-;; **Description:** Starting in the top left corner of a 2×2 grid, and only being able to move to the right and down,
+;; **Description:** Starting in the top left corner of a 2×2 grid, 
+;; and only being able to move to the right and down,
 ;; there are exactly 6 routes to the bottom right corner. 
 ;;
 ;; **Task:**
@@ -80,20 +81,9 @@
 ;; Binomial[2n, n] or (2n)!/(n!)^2,
 ;; central meaning they fall along the center line of Pascal’s triangle.
 
-(defn p015 []
-  (let [factorial
-        (fn [n]
-          ;; multiply all natural numbers from 1 to n+1
-          (reduce * (range 1.0 (inc n))))
-
-        lattice-paths
-        (fn [n]
-          ;; divide the factorial of 2n
-          (long (/ (factorial (* 2.0 n))
-                   ;; by (fac(n))^2
-                   (Math/pow (factorial n) 2))))]
-
-    (lattice-paths 20)))                                    ;; calculation
+(defn p015 
+  ([] (p015 20))
+  ([n] (lattice-paths n)))
 
 
 ;; # Problem 16 - Power digit sum
@@ -104,11 +94,9 @@
 ;; **Task:**
 ;; What is the sum of the digits of the number 2^1000?
 
-(defn p016 []
-  (->> (.pow (BigInteger. "2") 1000)
-       str
-       (map {\0 0 \1 1 \2 2 \3 3 \4 4 \5 5 \6 6 \7 7 \8 8 \9 9})
-       (reduce +)))
+(defn p016 
+  ([] (p016 (.pow (BigInteger. "2") 1000)))
+  ([n] (reduce + (digits n))))
 
 
 ;; # Problem 17 - Number letter counts
