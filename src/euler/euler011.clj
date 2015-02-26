@@ -109,37 +109,15 @@
 ;; NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters and 115 (one hundred and fifteen) contains 20 letters.
 ;; The use of "and" when writing out numbers is in compliance with British usage.
 
-(defn p017 []
-  ;; string maps
-  (let [singles
-        ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve"
-         "thirteen" "fourteen" "fifteen" "sixteen" "seventeen" "eighteen" "nineteen"]
-        tens ["twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"]
-
-        ;; concatenate function
-        to-words
-        (fn to-words [n]
-          (cond
-            (< n 20) (nth singles (dec n))
-            (< n 100) (if (zero? (mod n 10))
-                        (nth tens (/ (- n 20) 10))
-                        (str (nth tens (/ (- n 20) 10)) (nth singles (dec (mod n 10)))))
-            (< n 1000) (if (zero? (mod n 100))
-                         (str (to-words (/ n 100)) "hundred")
-                         (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
-            (= n 1000) "onethousand"))]
-
-    ;; calculation
-    ;; threading macro
-    (->>
-      ;; for all numbers 1 to 1000
-     (range 1 1001)
-      ;; map to corresponding string
-     (map to-words)
-      ;; concatenate
-     (reduce str)
-      ;; count the number of chars
-     count)))
+(defn p017 
+  ([] (p017 1000))
+  ([n] (->> (range 1 (inc n))
+          ;; map to corresponding string
+         (map to-words)
+          ;; concatenate
+         (apply str)
+          ;; count the number of chars
+         (count))))
 
 
 ;; # Problem 18 - Maximum path sum I

@@ -233,3 +233,23 @@ Example: (prime-factors 12) => (2 2 3)"
        ;; cast to int for comparison
        ; (int)
        (= n)))
+
+(def singles
+  ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve"
+   "thirteen" "fourteen" "fifteen" "sixteen" "seventeen" "eighteen" "nineteen"])
+
+(def tens ["twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"])
+
+(defn to-words 
+  "Converts a number (up to 1000) into its string representation, omitting spaces.  
+  Example: (to-words 115) => 'onehundredandfifteen'."
+  [n]
+  (cond
+    (< n 20) (nth singles (dec n))
+    (< n 100) (if (factor? n 10)
+                (nth tens (/ (- n 20) 10))
+                (str (nth tens (/ (- n 20) 10)) (nth singles (dec (mod n 10)))))
+    (< n 1000) (if (factor? n 100)
+                 (str (to-words (/ n 100)) "hundred")
+                 (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
+    (= n 1000) "onethousand"))

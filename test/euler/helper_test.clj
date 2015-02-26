@@ -23,6 +23,11 @@
 
   (fact "collatz"
         (collatz 12) => '(12 6 3 10 5 16 8 4 2 1))
+  
+  (fact "to-words"
+        (to-words 100) => "onehundred"
+        (to-words 115) => "onehundredandfifteen"
+        (to-words 342) => "threehundredandfortytwo")
 
   ; (fact-qc "factors vs divisors"
   ;         [n gen/nat]
