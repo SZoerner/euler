@@ -10,8 +10,8 @@
   (fact "Problem 22"
     (p022) => 871198282)
 
-  (fact "Problem 23"
-    (p023) =future=> 4179871) ;; too slow - makes cloverage abort
+  ; (fact "Problem 23"
+  ;   (p023) =future=> 4179871) ;; too slow - makes cloverage abort
 
   (fact "Problem 24"
     (p024) => '(2 7 8 3 9 1 5 4 6 0))
