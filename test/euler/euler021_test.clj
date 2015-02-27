@@ -38,6 +38,6 @@
     (p029 5) => 15
     (p029) => 9183))
 
-  (future-fact "Problem 30" :slow ;; too slow - makes cloverage abort
-    (p030 4) => 19316
-    (p030 5) => 443839)
+  ; (future-fact "Problem 30" :slow ;; too slow - makes cloverage abort
+  ;   (p030 4) => 19316
+  ;   (p030 5) => 443839)
