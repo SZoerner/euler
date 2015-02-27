@@ -24,12 +24,11 @@
 (defn p012
   "*Int -> Int*  
   Value of the first triangle number up to n."
-  ([] p012 500)
-  ([n]
-   (loop [cnt 1]
-     (let [cache (triangle cnt)]
-       (if (>= (num-of-divisors cache) n) cache
-           (recur (inc cnt)))))))
+  ([] (p012 500))
+  ([n] (loop [cnt 1]
+         (let [cache (triangle cnt)]
+           (if (>= (count (factors cache)) n) cache
+               (recur (inc cnt)))))))
 
 
 ;; # Problem 13 - Large sum

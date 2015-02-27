@@ -114,8 +114,8 @@
   "Fibonacci terms converge to (n)*Phi=(n+1), where Phi is the Golden Ratio (1+sqrt5)/2."
   ([] (p025 1000))
   ([n] (int (Math/ceil 
-                  (/ (+ (dec n) (Math/log10 (Math/sqrt 5))) 
-                     (Math/log10 phi))))))
+        (/ (+ (dec n) (Math/log10 (Math/sqrt 5))) 
+           (Math/log10 phi))))))
 ;; brute force - too slow
 ;; (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs)))) 
   
@@ -232,8 +232,7 @@
   ;; precondition: spirals can only have an odd length
   {:pre [(odd? n)]}
   ;; base case: f(1) = 1
-  (if (= n 1)
-    1
+  (if (= n 1) 1
     (reduce + (cons
                 ;; recursive case: cons it to the recusive call of f(n -2)
                (p028 (- n 2))
