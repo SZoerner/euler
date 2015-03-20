@@ -212,7 +212,7 @@ Example: (prime-factors 12) => (2 2 3)"
 
 (def phi
   "The Golden Ratio - (1+sqrt5)/2."
-  (/ (+ 1 (Math/sqrt 5)) 2))
+  (/ (inc (Math/sqrt 5)) 2))
 
 (defn digits
   "Converts a number n into a list of its digits."
@@ -251,7 +251,7 @@ Example: (prime-factors 12) => (2 2 3)"
 
 (defn combinations [amount [car & cdr :as coins]]
   (cond
-   (= amount 0) 1
-   (or (< amount 0) (= 0 (count coins))) 0
+   (zero? amount) 1
+   (or (neg? amount) (empty? coins)) 0
    :else (+ (combinations amount cdr)
             (combinations (- amount car) coins))))
