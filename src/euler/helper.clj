@@ -248,3 +248,12 @@ Example: (prime-factors 12) => (2 2 3)"
                  (str (to-words (/ n 100)) "hundred")
                  (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
     (= n 1000) "onethousand"))
+
+(defn combinations [n [car & cdr :as items]]
+  "Returns all combinations of elements in items that sum up to n."
+  (cond
+   (<= n 0) '(())
+   (or (empty? items) (> car n)) '()
+   :else (concat 
+    (map #(cons car %) (combinations (- n car) items))
+    (combinations n cdr))))
