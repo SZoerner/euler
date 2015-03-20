@@ -2,8 +2,8 @@
   (:require [clojure.test :refer [deftest]]
             [clojure.test.check.generators :as gen]
             [euler.core-test :refer :all]
-            [euler.euler011 :refer :all])
-  (:use midje.sweet))
+            [euler.euler011 :refer :all]
+            [midje.sweet :refer :all]))
 
 (deftest euler011-tests
   (fact "Problem 11"
@@ -11,7 +11,7 @@
 
   ; (fact "Problem 12"
   ;   (p012) => 76576500) ;; too slow - makes cloverage abort
-  
+
   (fact "Problem 13"
     (p013) => 5537376230342)
 
@@ -21,7 +21,7 @@
     (p014 1000) => 871
     ; (p014) =future=> 837799
     ) ;; too slow - makes cloverage abort
-    
+
   (fact "Problem 15"
     (p015) => 137846528820)
 

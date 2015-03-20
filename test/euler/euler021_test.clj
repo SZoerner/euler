@@ -1,7 +1,7 @@
 (ns euler.euler021-test
   (:require [clojure.test :refer [deftest]]
-            [euler.euler021 :refer :all])
-  (:use midje.sweet))
+            [euler.euler021 :refer :all]
+            [midje.sweet :refer :all]))
 
 (deftest euler021-tests
   (fact "Problem 21"

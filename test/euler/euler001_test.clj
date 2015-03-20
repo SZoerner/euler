@@ -2,8 +2,8 @@
   (:require [clojure.test :refer [deftest]]
             [clojure.test.check.generators :as gen]
             [euler.core-test :refer :all]
-            [euler.euler001 :refer :all])
-  (:use midje.sweet))
+            [euler.euler001 :refer :all]
+            [midje.sweet :refer :all]))
 
 (deftest euler001-tests
   (fact "Problem 1"
@@ -34,7 +34,7 @@
         (p005 10) => 2520
         (p005) => 232792560
         (fact-qc "p005-quickcheck"
-                 [n gen/int] 
+                 [n gen/int]
                  (let [res (p005 n)
                        nums (range 2 (+ 1 n))
                        not-div-by? (fn [x] (not (= 0 (rem res x))))]
@@ -47,7 +47,7 @@
   (fact "Problem 7"
         (p007 6) => 13
         (p007 10) => 29
-        (p007) => 104743)  
+        (p007) => 104743)
 
   (fact "Problem 8"
         (p008 5 123456789) => 15120
