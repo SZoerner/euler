@@ -121,9 +121,9 @@
 (defn prime?
   "*Int -> Bool*
 	Checks whether a given number n is a prime number."
-  [n] 
+  [n]
   (and (< 1 n)
-    (not-any? factor? 
+    (not-any? factor?
       (take-while #(<= (* % %) n) primes))))
 
 ;; iterative approach
@@ -249,11 +249,9 @@ Example: (prime-factors 12) => (2 2 3)"
                  (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
     (= n 1000) "onethousand"))
 
-(defn combinations [n [car & cdr :as items]]
-  "Returns all combinations of elements in items that sum up to n."
+(defn combinations [amount [car & cdr :as coins]]
   (cond
-   (<= n 0) '(())
-   (or (empty? items) (> car n)) '()
-   :else (concat 
-    (map #(cons car %) (combinations (- n car) items))
-    (combinations n cdr))))
+   (= amount 0) 1
+   (or (< amount 0) (= 0 (count coins))) 0
+   :else (+ (combinations amount cdr)
+            (combinations (- amount car) coins))))

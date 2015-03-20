@@ -16,5 +16,5 @@
 ;; How many different ways can £2 be made using any number of coins?
 
 (defn p031
-  ([] (p031 200 [1 2 5 10 20 50 100 200]))
-  ([n coins] (count (combinations n coins))))
+  ([] (p031 200 [200 100 50 20 10 5 2 1]))
+  ([n coins] (combinations n coins)))
