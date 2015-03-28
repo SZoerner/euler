@@ -35,19 +35,19 @@
 (defn p022
   ([] (p022 (re-seq #"\w+" (slurp "resources/p022_names.txt"))))
   ([names]
-    (let
-        [input (sort names)
+   (let
+    [input (sort names)
          ;; sum of the numerical representation of each character
-         get-value (fn [name]
-                     (->> name
-                          (map int)
-                          (map #(- % 64))
-                          (reduce +)))
+     get-value (fn [name]
+                 (->> name
+                      (map int)
+                      (map #(- % 64))
+                      (reduce +)))
          ;; get the position
-         get-index (fn [name]
-                     (inc (.indexOf input name)))]
+     get-index (fn [name]
+                 (inc (.indexOf input name)))]
       ;; compute the product of value and position
-      (reduce + (map #(* (get-index %) (get-value %)) input)))))
+     (reduce + (map #(* (get-index %) (get-value %)) input)))))
 
 
 ;; # Problem 23 - Non-abundant sums
@@ -68,13 +68,12 @@
 (defn p023
   ([] (p023 (range 1 (inc 28123))))
   ([input]
-    (let 
-        [
-         ;; Set[Numbers] - all abundant numbers up to input
-         abundants (into (sorted-set) (filter abundant? input))]
+   (let 
+    [;; Set[Numbers] - all abundant numbers up to input
+     abundants (into (sorted-set) (filter abundant? input))]
 
       ;; calculation - sum up all 'non-abundant-sums' up to input
-      (reduce + (filter #(not (sum-of-abundants? % abundants)) input)))))
+     (reduce + (filter #(not (sum-of-abundants? % abundants)) input)))))
 
 
 ;; # Problem 24 - Lexicographic permutations
@@ -114,11 +113,11 @@
   "Fibonacci terms converge to (n)*Phi=(n+1), where Phi is the Golden Ratio (1+sqrt5)/2."
   ([] (p025 1000))
   ([n] (int (Math/ceil 
-        (/ (+ (dec n) (Math/log10 (Math/sqrt 5))) 
-           (Math/log10 phi))))))
+             (/ (+ (dec n) (Math/log10 (Math/sqrt 5))) 
+                (Math/log10 phi))))))
 ;; brute force - too slow
 ;; (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs)))) 
-  
+
 
 ;; # Problem 26 - Reciprocal cycles
 ;;
@@ -225,16 +224,16 @@
   ([] (p028 1001))
   ([n]
   ;; precondition: spirals can only have an odd length
-  {:pre [(odd? n)]}
+   {:pre [(odd? n)]}
   ;; base case: f(1) = 1
-  (if (= n 1) 1
-    (reduce + (cons
+   (if (= n 1) 1
+       (reduce + (cons
                 ;; recursive case: cons it to the recusive call of f(n -2)
-               (p028 (- n 2))
+                  (p028 (- n 2))
                 ;; take four values per 'ring'
-               (take 4
+                  (take 4
                       ;; creating 'ring': from n * n, decrementing in steps of n- 1
-                     (iterate #(- % (dec n)) (* n n))))))))
+                        (iterate #(- % (dec n)) (* n n))))))))
 
 
 ;; # Problem 29 - Distinct powers
@@ -256,17 +255,17 @@
 (defn p029 
   ([] (p029 100))
   ([n]
-  (->>
+   (->>
     ;; typical list comprehension problem
-   (for [a (range 2 (inc n))
+    (for [a (range 2 (inc n))
           ;; for 2 to n
-         b (range 2 (inc n))]
+          b (range 2 (inc n))]
       ;; return a^b
-     (Math/pow a b))
+      (Math/pow a b))
     ;; distinct elements
-   (set)
+    (set)
     ;; count them
-   (count))))
+    (count))))
 
 
 ;; # Problem 30 - Digit fifth powers
@@ -286,6 +285,6 @@
 
 (defn p030 [exp]
   ;; predicate checking for being a sum of powers
-    (reduce + (filter #(narcissistic? % exp)
+  (reduce + (filter #(narcissistic? % exp)
                       ;; not really sure what the upper limit is..
-                      (range 2 (Math/pow 10 (inc exp))))))
+                    (range 2 (Math/pow 10 (inc exp))))))

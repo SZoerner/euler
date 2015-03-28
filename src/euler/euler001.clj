@@ -17,9 +17,9 @@
     ;; for the range 0 to (limit - 1)
    (->> (range limit)
      ;; filter the multiples (at least one divisor)
-    (filter (reduce factor-any divisors))
+        (filter (reduce factor-any divisors))
      ;; and sum up the resulting list
-    (reduce +))))
+        (reduce +))))
 
 
 ;; # Problem 2 - Even Fibonacci numbers
@@ -42,9 +42,9 @@
   ([] (p002 (* 4 1000 1000)))
   ([n]
    (->> fibs
-    (take-while #(< % n))
-    (filter even?)
-    (reduce +))))
+        (take-while #(< % n))
+        (filter even?)
+        (reduce +))))
 
 
 ;; # Problem 3 - Largest prime factor
@@ -138,11 +138,11 @@
   ([n series]
    (->> (digits series)
       ;; partition into lists of 5
-    (partition n 1)
+        (partition n 1)
       ;; calculate the product
-    (map #(reduce * %))
+        (map #(reduce * %))
       ;; get the highest product
-    (reduce max))))
+        (reduce max))))
 
 
 ;; # Problem 9 - Special Pythagorean triplet
@@ -178,5 +178,5 @@
   ([] (p010 2000000))
   ([n]
    (->> primes
-    (take-while #(< % n))
-    (reduce +))))
+        (take-while #(< % n))
+        (reduce +))))

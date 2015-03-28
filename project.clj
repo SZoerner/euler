@@ -3,11 +3,11 @@
             :url "https://github.com/SZoerner/euler"
             :license {:name "MIT License"
                       :url  "http://opensource.org/licenses/MIT"}
-            :plugins [[codox "0.8.10"]
+            :plugins [[codox "0.8.11"]
                       [lein-midje "3.1.3"]
                       [lein-cloverage "1.0.2"]
                       [lein-marginalia "0.8.0"]
-                      [lein-cljfmt "0.1.8"]]
+                      [lein-cljfmt "0.1.10"]]
             :dependencies [[org.clojure/clojure "1.6.0"]]
             :profiles {:dev {:dependencies [[midje "1.7.0-SNAPSHOT"]
                                             [org.clojure/test.check "0.7.0"]]

@@ -18,14 +18,14 @@
   Returns all numbers that evenly divide n."
   ([n] (factors n 1))
   ([n start]
-    (lazy-seq (let [lower (filter #(factor? n %)
+   (lazy-seq (let [lower (filter #(factor? n %)
                                   ;; iterate up to sqrt(n)
-                                  (range start (inc (Math/sqrt n))))
+                                 (range start (inc (Math/sqrt n))))
                     ;; add the coresponding divisor pairs
-                    upper (map #(/ n %) lower)]
-                (set (concat lower upper))))))
+                   upper (map #(/ n %) lower)]
+               (set (concat lower upper))))))
 
-(defn factorial[n]
+(defn factorial [n]
   "*Int -> [Int]*
   Multiplies all natural numbers from 1 to n+1."
   (reduce * (range 1N (inc n))))
@@ -60,9 +60,9 @@
 
 (defn memo-collatz [c n] ;; TODO not sure this works efficiently..
   (if-let [entry (@c n)] entry ;; already present - return the count
-            ((swap! c assoc n  ;; new entry - store in cache
-              (inc (memo-collatz c (next-collatz n))))
-            n)))
+          ((swap! c assoc n  ;; new entry - store in cache
+                  (inc (memo-collatz c (next-collatz n))))
+           n)))
 
 (defn parse-grid [grid-str dimension]
   "**parse-grid :: String -> [[Int]]**
@@ -113,8 +113,8 @@
   "**prime? :: Int -> Bool**
 	Checks whether a given number n is a prime number."
   (and (< 1 n)
-    (not-any? #(factor? n %)
-      (take-while #(<= (* % %) n) primes))))
+       (not-any? #(factor? n %)
+                 (take-while #(<= (* % %) n) primes))))
 
 ;; iterative approach
 (defn get-primes
@@ -146,11 +146,11 @@
 Given a number, returns the list of prime factors of n.
 Example: (prime-factors 12) => (2 2 3)"
   ([n] (prime-factors n [] primes))
-  ([num factors ps]         ;; TODO use destructuring
+  ([number factors ps]         ;; TODO use destructuring
    (cond
-     (= 1 num) factors
-     (factor? num (first ps)) (prime-factors (/ num (first ps)) (conj factors (first ps)) ps)
-     :else (prime-factors num factors (rest ps)))))
+     (= 1 number) factors
+     (factor? number (first ps)) (prime-factors (/ number (first ps)) (conj factors (first ps)) ps)
+     :else (prime-factors number factors (rest ps)))))
 
 (defn palindrome? [n]
   "**palindrome? :: Int -> Bool**
@@ -191,11 +191,11 @@ Example: (prime-factors 12) => (2 2 3)"
   "**truncate :: Int, Int -> Int**
   Truncates the given number up to the first n digits."
   (->> digits
-    (inc)
-    (- (count (str number)))
-    (Math/pow 10)
-    (/ number)
-    (Math/floor)))
+       (inc)
+       (- (count (str number)))
+       (Math/pow 10)
+       (/ number)
+       (Math/floor)))
 
 (def phi
   "The Golden Ratio - (1+sqrt5)/2."
@@ -236,7 +236,7 @@ Example: (prime-factors 12) => (2 2 3)"
 
 (defn combinations [amount [car & cdr :as coins]]
   (cond
-   (zero? amount) 1
-   (or (neg? amount) (empty? coins)) 0
-   :else (+ (combinations amount cdr)
-            (combinations (- amount car) coins))))
+    (zero? amount) 1
+    (or (neg? amount) (empty? coins)) 0
+    :else (+ (combinations amount cdr)
+             (combinations (- amount car) coins))))

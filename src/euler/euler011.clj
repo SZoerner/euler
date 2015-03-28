@@ -61,9 +61,9 @@
 (defn p014 
   ([] (p014 (Math/pow 10 6)))
   ([limit] 
-    (let [cache (atom {1 1})]
-      (doseq [n (range 1 limit)] (memo-collatz cache n))
-      (key (apply max-key val @cache)))))
+   (let [cache (atom {1 1})]
+     (doseq [n (range 1 limit)] (memo-collatz cache n))
+     (key (apply max-key val @cache)))))
 
 
 ;; # Problem 15 - Lattice paths
@@ -112,11 +112,11 @@
   ([] (p017 1000))
   ([n] (->> (range 1 (inc n))
           ;; map to corresponding string
-         (map to-words)
+            (map to-words)
           ;; concatenate
-         (apply str)
+            (apply str)
           ;; count the number of chars
-         (count))))
+            (count))))
 
 
 ;; # Problem 18 - Maximum path sum I
