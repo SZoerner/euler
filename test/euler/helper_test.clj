@@ -34,6 +34,13 @@
     (to-words 115) => "onehundredandfifteen"
     (to-words 342) => "threehundredandfortytwo")
 
+  (fact "prime?"
+    (prime? 2) => true
+    (prime? 12) => false)
+
+  (fact "narcissistic?"
+    (narcissistic? 1634 4))
+
   ; (fact-qc "factors vs divisors"
   ;         [n gen/nat]
   ;         (factors n) => (divisors n))

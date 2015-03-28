@@ -113,7 +113,7 @@
   "**prime? :: Int -> Bool**
 	Checks whether a given number n is a prime number."
   (and (< 1 n)
-    (not-any? factor?
+    (not-any? #(factor? n %)
       (take-while #(<= (* % %) n) primes))))
 
 ;; iterative approach
@@ -183,7 +183,7 @@ Example: (prime-factors 12) => (2 2 3)"
   (< (* 2 n) (reduce + (factors n))))
 
 (defn sum-of-abundants? [i abundants]
-  "**su-of-abundants? :: Int, Set[Number] -> Boolean**
+  "**sum-of-abundants? :: Int, Set[Number] -> Boolean**
   Are there two elements in abundants which sum is i?"
   (some (fn [a] (abundants (- i a))) abundants))
 
@@ -212,8 +212,7 @@ Example: (prime-factors 12) => (2 2 3)"
   (->> (digits n)
        (map #(Math/pow % exp))
        (reduce +)
-       ;; cast to int for comparison
-       ; (int)
+       (int)  ;; cast to int for comparison
        (= n)))
 
 (def singles
