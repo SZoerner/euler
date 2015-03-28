@@ -178,11 +178,6 @@
 ;; Find the product of the coefficients, a and b, for the quadratic expression that produces
 ;; the maximum number of primes for consecutive values of n, starting with n = 0.
 
-;; predicate checking for prime number (using Java's BigInteger)
-(defn- prime-java? [n]
-  ;; certainty of 5 - 96.875%
-  (.isProbablePrime (BigInteger/valueOf n) 5))
-
 ;; Validator function
 (defn consec-primes
   "given a generator function, returns number of consecutive prime numbers generated"

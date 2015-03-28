@@ -9,7 +9,7 @@
   (fact "prime-factors"
     (prime-factors 12) => '(2 2 3)
     (prime-factors 123) => '(3 41))
-  
+
   (fact "amicable"
     (amicable? 220) => [220 284]
     (amicable? 284) => [284 220])
@@ -28,7 +28,7 @@
 
   (fact "collatz"
     (collatz 12) => '(12 6 3 10 5 16 8 4 2 1))
-  
+
   (fact "to-words"
     (to-words 100) => "onehundred"
     (to-words 115) => "onehundredandfifteen"
