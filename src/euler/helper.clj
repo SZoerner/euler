@@ -25,10 +25,16 @@
                    upper (map #(/ n %) lower)]
                (set (concat lower upper))))))
 
+;; TODO replace with facts seq
 (defn factorial [n]
   "*Int -> [Int]*
   Multiplies all natural numbers from 1 to n+1."
   (reduce * (range 1N (inc n))))
+
+(def facts 
+"**facts :: [Int]**
+Lazy, infinite sequence of all factorial numbers."
+  (lazy-cat [1] (map * facts (iterate inc 2))))
 
 (defn lattice-paths [n]
   ;; divide the factorial of 2n
@@ -44,7 +50,7 @@
   (/ (* n (inc n)) 2))
 
 (def fibs
-  "**fibs :: (Int)**
+  "**fibs :: [Int]**
   Lazy sequence of all Fibonacci numbers. Using BigIntegers."
   (lazy-cat [0N 1N] (map + (rest fibs) fibs)))
 
@@ -53,7 +59,8 @@
   (if (even? n) (bit-shift-right n 1) (inc (* 3 n))))
 
 (defn collatz [n]
-  "Lazy seq of Collatz sequence of n."
+  "**collatz :: [Int]**
+  Lazy seq of Collatz sequence of n."
   (cons n
         (if (= n 1) '()
             (collatz (next-collatz n)))))
@@ -151,6 +158,15 @@ Example: (prime-factors 12) => (2 2 3)"
      (= 1 number) factors
      (factor? number (first ps)) (prime-factors (/ number (first ps)) (conj factors (first ps)) ps)
      :else (prime-factors number factors (rest ps)))))
+
+(defn count-divisors 
+"**count-divisors :: Int -> Int**
+Calculates the number of divisors of n (including 1 and n itself)."
+  [n] (->> (prime-factors n)
+       (partition-by identity)
+       (map count)
+       (map inc)
+       (reduce *)))
 
 (defn palindrome? [n]
   "**palindrome? :: Int -> Bool**
