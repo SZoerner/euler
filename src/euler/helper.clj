@@ -31,10 +31,10 @@
   Multiplies all natural numbers from 1 to n+1."
   (reduce * (range 1N (inc n))))
 
-(def facts 
+(def factorials 
 "**facts :: [Int]**
 Lazy, infinite sequence of all factorial numbers."
-  (lazy-cat [1] (map * facts (iterate inc 2))))
+  (lazy-cat [1] (map * factorials (iterate inc 2))))
 
 (defn lattice-paths [n]
   ;; divide the factorial of 2n
