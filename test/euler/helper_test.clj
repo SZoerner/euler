@@ -10,10 +10,17 @@
         (prime-factors 12) => '(2 2 3)
         (prime-factors 123) => '(3 41))
 
-  (fact "amicable"
+  (fact "amicable?"
         (amicable? 220) => [220 284]
         (amicable? 284) => [284 220])
 
+  (fact "abundant?"
+        (abundant? 12) => true)
+
+  (fact "abundant-sum?"
+        (abundant-sum? 12) => false
+        (abundant-sum? 24) => true)
+  
   (fact "triangle"
         (triangle 1) => 1
         (triangle 10) => 55

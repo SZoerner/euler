@@ -67,13 +67,9 @@
 
 (defn p023
   ([] (p023 (range 1 (inc 28123))))
-  ([input]
-   (let 
-    [;; Set[Numbers] - all abundant numbers up to input
-     abundants (into (sorted-set) (filter abundant? input))]
-
-      ;; calculation - sum up all 'non-abundant-sums' up to input
-     (reduce + (filter #(not (sum-of-abundants? % abundants)) input)))))
+  ([input] (->> input
+                (remove #(abundant-sum? %))
+                (reduce +))))
 
 
 ;; # Problem 24 - Lexicographic permutations

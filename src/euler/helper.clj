@@ -182,10 +182,12 @@ Example: (prime-factors 12) => (2 2 3)"
   Checks whether the sum of the factors of n (excluding n) is greater than n."
   (< (* 2 n) (reduce + (factors n))))
 
-(defn sum-of-abundants? [i abundants]
-  "**sum-of-abundants? :: Int, Set[Number] -> Boolean**
-  Are there two elements in abundants which sum is i?"
-  (some (fn [a] (abundants (- i a))) abundants))
+(def abundants (into (sorted-set) (filter abundant? (range 12 28124))))
+
+(defn abundant-sum? [n]
+  "**abundant-sum? :: Int -> Boolean**
+  Can n be expressed as the sum of two abundant numbers?"
+  (boolean (some #(abundants (- n %)) (take-while #(< % n) abundants))))
 
 (defn truncate [number digits]
   "**truncate :: Int, Int -> Int**
