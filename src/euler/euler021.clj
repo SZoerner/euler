@@ -68,7 +68,7 @@
 (defn p023
   ([] (p023 (range 1 (inc 28123))))
   ([input] (->> input
-                (remove #(abundant-sum? %))
+                (remove abundant-sum?)
                 (reduce +))))
 
 

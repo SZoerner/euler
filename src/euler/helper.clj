@@ -32,7 +32,7 @@
   (reduce * (range 1N (inc n))))
 
 (def factorials 
-"**facts :: [Int]**
+  "**facts :: [Int]**
 Lazy, infinite sequence of all factorial numbers."
   (lazy-cat [1] (map * factorials (iterate inc 2))))
 
@@ -160,13 +160,13 @@ Example: (prime-factors 12) => (2 2 3)"
      :else (prime-factors number factors (rest ps)))))
 
 (defn count-divisors 
-"**count-divisors :: Int -> Int**
+  "**count-divisors :: Int -> Int**
 Calculates the number of divisors of n (including 1 and n itself)."
   [n] (->> (prime-factors n)
-       (partition-by identity)
-       (map count)
-       (map inc)
-       (reduce *)))
+           (partition-by identity)
+           (map count)
+           (map inc)
+           (reduce *)))
 
 (defn palindrome? [n]
   "**palindrome? :: Int -> Bool**

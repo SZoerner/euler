@@ -45,9 +45,9 @@
   Value of the first triangle number up to n."
   ([] (p012 500))
   ([n] (->> (iterate inc 1)
-       (map triangle)
-       (drop-while #(< (count-divisors %) n))
-       first)))
+            (map triangle)
+            (drop-while #(< (count-divisors %) n))
+            first)))
 
 ;; # Problem 13 - Large sum
 ;; 
