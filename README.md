@@ -6,6 +6,8 @@
 Status](https://travis-ci.org/SZoerner/euler.svg?branch=master)](https://travis-ci.org/SZoerner/euler)
 [![Coverage Status](https://coveralls.io/repos/SZoerner/euler/badge.svg?branch=master)](https://coveralls.io/r/SZoerner/euler?branch=master)
 [![Dependencies Status](http://jarkeeper.com/szoerner/euler/status.svg)](http://jarkeeper.com/szoerner/euler)
+[![API codox](http://b.repl.ca/v1/doc-API-blue.png)](http://szoerner.github.io/euler/codox/)
+[![marginalia docs](http://b.repl.ca/v1/doc-marginalia-blue.png)](http://szoerner.github.io/euler/uberdoc)
 
 My Project Euler solutions, written in Clojure
 
