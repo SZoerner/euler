@@ -17,7 +17,7 @@ git checkout gh-pages
 ls -1 | grep -v '.git' | xargs rm -rf 
 
 # generate the docs
-lein doc
+lein docs
 lein marg -d "./doc"
 
 # create a new commit
