@@ -143,9 +143,11 @@
             (recur (* rem 10) d
                    (conj acc div)
                    (conj rems rem)))))))
+
 (def kvs
   (map #(vector % (count (rec-cycle 1 %)))
        (take 1000 (iterate dec 1000))))
+
 (defn p026 []
   (first (apply max-key second kvs)))
 
@@ -173,30 +175,29 @@
 ;; Find the product of the coefficients, a and b, for the quadratic expression that produces
 ;; the maximum number of primes for consecutive values of n, starting with n = 0.
 
-;; Validator function
+(defn quadratic 
+"Returns a generator function of the form: n² + an + b."
+  [a b] (fn [n] (+ (* (+ n a) n) b)))
+
 (defn consec-primes
-  "given a generator function, returns number of consecutive prime numbers generated"
-  [a b]
-  (->>
-   (iterate inc 0)
-    ;; returns a generator of the form: n² + an + b
-   (map #(+ (* (+ % a) %) b))
-    ;; filter as long as primes are generated
-   (take-while #(and (pos? %) (prime? %)))
-    ;; count # of primes
-   (count)))
+  "given a generator function, returns the amount of consecutive prime numbers generated"
+  [a b] (->>
+         (iterate inc 0) ;; for Integers starting from zero
+         (map (quadratic a b)) ;; apply the generator of the form: n² + an + b
+         (take-while #(and (pos? %) (prime? %))) ;; filter as long as primes are generated
+         (count))) ;; count # of primes
+
+(defn quads [nums]
+  (for [a nums b nums] ;; all quadratic prime generators between a and b
+    [(consec-primes a b) a b]))
+
+(defn find-max [nums]
+    (let [[n a b] (first (sort-by first > (quads nums)))]
+      (* a b)))
 
 (defn p027
-  "list comprehension for finding the max prime generator"
-  []
-  (let [nums (range -999 1000)
-        ;; all quadratic prime generators
-        quads (for [a nums
-                    ;; between -999 and 999
-                    b nums]
-                [a b (consec-primes a b)])
-        [a b _] (reduce #(if (> (nth %1 2) (nth %2 2)) %1 %2) quads)]
-    (* a b)))
+  ([] (p027 (range -999 1000))) ;; list comprehension for finding the max prime generator between -999 and 999
+  ([nums] (find-max nums)))
 
 
 ;; # Problem 28 - Number spiral diagonals
