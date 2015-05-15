@@ -8,8 +8,8 @@
   (fact "Problem 11"
         (p011) => 70600674)
 
-  ; (fact "Problem 12"
-  ;       (p012) => 76576500) ;; too slow - makes cloverage abort
+   (fact "Problem 12"
+         (p012) => 76576500)
 
   (fact "Problem 13"
         (p013) => 5537376230342)
@@ -18,8 +18,7 @@
         (p014 10) => 9
         (p014 100) => 97
         (p014 1000) => 871
-        ;; (p014) => 837799
-        ) ;; too slow - makes cloverage abort
+        (p014) => 837799)
 
   (fact "Problem 15"
         (p015) => 137846528820)
