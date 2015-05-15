@@ -1,5 +1,5 @@
 (ns euler.euler021
-  (:use euler.helper))
+  (:require [euler.helper :refer [abundant-sum? amicable? narcissistic? phi prime?]]))
 
 ;; # Problem 21 - Amicable numbers
 ;;

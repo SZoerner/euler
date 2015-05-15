@@ -1,5 +1,5 @@
 (ns euler.euler001
-  (:use euler.helper))
+  (:require [euler.helper :refer [digits factor-any fibs least-common-multiple max-prime palindrome? primes]]))
 
 ;; # Problem 1 - Multiples of 3 and 5
 ;;

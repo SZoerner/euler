@@ -1,5 +1,5 @@
 (ns euler.euler031
-  (:use euler.helper))
+  (:require [euler.helper :refer [combinations]]))
 
 ;; # Problem 31 - Coin sums
 ;;

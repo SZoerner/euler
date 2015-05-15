@@ -1,5 +1,6 @@
 (ns euler.euler011
-  (:use euler.helper))
+  (:require [euler.helper :refer [count-divisors digits factorial lattice-paths memo-collatz
+                                  parse-grid product to-words triangle truncate]]))
 
 ;; # Problem 11 - Largest product in a grid
 ;;
