@@ -134,13 +134,14 @@
   ;; entry point - start with the list of primes and [] as accumulator
   ([n] (get-primes n primes []))
   ([n ps acc]
-   (cond
-      ;; no more factors - stop iteration
-     (< n (first ps)) acc
-      ;; if factor - add to set of prime factors
-     (factor? n (first ps)) (get-primes (/ n (first ps)) ps (conj acc (first ps)))
-      ;; no match - next iteration
-     :else (get-primes n (rest ps) acc))))
+   (let [[f & r] ps]
+     (cond
+       ;; no more factors - stop iteration
+       (< n f) acc
+       ;; if factor - add to set of prime factors
+       (factor? n f) (get-primes (/ n f) ps (conj acc f))
+       ;; no match - next iteration
+       :else (get-primes n r acc)))))
 
 (defn max-prime
   "**max-prime :: Int, [Int] -> Int**
