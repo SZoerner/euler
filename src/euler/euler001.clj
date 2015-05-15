@@ -16,9 +16,9 @@
   ([limit & divisors]
     ;; for the range 0 to (limit - 1)
    (->> (range limit)
-     ;; filter the multiples (at least one divisor)
+        ;; filter the multiples (at least one divisor)
         (filter (reduce factor-any divisors))
-     ;; and sum up the resulting list
+        ;; and sum up the resulting list
         (reduce +))))
 
 
@@ -55,7 +55,7 @@
 ;; **Task:**
 ;; What is the largest prime factor of the number 600851475143 ?
 
-(defn p003 
+(defn p003
   ([] (p003 600851475143))
   ([n] (max-prime n primes)))
 
@@ -63,20 +63,21 @@
 ;; # Problem 4 - Largest palindrome product
 ;; 
 ;; **Description:** 
-;; A palindromic number reads the same both ways. The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+;; A palindromic number reads the same both ways.
+;; The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
 ;; Find the largest palindrome made from the product of two 3-digit numbers.
 
-(defn p004 
+(defn p004
   ([] (p004 1000))
   ([n]
-  ;; get the largest result of
+    ;; get the largest result of
    (reduce max
            (for [num1 (range n 0 -1)
-                ;; all numbers from 100 to 1000
+                 ;; all numbers from 100 to 1000
                  num2 (range n 0 -1)
-                ;; compute the product of the two
+                 ;; compute the product of the two
                  :let [pal (* num1 num2)]
-                ;; and filter those who are palindromes
+                 ;; and filter those who are palindromes
                  :when (palindrome? pal)]
              pal))))
 
@@ -92,7 +93,7 @@
 ;; reference for computing the least common multiple
 ;; http://en.wikipedia.org/wiki/Least_common_multiple
 
-(defn p005 
+(defn p005
   ([] (p005 20))
   ([n] (least-common-multiple (range (inc n)))))
 
@@ -102,12 +103,14 @@
 ;; **Description:** 
 ;; The sum of the squares of the first ten natural numbers is 1^2 + 2^2 + ... + 10^2 = 385
 ;; The square of the sum of the first ten natural numbers is (1 + 2 + ... + 10)^2 = 55^2 = 3025
-;; Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is 3025 − 385 = 2640.
+;; Hence the difference between the sum of the squares of the first ten natural numbers
+;; and the square of the sum is 3025 − 385 = 2640.
 ;; 
 ;; **Task:**
-;; Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
+;; Find the difference between the sum of the squares of the first one hundred natural numbers
+;; and the square of the sum.
 
-(defn p006 
+(defn p006
   ([] (p006 100))
   ([n]
    (let [nums (range (inc n))]
@@ -123,7 +126,7 @@
 ;; **Task:**
 ;; What is the 10 001st prime number?
 
-(defn p007 
+(defn p007
   ([] (p007 10001))
   ([n] (last (take n primes))))
 
@@ -137,11 +140,11 @@
   ([] (p008 5 (bigdec (slurp "resources/p008_digit.txt"))))
   ([n series]
    (->> (digits series)
-      ;; partition into lists of 5
+        ;; partition into lists of 5
         (partition n 1)
-      ;; calculate the product
+        ;; calculate the product
         (map #(reduce * %))
-      ;; get the highest product
+        ;; get the highest product
         (reduce max))))
 
 
@@ -174,7 +177,7 @@
 ;; **Task:**
 ;; Find the sum of all the primes below two million.
 
-(defn p010 
+(defn p010
   ([] (p010 2000000))
   ([n]
    (->> primes
