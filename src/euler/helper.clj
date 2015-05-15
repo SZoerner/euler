@@ -248,11 +248,12 @@ Calculates the number of divisors of n (including 1 and n itself)."
    "eleven" "twelve" "thirteen" "fourteen" "fifteen" "sixteen" "seventeen"
    "eighteen" "nineteen"])
 
-(def tens ["twenty" "thirty" "forty" "fifty" "sixty" "seventy" "eighty" "ninety"])
+(def tens ["twenty" "thirty" "forty" "fifty"
+           "sixty" "seventy" "eighty" "ninety"])
 
 (defn to-words
-  "Converts a number (up to 1000) into its string representation, omitting spaces.
-  Example: (to-words 115) => 'onehundredandfifteen'."
+  "Converts a number (up to 1000) into its string representation,
+  omitting spaces. Example: (to-words 115) => 'onehundredandfifteen'."
   [n]
   (cond
     (< n 20) (nth singles (dec n))
