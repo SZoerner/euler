@@ -1,9 +1,8 @@
 (ns euler.euler011-test
   (:require [clojure.test :refer [deftest]]
-            [clojure.test.check.generators :as gen]
-            [euler.core-test :refer :all]
-            [euler.euler011 :refer :all]
-            [midje.sweet :refer :all]))
+            [midje.sweet :refer [fact]]
+            [euler.core-test :refer [fact-qc]]
+            [euler.euler011 :refer :all]))
 
 (deftest euler011-tests
   (fact "Problem 11"

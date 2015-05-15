@@ -1,9 +1,9 @@
 (ns euler.helper-test
   (:require [clojure.test :refer [deftest]]
             [clojure.test.check.generators :as gen]
-            [euler.core-test :refer :all]
-            [euler.helper :refer :all])
-  (:use midje.sweet))
+            [midje.sweet :refer [fact]]
+            [euler.core-test :refer [fact-qc]]
+            [euler.helper :refer :all]))
 
 (deftest helper-tests
   (fact "prime-factors"
