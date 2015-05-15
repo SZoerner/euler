@@ -48,7 +48,7 @@
   (fact "narcissistic?"
         (narcissistic? 1634 4))
 
-  ; (fact-qc "factors vs divisors"
-  ;         [n gen/nat]
-  ;         (factors n) => (divisors n))
+   (fact-qc "factors vs count-divisors"
+           [n gen/nat]
+           (count (factors n)) => (count-divisors n))
   )
