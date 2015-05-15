@@ -20,7 +20,7 @@
   (fact "abundant-sum?"
         (abundant-sum? 12) => false
         (abundant-sum? 24) => true)
-  
+
   (fact "triangle"
         (triangle 1) => 1
         (triangle 10) => 55

@@ -4,7 +4,7 @@
 
 ;; # Problem 21 - Amicable numbers
 ;;
-;; **Description:**  
+;; **Description:**
 ;; Let d(n) be defined as the sum of proper divisors of n
 ;; (numbers less than n which divide evenly into n).
 ;; If d(a) = b and d(b) = a, where a ≠ b, then a and b are an amicable pair
@@ -13,7 +13,7 @@
 ;; therefore d(220) = 284.
 ;; The proper divisors of 284 are 1, 2, 4, 71 and 142; so d(284) = 220.
 ;;
-;; **Task:**  
+;; **Task:**
 ;; Evaluate the sum of all the amicable numbers under 10000.
 
 (defn p021
@@ -27,7 +27,7 @@
 
 ;; # Problem 22 - Names scores
 ;;
-;; **Description:**  
+;; **Description:**
 ;; Using 'http://projecteuler.net/project/names.txt', a 46K text file containing
 ;; over five-thousand first names, begin by sorting it into alphabetical order.
 ;; Then working out the alphabetical value for each name, multiply this value
@@ -36,7 +36,7 @@
 ;; which is worth 3 + 15 + 12 + 9 + 14 = 53, is the 938th name in the list.
 ;; So, COLIN would obtain a score of 938 × 53 = 49714.
 ;;
-;; **Task:**  
+;; **Task:**
 ;; What is the total of all the name scores in the file?
 
 (defn p022
@@ -59,7 +59,7 @@
 
 ;; # Problem 23 - Non-abundant sums
 ;;
-;; **Description:**  
+;; **Description:**
 ;; A perfect number is a number for which the sum of its proper divisors is
 ;; exactly equal to the number. For example, the sum of the proper divisors of
 ;; 28 would be 1 + 2 + 4 + 7 + 14 = 28, which means that 28 is a perfect number.
@@ -74,7 +74,7 @@
 ;; even though it is known that the greatest number that cannot be expressed
 ;; as the sum of two abundant numbers is less than this limit.
 ;;
-;; **Task:**  
+;; **Task:**
 ;; Find the sum of all the positive integers which cannot be written
 ;; as the sum of two abundant numbers.
 
@@ -87,18 +87,18 @@
 
 ;; # Problem 24 - Lexicographic permutations
 ;;
-;; **Description:**  
+;; **Description:**
 ;; A permutation is an ordered arrangement of objects.
 ;; For example, 3124 is one possible permutation of the digits 1, 2, 3 and 4.
 ;; If all of the permutations are listed numerically or alphabetically,
 ;; we call it lexicographic order. The lexicographic permutations of
 ;; 0, 1 and 2 are: 012 021 102 120 201 210.
 ;;
-;; **Task:**  
+;; **Task:**
 ;; What is the millionth lexicographic permutation
 ;; of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?
 ;;
-;; **Background:**  
+;; **Background:**
 ;; http://clojure-euler.wikispaces.com/Problem+024
 ;; With n elements, there are n! permutations; grouping based on the first
 ;; element in the permutation, there are n permutation groups,
@@ -125,20 +125,20 @@
 ;; **Task:** What is the first term in the Fibonacci sequence
 ;; to contain 1000 digits?
 
-(defn p025 
+(defn p025
   "Fibonacci terms converge to (n)*Phi=(n+1),
   where Phi is the Golden Ratio (1+sqrt5)/2."
   ([] (p025 1000))
-  ([n] (int (Math/ceil 
-             (/ (+ (dec n) (Math/log10 (Math/sqrt 5))) 
+  ([n] (int (Math/ceil
+             (/ (+ (dec n) (Math/log10 (Math/sqrt 5)))
                 (Math/log10 phi))))))
 ;; brute force - too slow
-;; (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs)))) 
+;; (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs))))
 
 
 ;; # Problem 26 - Reciprocal cycles
 ;;
-;; **Description:**  
+;; **Description:**
 ;; A unit fraction contains 1 in the numerator. The decimal representation
 ;; of the unit fractions with denominators 2 to 10 are given:
 ;;
@@ -151,7 +151,7 @@
 ;; Where 0.1(6) means 0.166666..., and has a 1-digit recurring cycle.
 ;; It can be seen that 1/7 has a 6-digit recurring cycle.
 ;;
-;; **Task:**  
+;; **Task:**
 ;; Find the value of d < 1000 for which 1/d contains the longest
 ;; recurring cycle in its decimal fraction part.
 
@@ -177,7 +177,7 @@
 
 ;; # Problem 27 - Quadratic primes
 ;;
-;; **Description:**  
+;; **Description:**
 ;; Euler discovered the remarkable quadratic formula:
 ;;
 ;; n² + n + 41
@@ -197,12 +197,12 @@
 ;; where |n| is the modulus/absolute value of n
 ;; e.g. |11| = 11 and |−4| = 4
 ;;
-;; **Task:**  
+;; **Task:**
 ;; Find the product of the coefficients, a and b, for the quadratic expression
 ;; that produces the maximum number of primes for consecutive values of n,
 ;; starting with n = 0.
 
-(defn quadratic 
+(defn quadratic
 "Returns a generator function of the form: n² + an + b."
   [a b] (fn [n] (+ (* (+ n a) n) b)))
 
@@ -230,7 +230,7 @@
 
 ;; # Problem 28 - Number spiral diagonals
 ;;
-;; **Description:**  
+;; **Description:**
 ;; Starting with the number 1 and moving to the right in a clockwise direction
 ;; a 5 by 5 spiral is formed as follows:
 
@@ -242,11 +242,11 @@
 
 ;; It can be verified that the sum of the numbers on the diagonals is 101.
 ;;
-;; **Task:**  
+;; **Task:**
 ;; What is the sum of the numbers on the diagonals in a
 ;; 1001 by 1001 spiral formed in the same way?
 
-(defn p028 
+(defn p028
   ([] (p028 1001))
   ([n]
   ;; precondition: spirals can only have an odd length
@@ -264,7 +264,7 @@
 
 ;; # Problem 29 - Distinct powers
 ;;
-;; **Description:**  
+;; **Description:**
 ;; Consider all integer combinations of ab for 2 ≤ a ≤ 5 and 2 ≤ b ≤ 5:
 ;;
 ;; 2^2=4,  2^3=8,   2^4=16,  2^5=32
@@ -276,11 +276,11 @@
 ;;
 ;; 4, 8, 9, 16, 25, 27, 32, 64, 81, 125, 243, 256, 625, 1024, 3125
 ;;
-;; **Task:**  
+;; **Task:**
 ;; How many distinct terms are in the sequence generated
 ;; by ab for 2 ≤ a ≤ 100 and 2 ≤ b ≤ 100?
 
-(defn p029 
+(defn p029
   ([] (p029 100))
   ([n]
    (->>
@@ -298,7 +298,7 @@
 
 ;; # Problem 30 - Digit fifth powers
 ;;
-;; **Description:**  
+;; **Description:**
 ;; Surprisingly there are only three numbers that can be written as the sum
 ;; of fourth powers of their digits:
 ;;
@@ -309,7 +309,7 @@
 ;;
 ;; The sum of these numbers is 1634 + 8208 + 9474 = 19316.
 ;;
-;; **Task:**  
+;; **Task:**
 ;; Find the sum of all the numbers that can be written as the sum
 ;; of fifth powers of their digits.
 

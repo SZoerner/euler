@@ -26,7 +26,7 @@
                (set (concat lower upper))))))
 
 ;; TODO replace with facts seq
-(defn factorial 
+(defn factorial
   "*Int -> [Int]*
   Multiplies all natural numbers from 1 to n+1."
   [n] (reduce * (range 1N (inc n))))
@@ -168,7 +168,7 @@ Example: (prime-factors 12) => (2 2 3)"
                                                 (conj factors (first ps)) ps)
      :else (prime-factors number factors (rest ps)))))
 
-(defn count-divisors 
+(defn count-divisors
   "**count-divisors :: Int -> Int**
 Calculates the number of divisors of n (including 1 and n itself)."
   [n] (->> (prime-factors n)
