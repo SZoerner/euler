@@ -1,12 +1,14 @@
 (ns euler.euler011
-  (:require [euler.helper :refer [count-divisors digits factorial lattice-paths memo-collatz
-                                  parse-grid product to-words triangle truncate]]))
+  (:require [euler.helper :refer [count-divisors digits factorial lattice-paths
+                                  memo-collatz parse-grid product to-words
+                                  triangle truncate]]))
 
 ;; # Problem 11 - Largest product in a grid
 ;;
 ;; *Description:* 
-;; In the 20x20 grid below, four numbers along a diagonal line have been marked in red.
-;; The product of these numbers is ``26 x 63 x 78 x 14 = 1788696``.
+;; In the 20x20 grid below, four numbers along a diagonal line
+;; have been marked in red. The product of these numbers
+;; is ``26 x 63 x 78 x 14 = 1788696``.
 ;; 
 ;; **Task:** 
 ;; What is the greatest product of four adjacent numbers in the same direction
@@ -39,7 +41,8 @@
 ;; We can see that 28 is the first triangle number to have over five divisors.
 ;; 
 ;; **Task:** 
-;; What is the value of the first triangle number to have over five hundred divisors?
+;; What is the value of the first triangle number
+;; to have over five hundred divisors?
 
 (defn p012
   "*Int -> Int*  
@@ -53,26 +56,33 @@
 ;; # Problem 13 - Large sum
 ;; 
 ;; **Task:** 
-;; Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.
+;; Work out the first ten digits of the sum
+;; of the following one-hundred 50-digit numbers.
 
 (defn p013
   "*[Int] -> Int*  
   The sum of the first n digits of the given list of numbers."
   ([] (p013 10 "resources/p013_numbers.txt"))
-  ([n input]
-   (long (reduce + (map #(truncate % n) (map bigdec (re-seq #"\d+" (slurp input))))))))
+  ([n input] (->> input
+                  (slurp)
+                  (re-seq #"\d+")
+                  (map bigdec)
+                  (map #(truncate % n))
+                  (reduce +)
+                  (long))))
 
 
 ;; # Problem 14 - Longest Collatz sequence
 ;; 
 ;; **Description:** 
-;; The following iterative sequence is defined for the set of positive integers:
-;; n → n/2 (n is even),  n → 3n + 1 (n is odd)
+;; The following iterative sequence is defined for
+;; the set of positive integers: n → n/2 (n is even),  n → 3n + 1 (n is odd).
 ;;
-;; Using the rule above and starting with 13, we generate the following sequence:
-;; 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
-;; It can be seen that this sequence (starting at 13 and finishing at 1) contains 10 terms.
-;; Although it has not been proved yet (Collatz Problem), it is thought that all starting numbers finish at 1.
+;; Using the rule above and starting with 13, we generate
+;; the following sequence: 13 → 40 → 20 → 10 → 5 → 16 → 8 → 4 → 2 → 1
+;; It can be seen that this sequence (starting at 13 and finishing at 1)
+;; contains 10 terms. Although it has not been proved yet (Collatz Problem),
+;; it is thought that all starting numbers finish at 1.
 ;; 
 ;; **Task:**
 ;; Which starting number, under one million, produces the longest chain?
@@ -124,11 +134,13 @@
 ;; then there are 3 + 3 + 5 + 4 + 4 = 19 letters used in total.
 ;; 
 ;; **Task:**
-;; If all the numbers from 1 to 1000 (one thousand) inclusive were written out in words,
-;; how many letters would be used?
-;; NOTE: Do not count spaces or hyphens. For example, 342 (three hundred and forty-two) contains 23 letters
+;; If all the numbers from 1 to 1000 (one thousand) inclusive
+;; were written out in words, how many letters would be used?
+;; NOTE: Do not count spaces or hyphens. For example,
+;; 342 (three hundred and forty-two) contains 23 letters
 ;; and 115 (one hundred and fifteen) contains 20 letters.
-;; The use of "and" when writing out numbers is in compliance with British usage.
+;; The use of "and" when writing out numbers is
+;; in compliance with British usage.
 
 (defn p017 
   ([] (p017 1000))
@@ -178,7 +190,8 @@
     merge-rows
     (fn [a b]
        ;; look at the two elements in the row below it,
-       ;; take the max of those two elements, and sum them to the original element.
+       ;; take the max of those two elements,
+       ;; and sum them to the original element.
       (map + (map #(reduce max %) (partition 2 1 a)) b))]
     (first (reduce merge-rows (reverse triangle)))))
 
@@ -186,15 +199,18 @@
 ;; # Problem 19 - Counting Sundays
 ;; 
 ;; **Description:** 
-;; You are given the following information, but you may prefer to do some research for yourself.
+;; You are given the following information,
+;; but you may prefer to do some research for yourself.
 ;;
 ;; 1 Jan 1900 was a Monday. Thirty days has September, April, June and November.
-;; All the rest have thirty-one, Saving February alone, Which has twenty-eight, rain or shine.
-;; And on leap years, twenty-nine.
-;; A leap year occurs on any year evenly divisible by 4, but not on a century unless it is divisible by 400.
+;; All the rest have thirty-one, saving February alone,
+;; which has twenty-eight, rain or shine. And on leap years, twenty-nine.
+;; A leap year occurs on any year evenly divisible by 4,
+;; but not on a century unless it is divisible by 400.
 ;; 
 ;; **Task:**
-;; How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
+;; How many Sundays fell on the first of the month during
+;; the twentieth century (1 Jan 1901 to 31 Dec 2000)?
 
 ;; by hroi
 ;; http://clojure-euler.wikispaces.com/Problem+019
@@ -212,8 +228,8 @@
 ;; 
 ;; **Description:** 
 ;; n! means n × (n − 1) × ... × 3 × 2 × 1
-;; For example, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800,
-;; and the sum of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
+;; For example, 10! = 10 × 9 × ... × 3 × 2 × 1 = 3628800, and the sum
+;; of the digits in the number 10! is 3 + 6 + 2 + 8 + 8 + 0 + 0 = 27.
 ;; 
 ;; **Task:**
 ;; Find the sum of the digits in the number 100!

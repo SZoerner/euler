@@ -1,5 +1,6 @@
 (ns euler.euler001
-  (:require [euler.helper :refer [digits factor-any fibs least-common-multiple max-prime palindrome? primes]]))
+  (:require [euler.helper :refer [digits factor-any fibs least-common-multiple
+                                  max-prime palindrome? primes]]))
 
 ;; # Problem 1 - Multiples of 3 and 5
 ;;
@@ -26,15 +27,16 @@
 ;; 
 ;; **Description:** 
 ;; Each new term in the Fibonacci sequence is generated 
-;; by adding the previous two terms. By starting with 1 and 2, the first 10 terms will be:
-;; (1), 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
+;; by adding the previous two terms. By starting with 1 and 2,
+;; the first 10 terms will be: (1), 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
 ;; 
 ;; **Task:** 
-;; By considering the terms in the Fibonacci sequence whose values do not exceed four million, 
-;; find the sum of the even-valued terms.
+;; By considering the terms in the Fibonacci sequence whose values
+;; do not exceed four million, find the sum of the even-valued terms.
 ;;
 ;; **Background**
-;; A Fibonacci number (exept 0 and 1) is recursively defined as the sum of its two predecessing Fibonacci numbers:  
+;; A Fibonacci number (exept 0 and 1) is recursively defined
+;; as the sum of its two predecessing Fibonacci numbers:
 ;; - base case: ``fib(n <= 1) = n``  
 ;; - rec case: ``fib (n > 1) = fib(n - 1) + fib(n - 2)``
 
@@ -64,7 +66,8 @@
 ;; 
 ;; **Description:** 
 ;; A palindromic number reads the same both ways.
-;; The largest palindrome made from the product of two 2-digit numbers is 9009 = 91 × 99.
+;; The largest palindrome made from the product of two 2-digit numbers
+;; is 9009 = 91 × 99.
 ;; Find the largest palindrome made from the product of two 3-digit numbers.
 
 (defn p004
@@ -85,10 +88,12 @@
 ;; # Problem 5 - Smallest multiple
 ;; 
 ;; **Description:** 
-;; 2520 is the smallest number that can be divided by each of the numbers from 1 to 10 without any remainder.
+;; 2520 is the smallest number that can be divided by each of the numbers
+;; from 1 to 10 without any remainder.
 ;; 
 ;; **Task:**
-;; What is the smallest positive number that is evenly divisible by all of the numbers from 1 to 20?
+;; What is the smallest positive number that is evenly divisible
+;; by all of the numbers from 1 to 20?
 
 ;; reference for computing the least common multiple
 ;; http://en.wikipedia.org/wiki/Least_common_multiple
@@ -101,14 +106,16 @@
 ;; #Problem 6 - Sum square difference
 ;; 
 ;; **Description:** 
-;; The sum of the squares of the first ten natural numbers is 1^2 + 2^2 + ... + 10^2 = 385
-;; The square of the sum of the first ten natural numbers is (1 + 2 + ... + 10)^2 = 55^2 = 3025
-;; Hence the difference between the sum of the squares of the first ten natural numbers
-;; and the square of the sum is 3025 − 385 = 2640.
+;; The sum of the squares of the first ten natural numbers
+;; is 1^2 + 2^2 + ... + 10^2 = 385
+;; The square of the sum of the first ten natural numbers
+;; is (1 + 2 + ... + 10)^2 = 55^2 = 3025
+;; Hence the difference between the sum of the squares of the first ten
+;; natural numbers and the square of the sum is 3025 − 385 = 2640.
 ;; 
 ;; **Task:**
-;; Find the difference between the sum of the squares of the first one hundred natural numbers
-;; and the square of the sum.
+;; Find the difference between the sum of the squares of the first one hundred
+;; natural numbers and the square of the sum.
 
 (defn p006
   ([] (p006 100))
@@ -121,7 +128,8 @@
 ;; # Problem 7 - 10001st prime
 ;; 
 ;; **Description:** 
-;; By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13, we can see that the 6th prime is 13.
+;; By listing the first six prime numbers: 2, 3, 5, 7, 11, and 13,
+;; we can see that the 6th prime is 13.
 ;; 
 ;; **Task:**
 ;; What is the 10 001st prime number?
@@ -134,7 +142,8 @@
 ;; # Problem 8 - Largest product in a series
 ;; 
 ;; **Task:**
-;; Find the greatest product of five consecutive digits in the 1000-digit number.
+;; Find the greatest product of five consecutive digits
+;; in the 1000-digit number.
 
 (defn p008
   ([] (p008 5 (bigdec (slurp "resources/p008_digit.txt"))))
@@ -151,11 +160,12 @@
 ;; # Problem 9 - Special Pythagorean triplet
 ;; 
 ;; **Description:** 
-;; A Pythagorean triplet is a set of three natural numbers, a < b < c, for which a^2 + b^2 = c^2
-;; For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
+;; A Pythagorean triplet is a set of three natural numbers, a < b < c,
+;; for which a^2 + b^2 = c^2 For example, 3^2 + 4^2 = 9 + 16 = 25 = 5^2.
 ;; 
 ;; **Task:**
-;; There exists exactly one Pythagorean triplet for which a + b + c = 1000. Find the product abc.
+;; There exists exactly one Pythagorean triplet for which a + b + c = 1000.
+;; Find the product abc.
 
 (defn p009
   ([] (p009 1000))
