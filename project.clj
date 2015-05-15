@@ -7,7 +7,8 @@
             :profiles {:dev {:dependencies [[midje "1.7.0-SNAPSHOT"]
                                             [org.clojure/test.check "0.7.0"]]
                              :injections [(require 'flare.clojure-test)
-                                          (flare.clojure-test/install!)]}}
+                                          (flare.clojure-test/install!)]}
+                       :coverage {:plugins [[lein-cloverage "1.0.2"]]}}
             :lein-release {:deploy-via :clojars}
             :marginalia {:css ["marg.css"]
                          :javascript ["http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]

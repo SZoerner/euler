@@ -13,8 +13,7 @@
   (fact "Problem 23"
         (p023 [12]) => 12
         (p023 (range 25)) => 276
-        ;; (p023) => 4179871
-        ) ;; too slow - makes cloverage abort
+        (p023) => 4179871)
 
   (fact "Problem 24"
         (p024) => '(2 7 8 3 9 1 5 4 6 0))
