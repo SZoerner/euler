@@ -242,8 +242,7 @@ Calculates the number of divisors of n (including 1 and n itself)."
   (->> (digits n)
        (map #(Math/pow % exp))
        (reduce +)
-       (int)  ;; cast to int for comparison
-       (= n)))
+       (== n)))
 
 (def singles
   ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten"

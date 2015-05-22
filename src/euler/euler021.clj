@@ -313,8 +313,12 @@
 ;; Find the sum of all the numbers that can be written as the sum
 ;; of fifth powers of their digits.
 
-(defn p030 [exp]
-  ;; predicate checking for being a sum of powers
-  (reduce + (filter #(narcissistic? % exp)
-                      ;; not really sure what the upper limit is..
-                    (range 2 (Math/pow 10 (inc exp))))))
+(defn p030 
+  ([] (p030 5))
+  ([exp]
+    ;; 6*9**5 = 354294 as the upper limit..
+    (let [limit (* (inc exp) (Math/pow 9 exp))]
+      ;; predicate checking for being a sum of powers
+      (reduce + (filter #(narcissistic? % exp)
+        ;; TODO only insert permutations of digits
+        (range 2 limit))))))
