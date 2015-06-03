@@ -1,6 +1,5 @@
 (ns euler.euler001
-  (:require [euler.helper :refer [digits factor-any fibs least-common-multiple
-                                  max-prime palindrome? primes]]))
+  (:require [euler.helper :as helper]))
 
 ;; # Problem 1 - Multiples of 3 and 5
 ;;
@@ -18,7 +17,7 @@
     ;; for the range 0 to (limit - 1)
    (->> (range limit)
         ;; filter the multiples (at least one divisor)
-        (filter (reduce factor-any divisors))
+        (filter (reduce helper/factor-any divisors))
         ;; and sum up the resulting list
         (reduce +))))
 
@@ -43,7 +42,7 @@
 (defn p002
   ([] (p002 (* 4 1000 1000)))
   ([n]
-   (->> fibs
+   (->> helper/fibs
         (take-while #(< % n))
         (filter even?)
         (reduce +))))
@@ -59,7 +58,7 @@
 
 (defn p003
   ([] (p003 600851475143))
-  ([n] (max-prime n primes)))
+  ([n] (helper/max-prime n helper/primes)))
 
 
 ;; # Problem 4 - Largest palindrome product
@@ -81,7 +80,7 @@
                  ;; compute the product of the two
                  :let [pal (* num1 num2)]
                  ;; and filter those who are palindromes
-                 :when (palindrome? pal)]
+                 :when (helper/palindrome? pal)]
              pal))))
 
 
@@ -100,7 +99,7 @@
 
 (defn p005
   ([] (p005 20))
-  ([n] (least-common-multiple (range (inc n)))))
+  ([n] (helper/least-common-multiple (range (inc n)))))
 
 
 ;; #Problem 6 - Sum square difference
@@ -136,7 +135,7 @@
 
 (defn p007
   ([] (p007 10001))
-  ([n] (last (take n primes))))
+  ([n] (last (take n helper/primes))))
 
 
 ;; # Problem 8 - Largest product in a series
@@ -148,7 +147,7 @@
 (defn p008
   ([] (p008 5 (bigdec (slurp "resources/p008_digit.txt"))))
   ([n series]
-   (->> (digits series)
+   (->> (helper/digits series)
         ;; partition into lists of 5
         (partition n 1)
         ;; calculate the product
@@ -190,6 +189,6 @@
 (defn p010
   ([] (p010 2000000))
   ([n]
-   (->> primes
+   (->> helper/primes
         (take-while #(< % n))
         (reduce +))))

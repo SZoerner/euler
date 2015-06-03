@@ -1,7 +1,5 @@
 (ns euler.euler011
-  (:require [euler.helper :refer [count-divisors digits factorial lattice-paths
-                                  memo-collatz parse-grid product to-words
-                                  triangle truncate]]))
+  (:require [euler.helper :as helper]))
 
 ;; # Problem 11 - Largest product in a grid
 ;;
@@ -16,7 +14,7 @@
 
 (defn p011
   ([] (p011 20 4 (slurp "resources/p011_matrix.txt")))
-  ([size len input-str] (product size len (parse-grid input-str size))))
+  ([size len input-str] (helper/product size len (helper/parse-grid input-str size))))
 
 
 ;; # Problem 12 - Highly divisible triangular number
@@ -49,8 +47,8 @@
   Value of the first triangle number up to n."
   ([] (p012 500))
   ([n] (->> (iterate inc 1)
-            (map triangle)
-            (drop-while #(< (count-divisors %) n))
+            (map helper/triangle)
+            (drop-while #(< (helper/count-divisors %) n))
             first)))
 
 ;; # Problem 13 - Large sum
@@ -67,7 +65,7 @@
                   (slurp)
                   (re-seq #"\d+")
                   (map bigdec)
-                  (map #(truncate % n))
+                  (map #(helper/truncate % n))
                   (reduce +)
                   (long))))
 
@@ -91,7 +89,7 @@
   ([] (p014 (Math/pow 10 6)))
   ([limit]
    (let [cache (atom {1 1})]
-     (doseq [n (range 1 limit)] (memo-collatz cache n))
+     (doseq [n (range 1 limit)] (helper/memo-collatz cache n))
      (key (apply max-key val @cache)))))
 
 
@@ -111,7 +109,7 @@
 
 (defn p015
   ([] (p015 20))
-  ([n] (lattice-paths n)))
+  ([n] (helper/lattice-paths n)))
 
 
 ;; # Problem 16 - Power digit sum
@@ -124,7 +122,7 @@
 
 (defn p016
   ([] (p016 (.pow (BigInteger. "2") 1000)))
-  ([n] (reduce + (digits n))))
+  ([n] (reduce + (helper/digits n))))
 
 
 ;; # Problem 17 - Number letter counts
@@ -146,7 +144,7 @@
   ([] (p017 1000))
   ([n] (->> (range 1 (inc n))
           ;; map to corresponding string
-            (map to-words)
+            (map helper/to-words)
           ;; concatenate
             (apply str)
           ;; count the number of chars
@@ -237,4 +235,4 @@
 ;; analogous to Problem 16
 (defn p020
   ([] (p020 100))
-  ([n] (reduce + (digits (factorial n)))))
+  ([n] (reduce + (helper/digits (helper/factorial n)))))

@@ -1,5 +1,5 @@
 (ns euler.euler031
-  (:require [euler.helper :refer [combinations]]))
+  (:require [euler.helper :as helper]))
 
 ;; # Problem 31 - Coin sums
 ;;
@@ -18,4 +18,4 @@
 
 (defn p031
   ([] (p031 200 [200 100 50 20 10 5 2 1]))
-  ([n coins] (combinations n coins)))
+  ([n coins] (helper/combinations n coins)))

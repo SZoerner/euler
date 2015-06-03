@@ -1,6 +1,5 @@
 (ns euler.euler021
-  (:require [euler.helper :refer [abundant-sum? amicable?
-                                  narcissistic? phi prime?]]))
+  (:require [euler.helper :as helper]))
 
 ;; # Problem 21 - Amicable numbers
 ;;
@@ -19,7 +18,7 @@
 (defn p021
   ([] (p021 10000))
   ([n] (->> (range 1 (inc n))
-            (map amicable?)
+            (map helper/amicable?)
             (flatten)
             (distinct)
             (reduce +))))
@@ -81,7 +80,7 @@
 (defn p023
   ([] (p023 (range 1 (inc 28123))))
   ([input] (->> input
-                (remove abundant-sum?)
+                (remove helper/abundant-sum?)
                 (reduce +))))
 
 
@@ -131,7 +130,7 @@
   ([] (p025 1000))
   ([n] (int (Math/ceil
              (/ (+ (dec n) (Math/log10 (Math/sqrt 5)))
-                (Math/log10 phi))))))
+                (Math/log10 helper/phi))))))
 ;; brute force - too slow
 ;; (.indexOf fibs (first (drop-while #(> 1000 (count (str %))) fibs))))
 
@@ -212,7 +211,7 @@
   [a b] (->>
          (iterate inc 0) ;; for Integers starting from zero
          (map (quadratic a b)) ;; apply the generator of the form: n² + an + b
-         (take-while #(and (pos? %) (prime? %))) ;; filter as long as primes
+         (take-while #(and (pos? %) (helper/prime? %))) ;; filter as long as primes
          (count))) ;; count # of primes
 
 (defn quads [nums]
@@ -319,6 +318,6 @@
     ;; 6*9**5 = 354294 as the upper limit..
     (let [limit (* (inc exp) (Math/pow 9 exp))]
       ;; predicate checking for being a sum of powers
-      (reduce + (filter #(narcissistic? % exp)
+      (reduce + (filter #(helper/narcissistic? % exp)
         ;; TODO only insert permutations of digits
         (range 2 limit))))))
