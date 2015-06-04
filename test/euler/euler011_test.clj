@@ -6,7 +6,7 @@
 
 (deftest euler011-tests
   (fact "Problem 11"
-        (e011/e011/p011) => 70600674)
+        (e011/p011) => 70600674)
 
   ; (fact "Problem 12"
   ;       (e011/p012) => 76576500) ;; too slow - makes cloverage abort
