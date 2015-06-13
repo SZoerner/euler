@@ -1,5 +1,6 @@
 (ns euler.euler011
-  (:require [euler.helper :as helper]))
+  (:require [euler.helper :as helper])
+  (:import [java.util GregorianCalendar]))
 
 ;; # Problem 11 - Largest product in a grid
 ;;
@@ -215,12 +216,14 @@
 ;; http://clojure-euler.wikispaces.com/Problem+019
 
 (defn p019 []
-  (count
-   (for [year (range 1 101) month (range 0 12)
-         :let [day (.getDay (doto (java.util.Date.) (.setYear year)
-                                  (.setMonth month) (.setDate 1)))]
-         :when (zero? day)]
-     [year, month])))
+  (reduce +
+   (for [year (range 1901 (inc 2000)) month (range 1 (inc 12))
+    :let [cal (doto (GregorianCalendar.)
+                (.set GregorianCalendar/YEAR year)
+                (.set GregorianCalendar/MONTH month)
+                (.set GregorianCalendar/DAY_OF_MONTH 1))
+          day (.get cal GregorianCalendar/DAY_OF_WEEK)]
+    :when (= GregorianCalendar/SUNDAY day)] 1)))
 
 
 ;; # Problem 20 - Factorial digit sum
