@@ -17,8 +17,8 @@ git checkout gh-pages
 ls -1 | grep -v '.git' | xargs rm -rf 
 
 # generate the docs
-lein docs
-lein marg -d "./doc"
+lein doc 				# codox API
+lein marg -d "./doc"	# marginalia code documentation
 
 # create a new commit
 git add .
