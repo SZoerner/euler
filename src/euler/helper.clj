@@ -36,7 +36,10 @@
   Lazy, infinite sequence of all factorial numbers."
   (lazy-cat [1] (map * factorials (iterate inc 2))))
 
-(defn lattice-paths [n]
+(defn lattice-paths
+  "**lattice-paths :: Int -> Int** The central binomial coefficients,
+  Binomial[2n, n] or (2n)!/(n!)^2."
+  [n]
   ;; divide the factorial of 2n
   (long (/ (factorial (* 2 n))
            ;; by (fac(n))^2
@@ -55,7 +58,8 @@
   (lazy-cat [0N 1N] (map + (rest fibs) fibs)))
 
 (defn next-collatz
-  "computes the next number of the collatz sequence."
+  "**next-collatz :: Int -> Int**
+  Computes the next number of the collatz sequence."
   [n] (if (even? n) (bit-shift-right n 1) (inc (* 3 n))))
 
 (defn collatz
@@ -65,7 +69,10 @@
         (if (= n 1) '()
             (collatz (next-collatz n)))))
 
-(defn memo-collatz [c n] ;; TODO not sure this works efficiently..
+(defn memo-collatz
+  "**memo-collatz :: [Int]**
+  Memoized collatz sequence using an atom."
+[c n] ;; TODO not sure this works efficiently..
   (if-let [entry (@c n)] entry ;; already present - return the count
           ((swap! c assoc n  ;; new entry - store in cache
                   (inc (memo-collatz c (next-collatz n))))
@@ -131,6 +138,7 @@
 
 ;; iterative approach
 (defn get-primes
+  "**get-primes :: Int -> [Int]** Get the prime divisors of n."
   ;; entry point - start with the list of primes and [] as accumulator
   ([n] (get-primes n primes []))
   ([n ps acc]
@@ -158,8 +166,8 @@
 
 (defn prime-factors
   "** prime-factors :: Int -> [Int]**
-Given a number, returns the list of prime factors of n.
-Example: (prime-factors 12) => (2 2 3)"
+  Given a number, returns the list of prime factors of n.
+  Example: (prime-factors 12) => (2 2 3)"
   ([n] (prime-factors n [] primes))
   ([number factors ps]         ;; TODO use destructuring
    (cond
@@ -170,7 +178,7 @@ Example: (prime-factors 12) => (2 2 3)"
 
 (defn count-divisors
   "**count-divisors :: Int -> Int**
-Calculates the number of divisors of n (including 1 and n itself)."
+  Calculates the number of divisors of n (including 1 and n itself)."
   [n] (->> (prime-factors n)
            (partition-by identity)
            (map count)
@@ -195,10 +203,13 @@ Calculates the number of divisors of n (including 1 and n itself)."
        (int)))
 
 (defn sum-of-factors
-  "The sum of all proper divisors, excluding  n."
+  "**sum-of-factors :: Int -> Int**
+  The sum of all proper divisors, excluding  n."
   [n] (reduce + 1 (factors n 2))) ; include 1, but ignore n
 
-(defn amicable? [a]
+(defn amicable?
+  "**amicable? :: Int -> Bool** Is a an amicable number?"
+  [a]
   (let [b (sum-of-factors a)]
     (if (and (not= a b) (= a (sum-of-factors b)))
       [a b] ())))
@@ -208,7 +219,9 @@ Calculates the number of divisors of n (including 1 and n itself)."
   Checks whether the sum of the factors of n (excluding n) is greater than n."
   [n] (< (* 2 n) (reduce + (factors n))))
 
-(def abundants (into (sorted-set) (filter abundant? (range 12 28124))))
+(def abundants
+  "**abundants :: [Int]** All abundant numbers."
+  (into (sorted-set) (filter abundant? (range 12 28124))))
 
 (defn abundant-sum?
   "**abundant-sum? :: Int -> Boolean**
@@ -227,7 +240,7 @@ Calculates the number of divisors of n (including 1 and n itself)."
        (Math/floor)))
 
 (def phi
-  "The Golden Ratio - (1+sqrt5)/2."
+  "**phi :: Double** The Golden Ratio - (1+sqrt5)/2."
   (/ (inc (Math/sqrt 5)) 2))
 
 (defn digits
@@ -236,7 +249,8 @@ Calculates the number of divisors of n (including 1 and n itself)."
   [n] (map #(Character/digit % 10) (str n)))
 
 (defn narcissistic?
-  "A number written as the sum of its nth powers.
+  "**narcissistic? :: Int, Int -> Bool**
+  Valid numbers can be written as the sum of its nth powers.
   Exp.: 1634 = 1^4 + 6^4 + 3^4 + 4^4."
   [n exp]
   (->> (digits n)
@@ -245,11 +259,14 @@ Calculates the number of divisors of n (including 1 and n itself)."
        (== n)))
 
 (def singles
+  "**singles :: [Int]** The literals of the numbers 1,2,..19"
   ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten"
    "eleven" "twelve" "thirteen" "fourteen" "fifteen" "sixteen" "seventeen"
    "eighteen" "nineteen"])
 
-(def tens ["twenty" "thirty" "forty" "fifty"
+(def tens
+  "**tens :: [Int]** The literals of the numbers 20,30,...90"
+  ["twenty" "thirty" "forty" "fifty"
            "sixty" "seventy" "eighty" "ninety"])
 
 (defn to-words
@@ -266,7 +283,10 @@ Calculates the number of divisors of n (including 1 and n itself)."
                  (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
     (= n 1000) "onethousand"))
 
-(defn combinations [amount [car & cdr :as coins]]
+(defn combinations
+  "**combinations :: Int, [Int] -> Int** Returns the number of combinations
+  that can be computed from the list of numbers."
+  [amount [car & cdr :as coins]]
   (cond
     (zero? amount) 1
     (or (neg? amount) (empty? coins)) 0

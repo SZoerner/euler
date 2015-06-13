@@ -211,7 +211,7 @@
   [a b] (->>
          (iterate inc 0) ;; for Integers starting from zero
          (map (quadratic a b)) ;; apply the generator of the form: n² + an + b
-         (take-while #(and (pos? %) (helper/prime? %))) ;; filter as long as primes
+         (take-while #(and (pos? %) (helper/prime? %))) ;; get all the primes
          (count))) ;; count # of primes
 
 (defn quads [nums]
@@ -312,7 +312,7 @@
 ;; Find the sum of all the numbers that can be written as the sum
 ;; of fifth powers of their digits.
 
-(defn p030 
+(defn p030
   ([] (p030 5))
   ([exp]
     ;; 6*9**5 = 354294 as the upper limit..

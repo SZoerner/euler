@@ -14,7 +14,8 @@
 
 (defn p011
   ([] (p011 20 4 (slurp "resources/p011_matrix.txt")))
-  ([size len input-str] (helper/product size len (helper/parse-grid input-str size))))
+  ([size len input-str]
+    (helper/product size len (helper/parse-grid input-str size))))
 
 
 ;; # Problem 12 - Highly divisible triangular number
