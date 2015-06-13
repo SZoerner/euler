@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/SZoerner/euler.png?label=ready&title=Ready)](https://waffle.io/SZoerner/euler)
 # euler
 
 <img src="https://projecteuler.net/profile/SZoerner.png"/>
