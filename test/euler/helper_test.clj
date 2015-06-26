@@ -22,9 +22,9 @@
         (helper/abundant-sum? 24) => true)
 
   (fact "triangle"
-        (helper/triangle 1) => 1
-        (helper/triangle 10) => 55
-        (helper/triangle 100) => 5050)
+        (last (take 1 helper/triangles)) => 1
+        (last (take 10 helper/triangles)) => 55
+        (last (take 100 helper/triangles)) => 5050)
 
   (fact "parse-grid"
         (helper/parse-grid "1 2 3 4" 2) => [[1 2] [3 4]]
