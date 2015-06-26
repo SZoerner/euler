@@ -54,7 +54,14 @@
 
 (def fibs
   "**fibs :: [Int]**
-  Lazy sequence of all Fibonacci numbers. Using BigIntegers."
+  Lazy sequence of all Fibonacci numbers. Using BigIntegers.
+
+  **Background:** A Fibonacci number (exept 0 and 1) is recursively defined as
+  the sum of its two predecessing Fibonacci numbers:
+
+  - base case: ``fib(n <= 1) = n``
+
+  - rec case: ``fib(n > 1) = fib(n - 1) + fib(n - 2)``"
   (lazy-cat [0N 1N] (map + (rest fibs) fibs)))
 
 (defn next-collatz
@@ -193,7 +200,8 @@
 
 (defn least-common-multiple
   "**least-common-multiple :: [Int] -> Int**
-  Computes the smallest number divisible by all of the given input numbers."
+  Computes the smallest number divisible by all of the given input numbers.
+  See http://en.wikipedia.org/wiki/Least_common_multiple."
   [input]
   (->> input
        (map #(frequencies (get-primes %)))
@@ -277,10 +285,12 @@
     (< n 20) (nth singles (dec n))
     (< n 100) (if (factor? n 10)
                 (nth tens (/ (- n 20) 10))
-                (str (nth tens (/ (- n 20) 10)) (nth singles (dec (mod n 10)))))
+                (str (nth tens (/ (- n 20) 10))
+                     (nth singles (dec (mod n 10)))))
     (< n 1000) (if (factor? n 100)
                  (str (to-words (/ n 100)) "hundred")
-                 (str (to-words (/ n 100)) "hundredand" (to-words (rem n 100))))
+                 (str (to-words (/ n 100)) "hundredand"
+                      (to-words (rem n 100))))
     (= n 1000) "onethousand"))
 
 (defn combinations
