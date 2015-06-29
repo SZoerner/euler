@@ -143,7 +143,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn p008
-  "**Task:** Find the greatest product of five consecutive digits in the 
+  "**Task:** Find the greatest product of five consecutive digits in the
   1000-digit number."
   ([] (p008 5 (bigdec (slurp "resources/p008_digit.txt"))))
   ([n series]
