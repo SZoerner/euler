@@ -110,7 +110,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn p015
-"**Task:** How many lattice routes are there through a 20×20 grid?"
+  "**Task:** How many lattice routes are there through a 20×20 grid?"
   ([] (p015 20))
   ([n] (helper/lattice-paths n)))
 
@@ -125,7 +125,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn p016
-"**Task:** What is the sum of the digits of the number 2^1000?"
+  "**Task:** What is the sum of the digits of the number 2^1000?"
   ([] (p016 (.pow (BigInteger. "2") 1000)))
   ([n] (reduce + (helper/digits n))))
 
@@ -145,8 +145,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn p017
-"**Task:** If all the numbers from 1 to 1000 (one thousand) inclusive were
-written out in words, how many letters would be used?"
+  "**Task:** If all the numbers from 1 to 1000 (one thousand) inclusive were
+  written out in words, how many letters would be used?"
   ([] (p017 1000))
   ([n] (->> (range 1 (inc n))
           ;; map to corresponding string
@@ -238,7 +238,7 @@ written out in words, how many letters would be used?"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn p020
-"**Task:** Find the sum of the digits in the number 100!"
+  "**Task:** Find the sum of the digits in the number 100!"
 ;; analogous to Problem 16
   ([] (p020 100))
   ([n] (reduce + (helper/digits (helper/factorial n)))))
