@@ -50,5 +50,4 @@
 
    (fact-qc "factors vs count-divisors"
            [n gen/nat]
-           (count (helper/factors n)) => (helper/count-divisors n))
-  )
+           (count (helper/factors n)) => (helper/count-divisors n)))

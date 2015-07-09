@@ -8,8 +8,8 @@
   (fact "Problem 11"
         (e011/p011) => 70600674)
 
-  ; (fact "Problem 12"
-  ;       (e011/p012) => 76576500) ;; too slow - makes cloverage abort
+  (fact "Problem 12"
+        (e011/p012) => 76576500 :slow)
 
   (fact "Problem 13"
         (e011/p013) => 5537376230342)
@@ -18,8 +18,7 @@
         (e011/p014 10) => 9
         (e011/p014 100) => 97
         (e011/p014 1000) => 871
-        ;; (e011/p014) => 837799
-        ) ;; too slow - makes cloverage abort
+        (e011/p014) => 837799 :slow)
 
   (fact "Problem 15"
         (e011/p015) => 137846528820)

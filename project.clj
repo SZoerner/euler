@@ -4,7 +4,7 @@
             :license {:name "MIT License"
                       :url  "http://opensource.org/licenses/MIT"}
             :dependencies [[org.clojure/clojure "1.7.0"]]
-            :profiles {:dev {:dependencies [[midje "1.7.0-SNAPSHOT"]
+            :profiles {:dev {:dependencies [[midje "1.7.0"]
                                             [org.clojure/test.check "0.7.0"]]
                              :injections [(require 'flare.clojure-test)
                                           (flare.clojure-test/install!)]}

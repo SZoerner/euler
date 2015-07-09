@@ -13,8 +13,7 @@
   (fact "Problem 23"
         (e021/p023 [12]) => 12
         (e021/p023 (range 25)) => 276
-        ;; (e021/p023) => 4179871
-        ) ;; too slow - makes cloverage abort
+        (e021/p023) => 4179871 :slow)
 
   (fact "Problem 24"
         (e021/p024) => '(2 7 8 3 9 1 5 4 6 0))
@@ -30,8 +29,7 @@
   (fact "Problem 27"
         (e021/consec-primes 1 41) => 40                       ; n² + n + 41
         (e021/consec-primes -79 1601) => 80                    ; n² − 79n + 1601
-        ;(e021/p027) => -59231 ;; too slow - makes cloverage abort
-  )
+        (e021/p027) => -59231 :slow)
 
   (fact "Problem 28"
         (e021/p028 3) => 25
@@ -42,7 +40,6 @@
         (e021/p029 5) => 15
         (e021/p029) => 9183)
 
-  ;; (fact "Problem 30" :slow ;; too slow - makes cloverage abort
-  ;;      (e021/p030 4) => 19316
-  ;;      (e021/p030 5) => 443839)
-)
+  (fact "Problem 30" :slow
+       (e021/p030 4) => 19316
+       (e021/p030 5) => 443839))
