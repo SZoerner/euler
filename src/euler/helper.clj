@@ -60,7 +60,7 @@
   - base case: ``fib(n <= 1) = n``
 
   - rec case: ``fib(n > 1) = fib(n - 1) + fib(n - 2)``"
-  (lazy-cat [0N 1N] (map + (rest fibs) fibs)))
+  (map first (iterate (fn [[a b]] [b, (+ a b)]) [0N, 1N])))
 
 (defn next-collatz
   "**next-collatz :: Int -> Int**
