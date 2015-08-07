@@ -48,6 +48,6 @@
   (fact "narcissistic?"
         (helper/narcissistic? 1634 4))
 
-   (fact-qc "factors vs count-divisors"
+  (fact-qc "factors vs count-divisors"
            [n gen/nat]
            (count (helper/factors n)) => (helper/count-divisors n)))

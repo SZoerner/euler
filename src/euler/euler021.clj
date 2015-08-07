@@ -23,7 +23,6 @@
             (distinct)
             (reduce +))))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 22 - Names scores
@@ -56,7 +55,6 @@
       ;; compute the product of value and position
      (reduce + (map #(* (get-index %) (get-value %)) input)))))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 23 - Non-abundant sums
@@ -84,7 +82,6 @@
   ([input] (->> input
                 (remove helper/abundant-sum?)
                 (reduce +))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -122,7 +119,6 @@
   0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?"
   [] (permute-nth (range 10) (dec 1000000)))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 25 - 1000-digit Fibonacci number
@@ -138,7 +134,6 @@
   ([n] (int (Math/ceil
              (/ (+ (dec n) (Math/log10 (Math/sqrt 5)))
                 (Math/log10 helper/phi))))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -179,7 +174,6 @@
   recurring cycle in its decimal fraction part."
   [] (first (apply max-key second kvs)))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 27 - Quadratic primes
@@ -206,7 +200,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn quadratic
-"Returns a generator function of the form: n² + an + b."
+  "Returns a generator function of the form: n² + an + b."
   [a b] (fn [n] (+ (* (+ n a) n) b)))
 
 (defn consec-primes
@@ -236,7 +230,6 @@
   of n, starting with n = 0."
   ([] (p027 (range -999 1000))) ;; max prime generator between -999 and 999
   ([nums] (find-max nums)))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -269,7 +262,6 @@
                   (take 4 ;; take four values per 'ring'
                           ;; creating 'ring': from n * n, dec in steps of n- 1
                         (iterate #(- % (dec n)) (* n n))))))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -306,7 +298,6 @@
     ;; count them
     (count))))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 30 - Digit fifth powers
@@ -329,8 +320,8 @@
   ([] (p030 5))
   ([exp]
     ;; 6*9**5 = 354294 as the upper limit..
-    (let [limit (* (inc exp) (Math/pow 9 exp))]
+   (let [limit (* (inc exp) (Math/pow 9 exp))]
       ;; predicate checking for being a sum of powers
-      (reduce + (filter #(helper/narcissistic? % exp)
+     (reduce + (filter #(helper/narcissistic? % exp)
         ;; TODO only insert permutations of digits
-        (range 2 limit))))))
+                       (range 2 limit))))))

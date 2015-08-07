@@ -71,13 +71,13 @@
   "**collatz :: [Int]**
   Lazy seq of Collatz sequence of n."
   [n] (cons n
-        (if (= n 1) '()
-            (collatz (next-collatz n)))))
+            (if (= n 1) '()
+                (collatz (next-collatz n)))))
 
 (defn memo-collatz
   "**memo-collatz :: [Int]**
   Memoized collatz sequence using an atom."
-[c n] ;; TODO not sure this works efficiently..
+  [c n] ;; TODO not sure this works efficiently..
   (if-let [entry (@c n)] entry ;; already present - return the count
           ((swap! c assoc n  ;; new entry - store in cache
                   (inc (memo-collatz c (next-collatz n))))
@@ -138,8 +138,8 @@
   "**prime? :: Int -> Bool**
   Checks whether a given number n is a prime number."
   [n] (and (< 1 n)
-       (not-any? #(factor? n %)
-                 (take-while #(<= (* % %) n) primes))))
+           (not-any? #(factor? n %)
+                     (take-while #(<= (* % %) n) primes))))
 
 ;; iterative approach
 (defn get-primes
@@ -273,7 +273,7 @@
 (def tens
   "**tens :: [Int]** The literals of the numbers 20,30,...90"
   ["twenty" "thirty" "forty" "fifty"
-           "sixty" "seventy" "eighty" "ninety"])
+   "sixty" "seventy" "eighty" "ninety"])
 
 (defn to-words
   "Converts a number (up to 1000) into its string representation,

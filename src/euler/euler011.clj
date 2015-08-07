@@ -16,8 +16,7 @@
   direction - up, down, left, right, or diagonally - in the 20x20 grid?"
   ([] (p011 20 4 (slurp "resources/p011_matrix.txt")))
   ([size len input-str]
-    (helper/product size len (helper/parse-grid input-str size))))
-
+   (helper/product size len (helper/parse-grid input-str size))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -49,7 +48,6 @@
             (drop-while #(< (helper/count-divisors %) n))
             first)))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 13 - Large sum
@@ -67,7 +65,6 @@
                   (map #(helper/truncate % n))
                   (reduce +)
                   (long))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -92,7 +89,6 @@
      (doseq [n (range 1 limit)] (helper/memo-collatz cache n))
      (key (apply max-key val @cache)))))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 15 - Lattice paths
@@ -114,7 +110,6 @@
   ([] (p015 20))
   ([n] (helper/lattice-paths n)))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 16 - Power digit sum
@@ -128,7 +123,6 @@
   "**Task:** What is the sum of the digits of the number 2^1000?"
   ([] (p016 (.pow (BigInteger. "2") 1000)))
   ([n] (reduce + (helper/digits n))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -155,7 +149,6 @@
             (apply str)
           ;; count the number of chars
             (count))))
-
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -199,7 +192,6 @@
       (map + (map #(reduce max %) (partition 2 1 a)) b))]
     (first (reduce merge-rows (reverse triangle)))))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 19 - Counting Sundays
@@ -218,14 +210,13 @@
   []
   ;; solution by hroi: http://clojure-euler.wikispaces.com/Problem+019
   (reduce +
-   (for [year (range 1901 (inc 2000)) month (range 1 (inc 12))
-    :let [cal (doto (GregorianCalendar.)
-                (.set GregorianCalendar/YEAR year)
-                (.set GregorianCalendar/MONTH month)
-                (.set GregorianCalendar/DAY_OF_MONTH 1))
-          day (.get cal GregorianCalendar/DAY_OF_WEEK)]
-    :when (= GregorianCalendar/SUNDAY day)] 1)))
-
+          (for [year (range 1901 (inc 2000)) month (range 1 (inc 12))
+                :let [cal (doto (GregorianCalendar.)
+                            (.set GregorianCalendar/YEAR year)
+                            (.set GregorianCalendar/MONTH month)
+                            (.set GregorianCalendar/DAY_OF_MONTH 1))
+                      day (.get cal GregorianCalendar/DAY_OF_WEEK)]
+                :when (= GregorianCalendar/SUNDAY day)] 1)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
