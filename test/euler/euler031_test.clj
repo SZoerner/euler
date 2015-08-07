@@ -1,7 +1,7 @@
 (ns euler.euler031-test
   (:require [clojure.test :refer [deftest]]
-            [midje.sweet :refer [fact]]
-            [euler.euler031 :as e031]))
+            [euler.euler031 :as e031]
+            [midje.sweet :refer [fact]]))
 
 (deftest euler031-tests
   (fact "Problem 31"
