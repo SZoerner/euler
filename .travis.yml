@@ -4,7 +4,7 @@ sudo: false
 cache:
   directories:
     - $HOME/.m2
-#script: lein midje
+script: lein cloverage --codecov
 after_success:
   #- bash -ex bin/coveralls.sh
   - bash <(curl -s https://codecov.io/bash)
