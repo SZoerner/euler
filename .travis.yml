@@ -6,4 +6,5 @@ cache:
     - $HOME/.m2
 #script: lein midje
 after_success:
-  - bash -ex bin/coveralls.sh
+  #- bash -ex bin/coveralls.sh
+  - bash <(curl -s https://codecov.io/bash)
