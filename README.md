@@ -12,6 +12,8 @@ Status](https://travis-ci.org/SZoerner/euler.svg?branch=master)](https://travis-
 
 My Project Euler solutions, written in Clojure
 
+![XKCD Lisp Cycles](http://imgs.xkcd.com/comics/lisp_cycles.png)
+
 ## Code Quality
 
 - This project runs example-based tests using [Midje](https://github.com/marick/Midje), as well as property-based tests via [clojure.test.check](https://github.com/clojure/test.check).
