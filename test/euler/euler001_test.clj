@@ -1,5 +1,6 @@
 (ns euler.euler001-test
-  (:require [clojure.test.check.generators :as gen]
+  (:require [clojure.edn :as edn]
+            [clojure.test.check.generators :as gen]
             [clojure.test :refer [deftest]]
             [euler.core-test :refer [fact-qc]]
             [euler.euler001 :as e001]
@@ -57,19 +58,10 @@
         (e001/p009 (+ 3 4 5)) => (* 3 4 5)
         (e001/p009) => (* 200 375 425)
         (fact-qc "all Pythagorean triplets up to 300"
-                 [[a b c]
-                  (gen/elements
-                   '((3 4 5) (5 12 13) (8 15 17) (7 24 25) (140 171 221)
-                             (20 21 29) (12 35 37) (9 40 41) (28 45 53)
-                             (11 60 61) (16 63 65) (33 56 65) (48 55 73) (115 276 299)
-                             (13 84 85) (36 77 85) (39 80 89) (39 252 255) (65 72 97)
-                             (20 99 101) (60 91 109) (15 112 113) (44 117 125)
-                             (55 132 143) (17 144 145) (24 143 145) (51 140 149)
-                             (85 132 157) (52 165 173) (19 180 181) (68 285 293)
-                             (57 176 185) (104 153 185) (95 168 193) (28 195 197)
-                             (84 187 205) (84 288 300) (133 156 205) (21 220 221)
-                             (23 264 265) (96 247 265) (69 260 269) (115 252 277)
-                             (60 221 229) (32 255 257) (102 136 170) (95 228 247)))]
+                 [[a b c] (->> "resources/p009_triplets.txt"
+                               slurp
+                               edn/read-string
+                               gen/elements)]
                  (= (* a b c) (e001/p009 (+ a b c)))))
 
   (fact "Problem 10"
