@@ -1,17 +1,21 @@
 (ns euler.helper)
 
-(defn factor?
-  "**factor? :: Int, Int -> Bool**:
+;; shortcuts for point-free notation
+(def & "function composition" comp)
+(def p "partial application" partial)
+
+;; factorisation
+(def factor?
+  "**factor? :: dividend:Int, divisor:Int -> Bool**:
   Predicate that tests whether the divisor evenly divides the dividend."
-  [dividend divisor] (zero? (mod dividend divisor)))
+  (& zero? (p mod)))
 
 (defn factor-any
-  "**factor-any :: [Int] -> (Int -> Bool)**:
-  Returns a predicate that tests whether its argument
+  "**factor-any :: [Int] -> Int -> Bool**:
+  Predicate that tests whether its argument
   can be evenly divided by any of the divisors."
-  [& divisors]
-  (fn [argument]
-    (boolean (some #(factor? argument %) divisors))))
+  [divisors argument]
+    (boolean (some #(factor? argument %) divisors)))
 
 (defn factors
   "**factors :: Int -> [Int]**

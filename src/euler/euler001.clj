@@ -17,7 +17,7 @@
     ;; for the range 0 to (limit - 1)
    (->> (range limit)
         ;; filter the multiples (at least one divisor)
-        (filter (reduce helper/factor-any divisors))
+        (filter (helper/p helper/factor-any divisors))
         ;; and sum up the resulting list
         (reduce +))))
 
