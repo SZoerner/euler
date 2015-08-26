@@ -29,16 +29,17 @@
                    upper (map #(/ n %) lower)]
                (set (concat lower upper))))))
 
+(def factorials
+  "**facts :: [Int]**
+  Lazy, infinite sequence of all factorial numbers."
+  ;; *' supports arbitrary precision 
+  (lazy-cat [1] (map *' factorials (iterate inc 2))))
+
 ;; TODO replace with facts seq
 (defn factorial
   "*Int -> [Int]*
   Multiplies all natural numbers from 1 to n+1."
-  [n] (reduce * (range 1N (inc n))))
-
-(def factorials
-  "**facts :: [Int]**
-  Lazy, infinite sequence of all factorial numbers."
-  (lazy-cat [1] (map * factorials (iterate inc 2))))
+  [n] (nth factorials (dec n)))
 
 (defn lattice-paths
   "**lattice-paths :: Int -> Int** The central binomial coefficients,
