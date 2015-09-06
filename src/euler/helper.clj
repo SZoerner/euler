@@ -15,7 +15,7 @@
   Predicate that tests whether its argument
   can be evenly divided by any of the divisors."
   [divisors argument]
-    (boolean (some #(factor? argument %) divisors)))
+  (boolean (some #(factor? argument %) divisors)))
 
 (defn factors
   "**factors :: Int -> [Int]**
@@ -32,7 +32,7 @@
 (def factorials
   "**facts :: [Int]**
   Lazy, infinite sequence of all factorial numbers."
-  ;; *' supports arbitrary precision 
+  ;; *' supports arbitrary precision
   (lazy-cat [1] (map *' factorials (iterate inc 2))))
 
 ;; TODO replace with facts seq
