@@ -4,3 +4,7 @@
 /target/
 /doc/
 /docs/
+/.project
+/.classpath
+/.settings/
+/bin/
