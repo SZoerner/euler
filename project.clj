@@ -5,7 +5,7 @@
             :url  "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.7.0"]]
   :profiles {:dev {:dependencies [[midje "1.7.0"]
-                                  [org.clojure/test.check "0.8.1"]]
+                                  [org.clojure/test.check "0.8.2"]]
                    :injections [(require 'flare.clojure-test)
                                 (flare.clojure-test/install!)]}
              :coverage {:plugins [[lein-cloverage "1.0.6"]]}}
