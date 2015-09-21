@@ -1,8 +1,5 @@
 (ns euler.euler001-test
-  (:require [clojure.edn :as edn]
-            [clojure.test.check.generators :as gen]
-            [clojure.test :refer [deftest]]
-            [euler.core-test :refer [fact-qc]]
+  (:require [clojure.test :refer [deftest]]
             [euler.euler001 :as e001]
             [midje.sweet :refer [fact]]))
 
@@ -14,10 +11,7 @@
 
   (fact "Problem 2"
         (e001/p002 35) => 44
-        (e001/p002) => 4613732
-        (fact-qc "always returns an even result"
-                 [n gen/nat]
-                 (e001/p002 n) => even?))
+        (e001/p002) => 4613732)
 
   (fact "Problem 3"
         (e001/p003 13195) => 29
@@ -25,21 +19,11 @@
 
   (fact "Problem 4"
         (e001/p004 100) => 9009
-        (e001/p004) => 906609
-        (fact-qc "each returned value is indeed a palindrome"
-                 [n (gen/such-that #(> % 1) gen/nat)]
-                 (let [res (str (e001/p004 n))]
-                   res => (apply str (reverse res)))))
+        (e001/p004) => 906609)
 
   (fact "Problem 5"
         (e001/p005 10) => 2520
-        (e001/p005) => 232792560
-        (fact-qc "e001/p005-quickcheck"
-                 [n gen/int]
-                 (let [res (e001/p005 n)
-                       nums (range 2 (+ 1 n))
-                       not-div-by? (fn [x] (not (= 0 (rem res x))))]
-                   (filter not-div-by? nums) => '())))
+        (e001/p005) => 232792560)
 
   (fact "Problem 6"
         (e001/p006 10) => 2640
@@ -56,13 +40,7 @@
 
   (fact "Problem 9"
         (e001/p009 (+ 3 4 5)) => (* 3 4 5)
-        (e001/p009) => (* 200 375 425)
-        (fact-qc "all Pythagorean triplets up to 300"
-                 [[a b c] (->> "resources/p009_triplets.txt"
-                               slurp
-                               edn/read-string
-                               gen/elements)]
-                 (= (* a b c) (e001/p009 (+ a b c)))))
+        (e001/p009) => (* 200 375 425))
 
   (fact "Problem 10"
         (e001/p010 10) => 17

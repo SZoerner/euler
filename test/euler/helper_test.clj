@@ -1,8 +1,6 @@
 (ns euler.helper-test
   (:require [clojure.test :refer [deftest]]
-            [clojure.test.check.generators :as gen]
             [midje.sweet :refer [fact]]
-            [euler.core-test :refer [fact-qc]]
             [euler.helper :as helper]))
 
 (deftest helper-tests
@@ -28,10 +26,7 @@
 
   (fact "parse-grid"
         (helper/parse-grid "1 2 3 4" 2) => [[1 2] [3 4]]
-        (helper/parse-grid "1 2 3 4 5 6 7 8 9" 3) => [[1 2 3] [4 5 6] [7 8 9]]
-        (fact-qc "return a vector of vectors"
-                 [n gen/nat]
-                 (helper/parse-grid (str n) 1) => [[n]]))
+        (helper/parse-grid "1 2 3 4 5 6 7 8 9" 3) => [[1 2 3] [4 5 6] [7 8 9]])
 
   (fact "collatz"
         (helper/collatz 12) => '(12 6 3 10 5 16 8 4 2 1))
@@ -46,8 +41,4 @@
         (helper/prime? 12) => false)
 
   (fact "narcissistic?"
-        (helper/narcissistic? 1634 4))
-
-  (fact-qc "factors vs count-divisors"
-           [n gen/nat]
-           (count (helper/factors n)) => (helper/count-divisors n)))
+        (helper/narcissistic? 1634 4)))
