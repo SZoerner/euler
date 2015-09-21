@@ -12,14 +12,13 @@
 
 (defn p001
   "**Task**: Find the sum of all the multiples of 3 or 5 below 1000."
-  ([] (p001 1000 3 5))
-  ([limit & divisors]
-    ;; for the range 0 to (limit - 1)
-   (->> (range limit)
-        ;; filter the multiples (at least one divisor)
-        (filter (helper/p helper/factor-any divisors))
-        ;; and sum up the resulting list
-        (reduce +))))
+  ;; for the range 0 to (limit - 1)
+  [limit] (->> (range limit)
+                ;; filter the multiples (at least one divisor)
+               (filter #(or (helper/factor? % 3)
+                            (helper/factor? % 5)))
+                ;; and sum up the resulting list
+               (reduce +)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -34,12 +33,10 @@
 (defn p002
   "**Task:** By considering the terms in the Fibonacci sequence whose values do
   not exceed four million, find the sum of the even-valued terms."
-  ([] (p002 (* 4 1000 1000)))
-  ([n]
-   (->> helper/fibs
-        (take-while #(< % n))
-        (filter even?)
-        (reduce +))))
+  [n] (->> helper/fibs
+           (take-while #(< % n))
+           (filter even?)
+           (reduce +)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -51,8 +48,7 @@
 
 (defn p003
   "**Task:** What is the largest prime factor of the number 600851475143 ?"
-  ([] (p003 600851475143))
-  ([n] (helper/max-prime n helper/primes)))
+  [n] (helper/max-prime n helper/primes))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -66,18 +62,16 @@
 (defn p004
   "**Task:** Find the largest palindrome made from the product of two
   three-digit numbers."
-  ([] (p004 1000))
-  ([n]
-    ;; get the largest result of
-   (reduce max
-           (for [num1 (range n 0 -1)
+  [n] (reduce
+       ;; get the largest result of
+       max (for [num1 (range n 0 -1)
                  ;; all numbers from 100 to 1000
                  num2 (range n 0 -1)
                  ;; compute the product of the two
                  :let [pal (* num1 num2)]
                  ;; and filter those who are palindromes
                  :when (helper/palindrome? pal)]
-             pal))))
+             pal)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -91,8 +85,7 @@
 (defn p005
   "**Task:** What is the smallest positive number that is evenly
   divisible by all of the numbers from 1 to 20?"
-  ([] (p005 20))
-  ([n] (helper/least-common-multiple (range (inc n)))))
+  [n] (helper/least-common-multiple (range (inc n))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -109,11 +102,9 @@
 (defn p006
   "**Task:** Find the difference between the sum of the squares of the
   first one hundred natural numbers and the square of the sum."
-  ([] (p006 100))
-  ([n]
-   (let [nums (range (inc n))]
-     (int (- (Math/pow (reduce + nums) 2)
-             (reduce + (map #(Math/pow % 2) nums)))))))
+  [n] (let [nums (range (inc n))]
+        (int (- (Math/pow (reduce + nums) 2)
+                (reduce + (map #(Math/pow % 2) nums))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -126,8 +117,7 @@
 
 (defn p007
   "**Task:** What is the 10 001st prime number?"
-  ([] (p007 10001))
-  ([n] (last (take n helper/primes))))
+  [n] (last (take n helper/primes)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -138,15 +128,14 @@
 (defn p008
   "**Task:** Find the greatest product of five consecutive digits in the
   1000-digit number."
-  ([] (p008 5 (bigdec (slurp "resources/p008_digit.txt"))))
-  ([n series]
-   (->> (helper/digits series)
-        ;; partition into lists of 5
-        (partition n 1)
-        ;; calculate the product
-        (map #(reduce * %))
-        ;; get the highest product
-        (reduce max))))
+  [n series]
+  (->> (helper/digits series)
+       ;; partition into lists of 5
+       (partition n 1)
+       ;; calculate the product
+       (map #(reduce * %))
+       ;; get the highest product
+       (reduce max)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -160,15 +149,13 @@
 (defn p009
   "**Task:** There exists exactly one Pythagorean triplet for which
   a + b + c = 1000. Find the product abc."
-  ([] (p009 1000))
-  ([n]
-   (first (for [a (range n)
-                b (range (- n a))
-                :let [c (- n (+ a b))]
-                :when (and (< a b c)
-                           (= (+ (Math/pow a 2) (Math/pow b 2))
-                              (Math/pow c 2)))]
-            (* a b c)))))
+  [n] (first (for [a (range n)
+                   b (range (- n a))
+                   :let [c (- n (+ a b))]
+                   :when (and (< a b c)
+                              (= (+ (Math/pow a 2) (Math/pow b 2))
+                                 (Math/pow c 2)))]
+               (* a b c))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -180,8 +167,6 @@
 
 (defn p010
   "**Task:** Find the sum of all the primes below two million."
-  ([] (p010 2000000))
-  ([n]
-   (->> helper/primes
-        (take-while #(< % n))
-        (reduce +))))
+  [n] (->> helper/primes
+           (take-while #(< % n))
+           (reduce +)))
