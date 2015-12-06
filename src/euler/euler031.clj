@@ -83,3 +83,31 @@
                    :when (and (< divisor 1)
                               (= divisor (/ a c)))]
                (/ num den)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; # Problem 33 - Digit factorials
+;;
+;; 145 is a curious number, as 1! + 4! + 5! = 1 + 24 + 120 = 145.
+;; Find the sum of all numbers which are equal to the sum of the factorial of
+;; their digits. Note: as 1! = 1 and 2! = 2 are not sums they are not included.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(def ^:private fact
+  "Caching the factorials of the digits 0 to 9"
+  (apply hash-map (interleave (seq "0123456789")
+                                      (map helper/factorial
+                                           (range 10)))))
+(defn- curious?
+  "A number that is equal to the sum of the factorial of its digits."
+  [n] (->> n
+           (str)
+           (map fact)
+           (reduce +)
+           (= n)))
+
+(defn p034 []
+  (->> (range 10 (* 7 (helper/factorial 9)))
+       (filter curious?)
+       (reduce +)))

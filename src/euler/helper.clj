@@ -40,7 +40,7 @@
 (defn factorial
   "*Int -> [Int]*
   Multiplies all natural numbers from 1 to n+1."
-  [n] (nth factorials (dec n)))
+  [n] (nth factorials (if (< n 1) 0 (dec n))))
 
 (defn lattice-paths
   "**lattice-paths :: Int -> Int** The central binomial coefficients,
