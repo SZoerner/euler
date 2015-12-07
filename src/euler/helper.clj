@@ -308,3 +308,13 @@
     (or (neg? amount) (empty? coins)) 0
     :else (+ (combinations amount cdr)
              (combinations (- amount car) coins))))
+
+(defn rotations
+  "Returns a lazy seq of all rotations of a seq.
+  Taken from [clojure.contrib](https://clojure.github.io/clojure-contrib/
+  seq-api.html#clojure.contrib.seq/rotations)"
+  [x] (if (seq x)
+        (map (fn [n _]
+               (lazy-cat (drop n x) (take n x)))
+             (iterate inc 0) x)
+        (list nil)))
