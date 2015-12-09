@@ -135,3 +135,24 @@
        (take-while #(< % (Math/pow 10 6)))
        (filter circular-prime?)
        (count)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; # Problem 36 - Double-base palindromes
+;;
+;; The decimal number, 585 = 1001001001 (bin), is palindromic in both bases.
+;; Find the sum of all numbers, less than one million, which are palindromic
+;; in base 10 and base 2. (Please note that the palindromic number, in either
+;; base, may not include leading zeros.)
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn- dec->bin [n]
+  (if (<= 0 n 1) n ; base case
+    (+' (*' 10 (dec->bin (quot n 2))) (mod n 2))))
+
+(defn p036 []
+  (->> (range 1 (Math/pow 10 6))
+       (filter helper/palindrome?)
+       (filter (comp helper/palindrome? dec->bin))
+       (reduce +)))
