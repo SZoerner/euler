@@ -154,39 +154,38 @@
   "**get-primes :: Int -> [Int]** Get the prime divisors of n."
   ;; entry point - start with the list of primes and [] as accumulator
   ([n] (get-primes n primes []))
-  ([n ps acc]
-   (let [[f & r] ps]
-     (cond
-       ;; no more factors - stop iteration
-       (< n f) acc
-       ;; if factor - add to set of prime factors
-       (factor? n f) (get-primes (/ n f) ps (conj acc f))
-       ;; no match - next iteration
-       :else (get-primes n r acc)))))
+  ([n [car & cdr :as ps] acc]
+   (cond
+    ;; no more factors - stop iteration
+     (< n car) acc
+    ;; if factor - add to set of prime factors
+     (factor? n car) (recur (/ n car) ps (conj acc car))
+    ;; no match - next iteration
+     :else (recur n cdr acc))))
 
 (defn max-prime
   "**max-prime :: Int, [Int] -> Int**
   Given a number n and a list of prime numbers ps,
   returns the largest prime factor of n."
-  [n ps]
-  (let [div (first ps)] ;; local variable - head of prime list
-    (cond
-      ;; termination - found max prime
-      (= n div) div
-      (factor? n div) (max-prime (/ n div) ps)
-      ;; list eater
-      :else (max-prime n (rest ps)))))
+  [n [car & cdr :as ps]]
+  (cond
+   ; termination - found max prime
+    (= n car) car
+   ; shrinking
+    (factor? n car) (recur (/ n car) ps)
+   ; list eater
+    :else (recur n cdr)))
 
 (defn prime-factors
   "** prime-factors :: Int -> [Int]**
   Given a number, returns the list of prime factors of n.
   Example: (prime-factors 12) => (2 2 3)"
   ([n] (prime-factors n [] primes))
-  ([number factors ps]         ;; TODO use destructuring
+  ([number factors ps]
    (cond
      (= 1 number) factors
      (factor? number (first ps)) (prime-factors (/ number (first ps))
-                                                (conj factors (first ps)) ps)
+                               (conj factors (first ps)) ps)
      :else (prime-factors number factors (rest ps)))))
 
 (defn count-divisors
