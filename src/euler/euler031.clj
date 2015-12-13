@@ -164,4 +164,40 @@
           (filter (comp helper/palindrome? dec->bin))
           (reduce +)))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; # Problem 37 - Truncatable primes
+;;
+;; The number 3797 has an interesting property. Being prime itself,
+;; it is possible to continuously remove digits from left to right,
+;; and remain prime at each stage: 3797, 797, 97, and 7.
+;;
+;; Similarly we can work from right to left: 3797, 379, 37, and 3.
+;; Find the sum of the only eleven primes that are both truncatable from left
+;; to right and right to left.
+;; NOTE: 2, 3, 5, and 7 are not considered to be truncatable primes.
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defn- remove-first-digit
+  "'rest' for Integers."
+  [n] (->> n Math/log10 int (Math/pow 10) int (mod n)))
+
+(defn- remove-last-digit
+  "'butlast' for Integers."
+  [n] (int (/ n 10)))
+
+(defn truncatable-prime?
+  "Being prime itself, it is possible to continuously remove digits from left
+  to right as well as from right to left, and remain prime at each stage."
+  [n] (let [trunc-prime? (fn [f n] (cond
+                                     (< n 10) (helper/prime? n)
+                                     (helper/prime? n) (recur f (f n))
+                                     true false))]
+        (and (trunc-prime? remove-last-digit n)
+             (trunc-prime? remove-first-digit n))))
+
+(defn p037
+  "Find the sum of the only eleven primes that are both truncatable
+  from left to right and right to left."
+  [] (reduce + (take 11 (filter truncatable-prime? (iterate inc 10)))))
