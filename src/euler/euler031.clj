@@ -72,17 +72,17 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn p033 []
-  (denominator
-   (reduce * (for [a (range 1 10)
-                   b (range 1 10)
-                   c (range 1 10)
-                   :let [num (+ (* 10 a) b)
-                         den (+ (* 10 b) c)
-                         divisor (/ num den)]
-                   :when (and (< divisor 1)
-                              (= divisor (/ a c)))]
-               (/ num den)))))
+(defn p033
+  "Find the denominator of the four non-trivial examples."
+  [] (denominator (reduce * (for [a (range 1 10)
+                                  b (range 1 10)
+                                  c (range 1 10)
+                                  :let [num (+ (* 10 a) b)
+                                        den (+ (* 10 b) c)
+                                        divisor (/ num den)]
+                                  :when (and (< divisor 1)
+                                             (= divisor (/ a c)))]
+                              (/ num den)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -97,8 +97,8 @@
 (def ^:private fact
   "Caching the factorials of the digits 0 to 9"
   (apply hash-map (interleave (seq "0123456789")
-                                      (map helper/factorial
-                                           (range 10)))))
+                              (map helper/factorial
+                                   (range 10)))))
 (defn- curious?
   "A number that is equal to the sum of the factorial of its digits."
   [n] (->> n
@@ -107,10 +107,12 @@
            (reduce +)
            (= n)))
 
-(defn p034 []
-  (->> (range 10 (* 7 (helper/factorial 9)))
-       (filter curious?)
-       (reduce +)))
+(defn p034
+  "Find the sum of all numbers which are equal to
+  the sum of the factorial of their digits."
+  [] (->> (range 10 (* 7 (helper/factorial 9)))
+          (filter curious?)
+          (reduce +)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -123,18 +125,20 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn- circular-prime? [n]
-  (->> (str n)
-       (helper/rotations)
-       (map #(apply str %))
-       (map #(Integer/parseInt %))
-       (every? helper/prime?)))
+(defn- circular-prime?
+  "A prime is circular if all rotations of the digits are themselves prime."
+  [n] (->> (str n)
+           (helper/rotations)
+           (map #(clojure.string/join %))
+           (map #(Integer/parseInt %))
+           (every? helper/prime?)))
 
-(defn p035 []
-  (->> helper/primes
-       (take-while #(< % (Math/pow 10 6)))
-       (filter circular-prime?)
-       (count)))
+(defn p035
+  "How many circular primes are there below one million?"
+  [] (->> helper/primes
+          (take-while #(< % (Math/pow 10 6)))
+          (filter circular-prime?)
+          (count)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -147,12 +151,17 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn- dec->bin [n]
-  (if (<= 0 n 1) n ; base case
-    (+' (*' 10 (dec->bin (quot n 2))) (mod n 2))))
+(defn- dec->bin
+  "Convert decimal Integers into binary representation."
+  [n] (if (<= 0 n 1) n
+          (+' (*' 10 (dec->bin (quot n 2))) (mod n 2))))
 
-(defn p036 []
-  (->> (range 1 (Math/pow 10 6))
-       (filter helper/palindrome?)
-       (filter (comp helper/palindrome? dec->bin))
-       (reduce +)))
+(defn p036
+  "Find the sum of all numbers, less than one million,
+  which are palindromic in base 10 and base 2."
+  [] (->> (range 1 (Math/pow 10 6))
+          (filter helper/palindrome?)
+          (filter (comp helper/palindrome? dec->bin))
+          (reduce +)))
+
+

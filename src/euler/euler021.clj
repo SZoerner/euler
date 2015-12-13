@@ -106,13 +106,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defn permute-nth
-  [s pos]
-  (let [n (count s)
-        m (reduce * (range 1 n))
-        r (rem pos m)
-        e (nth s (quot pos m))]
-    (if (= n 1) s
-        (cons e (permute-nth (remove #(= % e) s) r)))))
+  "Return permutation pos of the list of digits."
+  [s pos] (let [n (count s)
+                m (reduce * (range 1 n))
+                r (rem pos m)
+                e (nth s (quot pos m))]
+            (if (= n 1) s
+                (cons e (permute-nth (remove #(= % e) s) r)))))
 
 (defn p024
   "**Task:** What is the millionth lexicographic permutation of the digits
@@ -153,19 +153,20 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; find the longest recurring cycle in a fraction
-(defn rec-cycle [n d]
-  (loop [n n d d acc [] rems #{}]
-    (let [div (int (/ n d)) rem (mod n d)]
-      (if (zero? rem) ()
-          (if (contains? rems rem)
-            (drop-while #(not= % (int (/ (* rem 10) d)))
-                        (drop 1 (conj acc div)))
-            (recur (* rem 10) d
-                   (conj acc div)
-                   (conj rems rem)))))))
+(defn rec-cycle
+  "Find the longest recurring cycle in a fraction."
+  [n d] (loop [n n d d acc [] rems #{}]
+          (let [div (int (/ n d)) rem (mod n d)]
+            (if (zero? rem) ()
+                (if (contains? rems rem)
+                  (drop-while #(not= % (int (/ (* rem 10) d)))
+                              (drop 1 (conj acc div)))
+                  (recur (* rem 10) d
+                         (conj acc div)
+                         (conj rems rem)))))))
 
 (def kvs
+  "Recurring cycles of numbers under 1000."
   (map #(vector % (count (rec-cycle 1 %)))
        (take 1000 (iterate dec 1000))))
 
