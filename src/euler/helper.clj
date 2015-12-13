@@ -1,8 +1,20 @@
 (ns euler.helper)
 
-;; shortcuts for point-free notation
+;; == point-free notation =====================================================
+;; shortcuts
 (def & "function composition" comp)
 (def p "partial application" partial)
+
+;; == benchmarking ============================================================
+;; taken from https://adambard.com/blog/clojure-reducers-for-mortals/
+
+(defn benchmark
+  "Map f over the range of N x times."
+  [f N x] (let [nums (vec (range N))
+                start (java.lang.System/currentTimeMillis)]
+            (dotimes [n x]
+              (f nums))
+            (- (java.lang.System/currentTimeMillis) start)))
 
 ;; == factorisation ===========================================================
 
@@ -185,7 +197,7 @@
    (cond
      (= 1 number) factors
      (factor? number (first ps)) (prime-factors (/ number (first ps))
-                               (conj factors (first ps)) ps)
+                                                (conj factors (first ps)) ps)
      :else (prime-factors number factors (rest ps)))))
 
 (defn count-divisors
@@ -259,7 +271,7 @@
 (defn digits
   "**digits :: Int -> [Int]**
   Converts a number n into a list of its digits."
-  [n] (map #(Character/digit % 10) (str n)))
+  [n] (map #(Character/getNumericValue %) (str n)))
 
 (defn narcissistic?
   "**narcissistic? :: Int, Int -> Bool**
