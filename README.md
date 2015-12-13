@@ -1,7 +1,6 @@
 # euler
 
 <img src="https://projecteuler.net/profile/SZoerner.png"/>
-
 [![Build
 Status](https://travis-ci.org/SZoerner/euler.svg?branch=master)](https://travis-ci.org/SZoerner/euler)
 [![Coverage Status](https://coveralls.io/repos/SZoerner/euler/badge.svg?branch=master)](https://coveralls.io/r/SZoerner/euler?branch=master)
