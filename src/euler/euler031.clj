@@ -37,22 +37,16 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-
 ;; There are only two patterns of multiplications that produce 9 digits:
 ;; 1. A 1 digit number times a 4 digit number can be 4 digits long.
 ;; 2. A 2 digit number times a 3 digit number can be 4 digits long.
-
-(defn- pandigital?
-  "Makes use of all the digits 1 to n exactly once."
-  [a b] (= "123456789"
-           (clojure.string/join (sort (.split (str a b (* a b)) "")))))
 
 (defn p032
   "Find the sum of all products whose multiplicand/multiplier/product identity
   can be written as a 1 through 9 pandigital."
   [] (reduce + (distinct (for [a (range 2 5000)
                                b (range a (/ 9999 a))
-                               :when (pandigital? a b)]
+                               :when (helper/pandigital? a b)]
                            (* a b)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -187,7 +181,7 @@
   "'butlast' for Integers."
   [n] (int (/ n 10)))
 
-(defn truncatable-prime?
+(defn- truncatable-prime?
   "Being prime itself, it is possible to continuously remove digits from left
   to right as well as from right to left, and remain prime at each stage."
   [n] (let [trunc-prime? (fn [f n] (cond
