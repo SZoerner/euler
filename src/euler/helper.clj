@@ -11,10 +11,10 @@
 (defn benchmark
   "Map f over the range of N x times."
   [f N x] (let [nums (vec (range N))
-                start (java.lang.System/currentTimeMillis)]
+                start (System/currentTimeMillis)]
             (dotimes [n x]
               (f nums))
-            (- (java.lang.System/currentTimeMillis) start)))
+            (- (System/currentTimeMillis) start)))
 
 ;; == factorisation ===========================================================
 
@@ -48,7 +48,6 @@
   ;; *' supports arbitrary precision
   (lazy-cat [1] (map *' factorials (iterate inc 2))))
 
-;; TODO replace with facts seq
 (defn factorial
   "*Int -> [Int]*
   Multiplies all natural numbers from 1 to n+1."

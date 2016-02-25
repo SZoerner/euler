@@ -1,7 +1,7 @@
 (ns euler.helper-test
   (:require [clojure.test :refer [deftest]]
-            [midje.sweet :refer [fact]]
-            [euler.helper :as helper]))
+            [euler.helper :as helper]
+            [midje.sweet :refer [fact]]))
 
 (deftest helper-tests
   (fact "prime-factors"
