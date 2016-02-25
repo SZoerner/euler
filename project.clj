@@ -4,7 +4,7 @@
   :license {:name "MIT License"
             :url  "http://opensource.org/licenses/MIT"}
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [midje "1.8.2"]
+                 [midje "1.8.3"]
                  [org.clojure/test.check "0.9.0"]]
   :plugins [[lein-cloverage "1.0.7-SNAPSHOT"]
             [lein-test-out "0.3.1" :exclusions [org.clojure/clojure]]]
