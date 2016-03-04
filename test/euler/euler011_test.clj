@@ -1,39 +1,37 @@
 (ns euler.euler011-test
-  (:require [clojure.test :refer [deftest]]
-            [euler.euler011 :as e011]
-            [midje.sweet :refer [fact]]))
+  (:require [clojure.test :refer [deftest is]]
+            [euler.euler011 :as e011]))
 
-(deftest euler011-tests
-  (fact "Problem 11"
-        (e011/p011) => 70600674)
+(deftest problem-011
+  (is (= (e011/p011) 70600674)))
 
-  (fact "Problem 12"
-        (e011/p012) => 76576500 :slow)
+(deftest problem-012
+  (is (= (e011/p012) 76576500)))
 
-  (fact "Problem 13"
-        (e011/p013) => 5537376230342)
+(deftest problem-013
+  (is (= (e011/p013) 5537376230342)))
 
-  (fact "Problem 14"
-        (e011/p014 10) => 9
-        (e011/p014 100) => 97
-        (e011/p014 1000) => 871
-        (e011/p014) => 837799 :slow)
+(deftest problem-014
+  (is (= (e011/p014 10) 9))
+  (is (= (e011/p014 100) 97))
+  (is (= (e011/p014 1000) 871))
+  (is (= (e011/p014) 837799)))
 
-  (fact "Problem 15"
-        (e011/p015) => 137846528820)
+(deftest problem-015
+  (is (= (e011/p015) 137846528820)))
 
-  (fact "Problem 16"
-        (e011/p016) => 1366)
+(deftest problem-016
+  (is (= (e011/p016) 1366)))
 
-  (fact "Problem 17"
-        (e011/p017 10) => 39
-        (e011/p017) => 21124)
+(deftest problem-017
+  (is (= (e011/p017 10) 39))
+  (is (= (e011/p017) 21124)))
 
-  (fact "Problem 18"
-        (e011/p018) => 1074)
+(deftest problem-018
+  (is (= (e011/p018) 1074)))
 
-  (fact "Problem 19"
-        (e011/p019) => 171)
+(deftest problem-019
+  (is (= (e011/p019) 171)))
 
-  (fact "Problem 20"
-        (e011/p020) => 648))
+(deftest problem-020
+  (is (= (e011/p020) 648)))
