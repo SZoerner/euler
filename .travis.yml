@@ -1,5 +1,4 @@
 language: clojure
-script: lein midje
 sudo: false
 
 #lein: lein2
