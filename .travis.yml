@@ -1,5 +1,6 @@
 language: clojure
-sudo: false
+# Workaround for https://github.com/travis-ci/travis-ci/issues/4691
+sudo: required
 
 #lein: lein2
 #cache:
