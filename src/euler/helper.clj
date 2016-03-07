@@ -206,11 +206,12 @@
 (defn count-divisors
   "**count-divisors :: Int -> Int**
   Calculates the number of divisors of n (including 1 and n itself)."
-  [n] (->> (prime-factors n)
+  [n] (if (zero? n) 0
+        (->> (prime-factors n)
            (partition-by identity)
            (map count)
            (map inc)
-           (reduce *)))
+           (reduce *))))
 
 (defn palindrome?
   "**palindrome? :: Int -> Bool**
