@@ -1,13 +1,10 @@
 language: clojure
-sudo: false
-
 # Workaround for https://github.com/travis-ci/travis-ci/issues/4691
-# sudo: required
-
-#lein: lein2
-#cache:
-#  directories:
-#    - $HOME/.m2
+sudo: required
+lein: lein2
+cache:
+ directories:
+   - $HOME/.m2
 
 # after_success:
 # - bash -ex bin/coveralls.sh
