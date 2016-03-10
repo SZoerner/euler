@@ -3,6 +3,7 @@
 <img src="https://projecteuler.net/profile/SZoerner.png"/>
 [![Build
 Status](https://travis-ci.org/SZoerner/euler.svg?branch=master)](https://travis-ci.org/SZoerner/euler)
+[![codecov.io](https://codecov.io/github/SZoerner/euler/coverage.svg?branch=master)](https://codecov.io/github/SZoerner/euler?branch=master)
 [![Coverage Status](https://coveralls.io/repos/SZoerner/euler/badge.svg?branch=master)](https://coveralls.io/r/SZoerner/euler?branch=master)
 [![Dependencies Status](http://jarkeeper.com/szoerner/euler/status.svg)](http://jarkeeper.com/szoerner/euler)
 [![API codox](http://b.repl.ca/v1/doc-API-blue.png)](http://szoerner.github.io/euler/codox/)
