@@ -8,7 +8,7 @@ Status](https://travis-ci.org/SZoerner/euler.svg?branch=master)](https://travis-
 [![Dependencies Status](http://jarkeeper.com/szoerner/euler/status.svg)](http://jarkeeper.com/szoerner/euler)
 [![API codox](http://b.repl.ca/v1/doc-API-blue.png)](http://szoerner.github.io/euler/codox/)
 [![marginalia docs](http://b.repl.ca/v1/doc-marginalia-blue.png)](http://szoerner.github.io/euler/uberdoc)
-[![Stories in Backlog](https://badge.waffle.io/SZoerner/euler.svg?label=backlog&title=Backlog)](http://waffle.io/SZoerner/euler)
+[![Stories in Ready](https://badge.waffle.io/SZoerner/euler.svg?label=ready&title=Ready)](http://waffle.io/SZoerner/euler)
 
 My Project Euler solutions, written in Clojure
 
