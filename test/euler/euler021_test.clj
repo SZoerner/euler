@@ -19,10 +19,10 @@
 (deftest problem-025
   (is (= (e021/p025) 4782)))
 
-(deftest problem-026
-  (is (= (e021/rec-cycle 1 6) '(6)))
-  (is (= (e021/rec-cycle 1 7) '(1 4 2 8 5 7)))
-  (is (= (e021/p026) 983)))
+; (deftest problem-026
+;   (is (= (e021/rec-cycle 1 6) '(6)))
+;   (is (= (e021/rec-cycle 1 7) '(1 4 2 8 5 7)))
+;   (is (= (e021/p026) 983)))
 
 ; (deftest problem-027
 ;   (is (= (e021/consec-primes 1 41) 40))           ; n² + n + 41
