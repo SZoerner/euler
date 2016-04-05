@@ -19,25 +19,25 @@
 ; (deftest problem-025
 ;   (is (= (e021/p025) 4782)))
 
-(deftest problem-026
-  (is (= (e021/rec-cycle 1 6) '(6)))
-  (is (= (e021/rec-cycle 1 7) '(1 4 2 8 5 7)))
-  (is (= (e021/p026) 983)))
+; (deftest problem-026
+;   (is (= (e021/rec-cycle 1 6) '(6)))
+;   (is (= (e021/rec-cycle 1 7) '(1 4 2 8 5 7)))
+;   (is (= (e021/p026) 983)))
 
-(deftest problem-027
-  (is (= (e021/consec-primes 1 41) 40))           ; n² + n + 41
-  (is (= (e021/consec-primes -79 1601) 80))       ; n² − 79n + 1601
-  (is (= (e021/p027) -59231)))
+; (deftest problem-027
+;   (is (= (e021/consec-primes 1 41) 40))           ; n² + n + 41
+;   (is (= (e021/consec-primes -79 1601) 80))       ; n² − 79n + 1601
+;   (is (= (e021/p027) -59231)))
 
-; (deftest problem-028
-;   (is (= (e021/p028 3) 25))
-;   (is (= (e021/p028 5) 101))
-;   (is (= (e021/p028) 669171001)))
+(deftest problem-028
+  (is (= (e021/p028 3) 25))
+  (is (= (e021/p028 5) 101))
+  (is (= (e021/p028) 669171001)))
 
-; (deftest problem-029
-;   (is (= (e021/p029 5) 15))
-;   (is (= (e021/p029) 9183)))
+(deftest problem-029
+  (is (= (e021/p029 5) 15))
+  (is (= (e021/p029) 9183)))
 
-; (deftest problem-030
-;   (is (= (e021/p030 4) 19316))
-;   (is (= (e021/p030) 443839)))
+(deftest problem-030
+  (is (= (e021/p030 4) 19316))
+  (is (= (e021/p030) 443839)))
