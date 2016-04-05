@@ -5,19 +5,19 @@
 (deftest problem-021
   (is (= (e021/p021) 31626)))
 
-; (deftest problem-022
-;   (is (= (e021/p022) 871198282)))
+(deftest problem-022
+  (is (= (e021/p022) 871198282)))
 
-; (deftest problem-023
-;   (is (= (e021/p023 [12]) 12))
-;   (is (= (e021/p023 (range 25)) 276))
-;   (is (= (e021/p023) 4179871)))
+(deftest problem-023
+  (is (= (e021/p023 [12]) 12))
+  (is (= (e021/p023 (range 25)) 276))
+  (is (= (e021/p023) 4179871)))
 
-; (deftest problem-024
-;   (is (= (e021/p024) '(2 7 8 3 9 1 5 4 6 0))))
+(deftest problem-024
+  (is (= (e021/p024) '(2 7 8 3 9 1 5 4 6 0))))
 
-; (deftest problem-025
-;   (is (= (e021/p025) 4782)))
+(deftest problem-025
+  (is (= (e021/p025) 4782)))
 
 ; (deftest problem-026
 ;   (is (= (e021/rec-cycle 1 6) '(6)))
