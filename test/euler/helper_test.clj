@@ -3,40 +3,40 @@
             [euler.helper :as helper]))
 
 (deftest prime-factors
-  (is (= (helper/prime-factors 12) '(2 2 3)))
-  (is (= (helper/prime-factors 123) '(3 41))))
+  (is (= [2 2 3] (helper/prime-factors 12)))
+  (is (= [3 41] (helper/prime-factors 123))))
 
 (deftest amicable?
-  (is (= (helper/amicable? 220) [220 284]))
-  (is (= (helper/amicable? 284) [284 220])))
+  (is (= [220 284] (helper/amicable? 220)))
+  (is (= [284 220] (helper/amicable? 284))))
 
 (deftest abundant?
-  (is (= (helper/abundant? 12) true)))
+  (is (helper/abundant? 12)))
 
 (deftest abundant-sum?
-  (is (= (helper/abundant-sum? 12) false))
-  (is (= (helper/abundant-sum? 24) true)))
+  (is (not (helper/abundant-sum? 12)))
+  (is (helper/abundant-sum? 24)))
 
 (deftest triangle
-  (is (= (last (take 1 helper/triangles)) 1))
-  (is (= (last (take 10 helper/triangles)) 55))
-  (is (= (last (take 100 helper/triangles)) 5050)))
+  (is (= 1 (last (take 1 helper/triangles))))
+  (is (= 55 (last (take 10 helper/triangles))))
+  (is (= 5050 (last (take 100 helper/triangles)))))
 
 (deftest parse-grid
-  (is (= (helper/parse-grid "1 2 3 4" 2) [[1 2] [3 4]]))
-  (is (= (helper/parse-grid "1 2 3 4 5 6 7 8 9" 3) [[1 2 3] [4 5 6] [7 8 9]])))
+  (is (= [[1 2] [3 4]] (helper/parse-grid "1 2 3 4" 2)))
+  (is (= [[1 2 3] [4 5 6] [7 8 9]] (helper/parse-grid "1 2 3 4 5 6 7 8 9" 3))))
 
 (deftest collatz
-  (is (= (helper/collatz 12) '(12 6 3 10 5 16 8 4 2 1))))
+  (is (= [12 6 3 10 5 16 8 4 2 1] (helper/collatz 12))))
 
 (deftest to-words
-  (is (= (helper/to-words 100) "onehundred"))
-  (is (= (helper/to-words 115) "onehundredandfifteen"))
-  (is (= (helper/to-words 342) "threehundredandfortytwo")))
+  (is (= "onehundred" (helper/to-words 100)))
+  (is (= "onehundredandfifteen" (helper/to-words 115)))
+  (is (= "threehundredandfortytwo" (helper/to-words 342))))
 
 (deftest prime?
-  (is (= (helper/prime? 2) true))
-  (is (= (helper/prime? 12) false)))
+  (is (helper/prime? 2))
+  (is (not (helper/prime? 12))))
 
 (deftest narcissistic?
-  (is (= (helper/narcissistic? 1634 4) true)))
+  (is (helper/narcissistic? 1634 4)))

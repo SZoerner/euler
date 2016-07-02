@@ -43,15 +43,10 @@
   ([names]
    (let
     [input (sort names)
-         ;; sum of the numerical representation of each character
-     get-value (fn [name]
-                 (->> name
-                      (map int)
-                      (map #(- % 64))
-                      (reduce +)))
-         ;; get the position
-     get-index (fn [name]
-                 (inc (.indexOf input name)))]
+     ;; sum of the numerical representation of each character
+     get-value (fn [name] (reduce + (map #(- (int %) 64) name)))
+     ;; get the position
+     get-index (fn [name] (inc (.indexOf input name)))]
       ;; compute the product of value and position
      (reduce + (map #(* (get-index %) (get-value %)) input)))))
 
