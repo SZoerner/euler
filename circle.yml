@@ -12,7 +12,8 @@ test:
   pre:
     - mkdir $CIRCLE_TEST_REPORTS/lein
   override:
-    - lein test2junit
+    - lein test
+    #- lein test2junit
     #- lein test-out junit $CIRCLE_TEST_REPORTS/lein/results.xml
     #- lein cloverage --codecov
   #post:

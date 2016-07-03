@@ -7,7 +7,7 @@
                  [midje "1.8.3"]
                  [org.clojure/test.check "0.9.0"]]
   :plugins [[lein-cloverage "1.0.7-SNAPSHOT"]
-            [test2junit "1.1.2"]]
+            [lein-codox "0.9.4"]]
   :marginalia {:css ["marg.css"]
                :javascript ["http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]
                :dir ["doc"]}
@@ -15,6 +15,4 @@
           :sources ["src"]
           :output-dir "doc/codox"
           :src-dir-uri "https://github.com/SZoerner/euler/blob/master/"
-          :src-linenum-anchor-prefix "L"}
-  :test2junit-output-dir ~(or (System/getenv "CIRCLE_TEST_REPORTS") "target/test2junit")
-  :main test2junit-sample.core)
+          :src-linenum-anchor-prefix "L"})
