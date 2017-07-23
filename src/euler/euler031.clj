@@ -46,8 +46,9 @@
   can be written as a 1 through 9 pandigital."
   [] (reduce + (distinct (for [a (range 2 5000)
                                b (range a (/ 9999 a))
-                               :when (helper/pandigital? a b)]
-                           (* a b)))))
+                               :let [prod (* a b)]
+                               :when (helper/pandigital? (str a b prod))]
+                           prod))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -214,7 +215,19 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
+(defn concat-product [n upper]
+  (->> (range 1 (inc upper))
+       (map #(* n %))
+       (mapcat str)
+       (apply str)
+       (read-string)))
+
 (defn p038
   "What is the largest 1 to 9 pandigital 9-digit number that can be formed as
   the concatenated product of an integer with (1,2, ... , n) where n > 1?"
-  [])
+  [] (apply max
+            (for [r (range 1 10)
+                  n (range 1 9999)
+                  :let [product (concat-product n r)]
+                  :when (and (< product 987654321) (helper/pandigital? product))]
+              product)))

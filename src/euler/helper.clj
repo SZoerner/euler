@@ -336,5 +336,5 @@
 
 (defn pandigital?
   "Makes use of all the digits 1 to n exactly once."
-  [a b] (= "123456789"
-           (clojure.string/join (sort (.split (str a b (* a b)) "")))))
+  [n] (= "123456789"
+           (clojure.string/join (sort (.split (str n) "")))))
