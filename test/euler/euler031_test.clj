@@ -25,3 +25,6 @@
 
 (deftest problem-037
   (is (= 748317 (e031/p037))))
+
+(deftest problem-038
+  (is (= 932718654 (e031/p038))))
