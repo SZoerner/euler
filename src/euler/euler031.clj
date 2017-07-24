@@ -231,3 +231,33 @@
                   :let [product (concat-product n r)]
                   :when (and (< product 987654321) (helper/pandigital? product))]
               product)))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;
+;; # Problem 39 - Integer right triangles
+;;
+;; If p is the perimeter of a right angle triangle with integral length sides,
+;; {a,b,c}, there are exactly three solutions for p = 120.
+;;
+;; {20,48,52}, {24,45,51}, {30,40,50}
+;;
+;; For which value of p ≤ 1000, is the number of solutions maximised?
+;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn integer-right-triangles [n]
+  (for [a (range 1 500)
+        b (range a 500)
+        :let [c (- n a b)]
+        :when (and (every? pos? [a b c])
+                   (= (+ (* a a) (* b b)) (* c c)))]
+    [a b c]))
+
+(defn p039
+  "For which value of p ≤ 1000, is the number of solutions maximised?"
+  [n] (->> (range 1 (inc n))
+          (map integer-right-triangles)
+          (map #(vector (apply + (first %)) (count %) %))
+          (sort-by second >)
+          first))
