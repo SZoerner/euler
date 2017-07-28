@@ -1,6 +1,7 @@
 # euler
 
 <img src="https://projecteuler.net/profile/SZoerner.png"/>
+
 [![Build
 Status](https://travis-ci.org/SZoerner/euler.svg?branch=master)](https://travis-ci.org/SZoerner/euler)
 [![codecov.io](https://codecov.io/github/SZoerner/euler/coverage.svg?branch=master)](https://codecov.io/github/SZoerner/euler?branch=master)

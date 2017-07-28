@@ -6,8 +6,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [midje "1.8.3"]
                  [org.clojure/test.check "0.9.0"]]
-  :plugins [[lein-cloverage "1.0.7-SNAPSHOT"]
-            [lein-codox "0.9.4"]]
+  :plugins [[lein-cloverage "1.0.9"]
+            [lein-codox "0.10.3"]]
   :marginalia {:css ["marg.css"]
                :javascript ["http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]
                :dir ["doc"]}
