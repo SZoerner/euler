@@ -4,3 +4,6 @@
 
 (deftest problem-041
   (is (= 7652413 (e041/p041))))
+
+(deftest problem-042
+  (is (= 162 (e041/p042))))
