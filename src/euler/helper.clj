@@ -337,4 +337,11 @@
 (defn pandigital?
   "Makes use of all the digits 1 to n exactly once."
   [n] (= "123456789"
-           (clojure.string/join (sort (.split (str n) "")))))
+         (clojure.string/join (sort (.split (str n) "")))))
+
+(defn permutations [s]
+  (lazy-seq
+   (if (seq (rest s))
+     (apply concat
+            (for [x s](map #(cons x %) (permutations (remove #{x} s)))))
+     [s])))
