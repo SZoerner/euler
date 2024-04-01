@@ -170,6 +170,9 @@
            (not-any? #(factor? n %)
                      (take-while #(<= (* % %) n) primes))))
 
+(defn prime-fast? [n]
+  (.isProbablePrime (BigInteger/valueOf n) 5))
+
 ;; iterative approach
 (defn get-primes
   "**get-primes :: Int -> [Int]** Get the prime divisors of n."
@@ -351,3 +354,11 @@
      (apply concat
             (for [x s] (map #(cons x %) (permutations (remove #{x} s)))))
      [s])))
+
+; https://en.wikipedia.org/wiki/Exponentiation_by_squaring#With_constant_auxiliary_memory
+(defn exp-by-square [x n]
+  (loop [y 1N x (bigint x) n (bigint n)]
+    (cond (< n 0) (recur y (/ 1 x) (- n))
+          (= n 0) y
+          (even? n) (recur y (* x x) (/ n 2))
+          (odd? n) (recur (* x y) (* x x) (/ (- n 1) 2)))))
