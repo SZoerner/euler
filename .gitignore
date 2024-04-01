@@ -1,6 +1,10 @@
+.calva/
+.clj-kondo/
 .lein-failures
 .lein-repl-history
+.lsp/
 .nrepl-port
+.vscode/
 /target/
 /doc/
 /docs/

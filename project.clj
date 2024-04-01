@@ -3,7 +3,7 @@
   :url "https://github.com/SZoerner/euler"
   :license {:name "MIT License"
             :url  "http://opensource.org/licenses/MIT"}
-  :dependencies [[org.clojure/clojure "1.8.0"]
+  :dependencies [[org.clojure/clojure "1.11.1"]
                  [midje "1.8.3"]
                  [org.clojure/test.check "0.9.0"]]
   :plugins [[lein-cloverage "1.0.9"]

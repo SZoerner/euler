@@ -232,7 +232,6 @@
                   :when (and (< product 987654321) (helper/pandigital? product))]
               product)))
 
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;; # Problem 39 - Integer right triangles
@@ -257,11 +256,10 @@
 (defn p039
   "For which value of p ≤ 1000, is the number of solutions maximised?"
   [n] (->> (range 1 (inc n))
-          (map integer-right-triangles)
-          (map #(vector (apply + (first %)) (count %) %))
-          (sort-by second >)
-          first))
-
+           (map integer-right-triangles)
+           (map #(vector (apply + (first %)) (count %) %))
+           (sort-by second >)
+           first))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

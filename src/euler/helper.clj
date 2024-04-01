@@ -1,4 +1,5 @@
-(ns euler.helper)
+(ns euler.helper
+    (:require [clojure.string :as str]))
 
 ;; == point-free notation =====================================================
 ;; shortcuts
@@ -222,7 +223,7 @@
   "**palindrome? :: Int -> Bool**
   Checks whether the given number n is a palindrome.
   Uses reversed string comparison"
-  [n] (= (str n) (clojure.string/reverse (str n))))
+  [n] (= (str n) (str/reverse (str n))))
 
 (defn least-common-multiple
   "**least-common-multiple :: [Int] -> Int**
@@ -342,11 +343,11 @@
 (defn pandigital?
   "Makes use of all the digits 1 to n exactly once."
   [n] (= "123456789"
-         (clojure.string/join (sort (.split (str n) "")))))
+         (str/join (sort (.split (str n) "")))))
 
 (defn permutations [s]
   (lazy-seq
    (if (seq (rest s))
      (apply concat
-            (for [x s](map #(cons x %) (permutations (remove #{x} s)))))
+            (for [x s] (map #(cons x %) (permutations (remove #{x} s)))))
      [s])))
