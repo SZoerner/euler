@@ -6,10 +6,8 @@
 Status](https://travis-ci.org/SZoerner/euler.svg?branch=master)](https://travis-ci.org/SZoerner/euler)
 [![codecov.io](https://codecov.io/github/SZoerner/euler/coverage.svg?branch=master)](https://codecov.io/github/SZoerner/euler?branch=master)
 [![Coverage Status](https://coveralls.io/repos/SZoerner/euler/badge.svg?branch=master)](https://coveralls.io/r/SZoerner/euler?branch=master)
-[![Dependencies Status](http://jarkeeper.com/szoerner/euler/status.svg)](http://jarkeeper.com/szoerner/euler)
-[![API codox](http://b.repl.ca/v1/doc-API-blue.png)](http://szoerner.github.io/euler/codox/)
-[![marginalia docs](http://b.repl.ca/v1/doc-marginalia-blue.png)](http://szoerner.github.io/euler/uberdoc)
-[![Stories in Ready](https://badge.waffle.io/SZoerner/euler.svg?label=ready&title=Ready)](http://waffle.io/SZoerner/euler)
+[API codox](http://szoerner.github.io/euler/codox/)
+[marginalia docs](http://szoerner.github.io/euler/uberdoc)
 
 My Project Euler solutions, written in Clojure
 
@@ -17,9 +15,8 @@ My Project Euler solutions, written in Clojure
 
 ## Code Quality
 
-- This project runs example-based tests using [Midje](https://github.com/marick/Midje), as well as property-based tests via [clojure.test.check](https://github.com/clojure/test.check).
-- [Test coverage](https://coveralls.io/r/SZoerner/euler?branch=master) ist tracked via [Cloverage](https://github.com/lshift/cloverage) (for compatibility, midje tests are wrapped in ``deftest`` blocks).
-- [Dependencies](http://jarkeeper.com/szoerner/euler) are checked for updates with [Jarkeeper](http://jarkeeper.com/).
+- This project runs example-based tests using [clojure.test](https://clojure.github.io/clojure/clojure.test-api.html), as well as property-based tests via [clojure.test.check](https://github.com/clojure/test.check).
+- [Test coverage](https://coveralls.io/r/SZoerner/euler?branch=master) ist tracked via [Cloverage](https://github.com/lshift/cloverage).
 
 ## Documentation
 > No one will give a crap about your crap if your documentation is crap  

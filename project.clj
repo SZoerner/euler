@@ -11,6 +11,6 @@
   :marginalia {:javascript ["http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"]
                :dir ["docs"]}
   :codox {:metadata {:doc/format :markdown}
-          :output-path "docs"
+          :output-path "docs/codox"
           :source-paths ["src"]
           :source-uri "https://github.com/SZoerner/euler/blob/main/{filepath}#L{line}"})
