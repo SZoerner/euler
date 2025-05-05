@@ -126,7 +126,7 @@
            (helper/rotations)
            (map #(clojure.string/join %))
            (map #(Integer/parseInt %))
-           (every? helper/prime?)))
+           (every? helper/prime-fast?)))
 
 (defn p035
   "How many circular primes are there below one million?"
@@ -186,9 +186,9 @@
   "Being prime itself, it is possible to continuously remove digits from left
   to right as well as from right to left, and remain prime at each stage."
   [n] (let [trunc-prime? (fn [f n] (cond
-                                     (< n 10) (helper/prime? n)
-                                     (helper/prime? n) (recur f (f n))
-                                     true false))]
+                                     (< n 10) (helper/prime-fast? n)
+                                     (helper/prime-fast? n) (recur f (f n))
+                                     :else false))]
         (and (trunc-prime? remove-last-digit n)
              (trunc-prime? remove-first-digit n))))
 

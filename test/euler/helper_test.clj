@@ -2,9 +2,9 @@
   (:require [clojure.test :refer [deftest is]]
             [euler.helper :as helper]))
 
-(deftest prime-factors
-  (is (= [2 2 3] (helper/prime-factors 12)))
-  (is (= [3 41] (helper/prime-factors 123))))
+(deftest prime-factors-of
+  (is (= [2 2 3] (helper/prime-factors-of 12)))
+  (is (= [3 41] (helper/prime-factors-of 123))))
 
 (deftest amicable?
   (is (= [220 284] (helper/amicable? 220)))

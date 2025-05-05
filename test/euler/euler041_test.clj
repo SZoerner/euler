@@ -3,6 +3,7 @@
             [euler.euler041 :as e041]))
 
 (deftest problem-041
+  (is (= 4231 (e041/p041 4)))
   (is (= 7652413 (e041/p041))))
 
 (deftest problem-042
@@ -21,7 +22,7 @@
   (is (= 5777 (e041/p046))))
 
 (deftest problem-047
-  (is (= 134043 (e041/p047))))
+  (is (= 134043 (first (e041/p047)))))
 
 (deftest problem-048
   (is (= "9110846700" (e041/p048))))
@@ -30,4 +31,7 @@
   (is (= "296962999629" (e041/p049))))
 
 (deftest problem-050
+  (is (= 41 (e041/conseq-primes 1e2)))
+  (is (= 953 (e041/conseq-primes 1e3)))
+  (is (= 9521 (e041/conseq-primes 1e4)))
   (is (= 997651 (e041/p050))))

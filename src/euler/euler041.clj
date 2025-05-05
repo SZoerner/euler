@@ -13,11 +13,15 @@
 
 (defn p041
   "What is the largest n-digit pandigital prime that exists?"
-  [] (->> (for [x (range 1 10)] (apply str (range 1 (inc x))))
-          (mapcat helper/permutations)
-          (map #(read-string (apply str %)))
-          (filter helper/prime?)
-          (apply max)))
+  ([] (p041 9))
+  ([n] (let [digit-sum (fn [n] (reduce + (range 1 (inc n))))]
+          (->> (range n 0 -1) ;; Work backwards from 9 to 1 to start with the largest.
+               (remove #(zero? (mod (digit-sum %) 3))) ;; Skip numbers whose digits sum to multiple of 3 (not prime)
+               (mapcat #(helper/permutations (range % 0 -1))) ;; Get permutations in descending order
+               (map #(read-string (apply str %)))
+               (filter helper/prime-fast?)
+               first)))) ;; Return first match since we're going largest to smallest.
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -171,7 +175,7 @@
 
 ;; composite numbers are those that are not prime and not 1.
 (def odd-composites
-  (filter #(and (odd? %) (not (helper/prime? %))) (drop 2 (range))))
+  (filter #(and (odd? %) (not (helper/prime-fast? %))) (drop 2 (range))))
 
 (defn conjecture? [n]
   (let [ps (take-while #(<= % n) helper/primes)
@@ -205,7 +209,7 @@
 
 (defn distinct-factors [n]
   (if (= 0 n) 0
-      (count (set (helper/get-primes n)))))
+      (count (set (helper/prime-factors-of n)))))
 
 (defn has-primes? [x ns]
   (every? (partial = x) (map distinct-factors ns)))
@@ -299,18 +303,21 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn conseq-primes [below]
-  (let [p-range (take-while #(< % below) helper/primes)
-        cands (for [from p-range
-                    to (drop-while #(<= % from) p-range)
-              :let [span (->> p-range
-                              (drop-while #(< % from))
-                              (take-while #(<= % to)))
-                    cand (reduce + span)]
-              :while (< cand below)
-              :when (helper/prime-fast? cand)]
-          [cand span])]
-    (apply max-key #(count (second %)) cands)))
+;; Make a list of primes up to a million with a sieve, then:
+;; 1) add up primes from the beginning till the sum exceeded 1mil.
+;; 2) drop primes from the end until the sum was a prime
+;; 3) store the result if it's the longest run so far
+;; 4) drop one prime from the start of the list, and repeat
 
-(defn p050 []
-  (first (conseq-primes 10e6)))
+(defn conseq-primes [below]
+  (loop [primes (take-while #(< % below) helper/primes)
+         longest {:seq [] :sum 0 :len 0}]
+    (if (empty? primes) (:sum longest)
+        (let [running-sum (reductions + primes)
+              exceeds (into [] (take-while #(< % below) running-sum))
+              val (first (filter helper/prime-fast? (rseq exceeds)))
+              idx (.indexOf exceeds val)
+              longest-here {:seq (take idx primes) :sum val :len idx}]
+          (recur (rest primes) (max-key #(:len %) longest longest-here))))))
+
+(defn p050 [] (conseq-primes 1e6))

@@ -85,7 +85,7 @@
 (defn p005
   "**Task:** What is the smallest positive number that is evenly
   divisible by all of the numbers from 1 to 20?"
-  [n] (helper/least-common-multiple (range (inc n))))
+  [n] (helper/least-common-multiple (range 1 (inc n))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

@@ -1,5 +1,5 @@
 (ns euler.helper
-    (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]))
 
 ;; == point-free notation =====================================================
 ;; shortcuts
@@ -37,9 +37,9 @@
   ([n] (factors n 1))
   ([n start]
    (lazy-seq (let [lower (filter #(factor? n %)
-                                  ;; iterate up to sqrt(n)
+                                 ;; iterate up to sqrt(n)
                                  (range start (inc (Math/sqrt n))))
-                    ;; add the coresponding divisor pairs
+                   ;; add the coresponding divisor pairs
                    upper (map #(/ n %) lower)]
                (set (concat lower upper))))))
 
@@ -173,19 +173,16 @@
 (defn prime-fast? [n]
   (.isProbablePrime (BigInteger/valueOf n) 5))
 
-;; iterative approach
-(defn get-primes
-  "**get-primes :: Int -> [Int]** Get the prime divisors of n."
-  ;; entry point - start with the list of primes and [] as accumulator
-  ([n] (get-primes n primes []))
-  ([n [car & cdr :as ps] acc]
-   (cond
-    ;; no more factors - stop iteration
-     (< n car) acc
-    ;; if factor - add to set of prime factors
-     (factor? n car) (recur (/ n car) ps (conj acc car))
-    ;; no match - next iteration
-     :else (recur n cdr acc))))
+;; https://gist.github.com/unclebob/632303
+(defn prime-factors-of
+  "** prime-factors-of :: Int -> [Int]**
+  Given a number, returns the list of prime factors of n.
+  Example: (prime-factors-of 12) => (2 2 3)"
+  ([n] (vec (prime-factors-of 2 n)))
+  ([f n] (cond
+           (> f (Math/sqrt n)) (if (= n 1) [] [n])
+           (= 0 (mod n f)) (cons f (prime-factors-of f (/ n f)))
+           :else (recur (inc f) n))))
 
 (defn max-prime
   "**max-prime :: Int, [Int] -> Int**
@@ -200,23 +197,11 @@
    ; list eater
     :else (recur n cdr)))
 
-(defn prime-factors
-  "** prime-factors :: Int -> [Int]**
-  Given a number, returns the list of prime factors of n.
-  Example: (prime-factors 12) => (2 2 3)"
-  ([n] (prime-factors n [] primes))
-  ([number factors ps]
-   (cond
-     (= 1 number) factors
-     (factor? number (first ps)) (prime-factors (/ number (first ps))
-                                                (conj factors (first ps)) ps)
-     :else (prime-factors number factors (rest ps)))))
-
 (defn count-divisors
   "**count-divisors :: Int -> Int**
   Calculates the number of divisors of n (including 1 and n itself)."
   [n] (if (zero? n) 0
-          (->> (prime-factors n)
+          (->> (prime-factors-of n)
                (partition-by identity)
                (map count)
                (map inc)
@@ -234,7 +219,7 @@
   See http://en.wikipedia.org/wiki/Least_common_multiple."
   [input]
   (->> input
-       (map #(frequencies (get-primes %)))
+       (map #(frequencies (prime-factors-of %)))
        (apply merge-with max)
        (map #(Math/pow (first %) (second %)))
        (reduce *)

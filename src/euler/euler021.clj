@@ -205,7 +205,7 @@
   [a b] (->>
          (iterate inc 0) ;; for Integers starting from zero
          (map (quadratic a b)) ;; apply the generator of the form: n² + an + b
-         (take-while #(and (pos? %) (helper/prime? %))) ;; get all the primes
+         (take-while #(and (pos? %) (helper/prime-fast? %))) ;; get all the primes
          (count))) ;; count # of primes
 
 (defn quads
