@@ -314,10 +314,18 @@
   "**Task:** Find the sum of all the numbers that can be written as
   the sum of fifth powers of their digits."
   ([] (p030 5))
-  ([exp]
-    ;; 6*9**5 = 354294 as the upper limit..
-   (let [limit (* (inc exp) (Math/pow 9 exp))]
-      ;; predicate checking for being a sum of powers
-     (reduce + (filter #(helper/narcissistic? % exp)
-        ;; TODO only insert permutations of digits
-                       (range 2 limit))))))
+  ; Pre-calculate digit powers [0^exp, 1^exp, ..., 9^exp]
+  ([exp] (let [digit-powers (long-array (map #(long (Math/pow % exp)) (range 10)))
+               ; Calculate upper bound: 9^exp * (digits in number)
+               max-num (loop [n 9 sum (* 9 (long (Math/pow 9 exp)))]
+                         (let [next-sum (+ sum (long (Math/pow 9 exp)))]
+                           (if (> next-sum (Math/pow 10 (inc n)))
+                             (recur (inc n) next-sum)
+                             (long sum))))]
+           
+           (loop [n 2 total 0]
+             (if (> n max-num) total 
+                 (let [sum (loop [num n s 0] 
+                             (if (zero? num) s
+                                 (recur (quot num 10) (+ s (aget digit-powers (rem num 10))))))]
+                   (recur (inc n) (if (= n sum) (+ total sum) total))))))))

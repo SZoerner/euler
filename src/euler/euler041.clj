@@ -1,5 +1,7 @@
 (ns euler.euler041
-  (:require [euler.helper :as helper]))
+  (:require [euler.helper :as helper]
+            [clojure.set :as s]
+            [clojure.string :as str]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -15,12 +17,12 @@
   "What is the largest n-digit pandigital prime that exists?"
   ([] (p041 9))
   ([n] (let [digit-sum (fn [n] (reduce + (range 1 (inc n))))]
-          (->> (range n 0 -1) ;; Work backwards from 9 to 1 to start with the largest.
-               (remove #(zero? (mod (digit-sum %) 3))) ;; Skip numbers whose digits sum to multiple of 3 (not prime)
-               (mapcat #(helper/permutations (range % 0 -1))) ;; Get permutations in descending order
-               (map #(read-string (apply str %)))
-               (filter helper/prime-fast?)
-               first)))) ;; Return first match since we're going largest to smallest.
+         (->> (range n 0 -1) ;; Work backwards from 9 to 1 to start with the largest.
+              (remove #(zero? (mod (digit-sum %) 3))) ;; Skip numbers whose digits sum to multiple of 3 (not prime)
+              (mapcat #(helper/permutations (range % 0 -1))) ;; Get permutations in descending order
+              (map #(read-string (apply str %)))
+              (filter helper/prime-fast?)
+              first)))) ;; Return first match since we're going largest to smallest.
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -76,20 +78,59 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn substrings
+; Get all three-digit numbers that are multiples of p
+(defn divisibles [p]
+  (->> (iterate (partial + p) p)
+       (take-while #(< % 1000))
+       (map #(format "%03d" %))))
+
+; Unify nested maps with sets as leaves
+(defn deep-union [& maps]
+  (if (every? map? maps)
+    (apply merge-with deep-union maps)
+    (apply s/union maps)))
+
+; Build a tree data structure to fast retrieve the three-digit number divisible by p.
+(defn lookup-tree [p]
+  (->> (divisibles p)
+       (map (fn [[x1 x2 x3]] {x3 {x2 #{x1}}}))
+       (apply deep-union)
+       (hash-map p)))
+
+(defn p043 []
+  (let [tree (into {} (map lookup-tree [2 3 5 7 11 13 17]))
+        pans (for [[d8 d9 d10] (divisibles 17)
+                   d7 (get-in tree [13 d9 d8])
+                   d6 (get-in tree [11 d8 d7])
+                   d5 (get-in tree [7 d7 d6])
+                   d4 (get-in tree [5 d6 d5]) 
+                   d3 (get-in tree [3 d5 d4])
+                   d2 (get-in tree [2 d4 d3])
+                   :when (and (s/superset? #{\0 \5} #{d6})
+                              (s/superset? #{\0 \2 \4 \6 \8} #{d4})
+                              (zero? (mod (Long/parseLong (str d3 d4 d5)) 3)))
+                   :let [res (str d2 d3 d4 d5 d6 d7 d8 d9 d10)
+                         fst (reduce (fn [s c] (str/replace s (str c) "")) "0123456789" res)]
+                   :when (= 1 (count fst))]
+               (Long/parseLong (str (first fst) res)))]
+    (reduce + pans)))
+
+;; -- Simpler, but slower variant.
+(defn- substrings
   [ds] (map #(Integer/parseInt (apply str %)) (partition 3 1 ds)))
 
-(defn prime-divisible? [xs]
+(defn- prime-divisible? [xs]
   (->> (take 7 helper/primes)
        (map helper/factor? (rest xs))
        (every? true?)))
 
-(defn p043
-  [] (->> (range 10)
-          helper/permutations
-          (filter #(prime-divisible? (substrings %)))
-          (map #(Long/parseLong (apply str %)))
-          (reduce +)))
+(defn- p043-slow []
+  (->> (range 10) ; For all digits.
+       helper/permutations ; Generate all permutations.
+       (filter #(prime-divisible? (substrings %))) ; Filter permutations by prime divisibility.
+       (map #(Long/parseLong (apply str %))) ; Convert to long. 
+       (reduce +))) ; Sum the results.
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

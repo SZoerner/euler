@@ -1,5 +1,6 @@
 (ns euler.euler031
-  (:require [euler.helper :as helper]))
+  (:require [euler.helper :as helper]
+            [clojure.string :as str]))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
@@ -124,7 +125,7 @@
   "A prime is circular if all rotations of the digits are themselves prime."
   [n] (->> (str n)
            (helper/rotations)
-           (map #(clojure.string/join %))
+           (map #(str/join %))
            (map #(Integer/parseInt %))
            (every? helper/prime-fast?)))
 
@@ -245,21 +246,23 @@
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(defn integer-right-triangles [n]
-  (for [a (range 1 500)
-        b (range a 500)
-        :let [c (- n a b)]
-        :when (and (every? pos? [a b c])
-                   (= (+ (* a a) (* b b)) (* c c)))]
-    [a b c]))
+(defn p039 [max-p]
+  (let [solutions (int-array (inc max-p))] ; mutable array with idx=perimeter, val= # of solutions.
+    ; fill the array with the number of solutions for each perimeter
+    (doseq [a (range 1 (inc (quot max-p 3))) ; a < 1/3 of max-p
+            b (range (inc a) (quot (- max-p a) 2)) ; b > a and b < (max-p - a)
+            :let [c (Math/sqrt (+ (* a a) (* b b))) ; Pythagorean theorem
+                  p (+ a b (int c))]
+            :when (and (== c (int c)) ; c is an integer
+                       (<= p max-p))]
+      (aset solutions p (inc (aget solutions p)))) ; increment # of solutions for perimeter p
+    ; find the perimeter with the maximum number of solutions
+    (loop [best-p 0 max-count 0 p 1]
+      (if (> p max-p) best-p
+          (let [cnt (aget solutions p)]
+            (if (> cnt max-count) (recur p cnt (inc p))
+                (recur best-p max-count (inc p))))))))
 
-(defn p039
-  "For which value of p ≤ 1000, is the number of solutions maximised?"
-  [n] (->> (range 1 (inc n))
-           (map integer-right-triangles)
-           (map #(vector (apply + (first %)) (count %) %))
-           (sort-by second >)
-           first))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;

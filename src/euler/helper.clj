@@ -271,16 +271,6 @@
   Converts a number n into a list of its digits."
   [n] (map #(Character/getNumericValue %) (str n)))
 
-(defn narcissistic?
-  "**narcissistic? :: Int, Int -> Bool**
-  Valid numbers can be written as the sum of its nth powers.
-  Exp.: 1634 = 1^4 + 6^4 + 3^4 + 4^4."
-  [n exp]
-  (->> (digits n)
-       (map #(Math/pow % exp))
-       (reduce +)
-       (== n)))
-
 (def singles
   "**singles :: [Int]** The literals of the numbers 1,2,..19"
   ["one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten"

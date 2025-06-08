@@ -37,6 +37,3 @@
 (deftest prime?
   (is (helper/prime? 2))
   (is (not (helper/prime? 12))))
-
-(deftest narcissistic?
-  (is (helper/narcissistic? 1634 4)))
